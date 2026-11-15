@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopUserMapper">
+
+  <resultMap id="UserMap" type="com.jcd.model.shop.ShopUser">
+    <id     column="ID"          property="id"/>
+    <result column="USERNAME"    property="username"/>
+    <result column="PASSWORD"    property="password"/>
+    <result column="NICKNAME"    property="nickname"/>
+    <result column="PHONE"       property="phone"/>
+    <result column="EMAIL"       property="email"/>
+    <result column="STATUS"      property="status"/>
+    <result column="CREATE_TIME" property="createTime"/>
+    <result column="UPDATE_TIME" property="updateTime"/>
+  </resultMap>
+
+  <sql id="Cols">
+    ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+
+  <select id="selectById" resultMap="UserMap">
+    select <include refid="Cols"/> from SHOP_USER where ID = #{id}
+  </select>
+
+  <select id="selectByUsername" resultMap="UserMap">
+    select <include refid="Cols"/> from SHOP_USER where USERNAME = #{username}
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopUser">
+    insert into SHOP_USER (
+      ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, STATUS, CREATE_TIME, UPDATE_TIME
+    ) values (
+      #{id}, #{username}, #{password}, #{nickname}, #{phone}, #{email}, #{status}, #{createTime}, #{updateTime}
+    )
+  </insert>
+
+  <update id="updateSelective" parameterType="com.jcd.model.shop.ShopUser">
+    update SHOP_USER
+    <set>
+      <if test="password != null"> PASSWORD = #{password},</if>
+      <if test="nickname != null"> NICKNAME = #{nickname},</if>
+      <if test="phone != null">    PHONE = #{phone},</if>
+      <if test="email != null">    EMAIL = #{email},</if>
+      <if test="status != null">   STATUS = #{status},</if>
+      UPDATE_TIME = #{updateTime}
+    </set>
+    where ID = #{id}
+  </update>
+
+</mapper>

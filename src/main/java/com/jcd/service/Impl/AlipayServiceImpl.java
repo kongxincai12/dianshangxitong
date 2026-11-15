@@ -10,8 +10,11 @@ import com.jcd.config.AlipayConfig;
 import com.jcd.dto.*;
 import com.jcd.exception.BusinessException;
 import com.jcd.mapper.PaymentOrderMapper;
+import com.jcd.mapper.shop.ShopOrderMapper;
 import com.jcd.model.PaymentOrder;
+import com.jcd.model.shop.ShopOrder;
 import com.jcd.service.AlipayService;
+import com.jcd.service.shop.ShopOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,14 @@ public class AlipayServiceImpl implements AlipayService {
     private static final String STATUS_CLOSED = "CLOSED";
     private static final String STATUS_REFUNDED = "REFUNDED";
 
+    /** 商城订单状态常量 (SHOP_ORDER.STATUS) */
+    private static final String SHOP_PENDING = "PENDING";
+    private static final String SHOP_PAID = "PAID";
+
+    /** 支付宝端代表已收款的交易状态 */
+    private static final String TRADE_SUCCESS = "TRADE_SUCCESS";
+    private static final String TRADE_FINISHED = "TRADE_FINISHED";
+
     @Autowired
     private AlipayClient alipayClient;
 
@@ -45,32 +56,68 @@ public class AlipayServiceImpl implements AlipayService {
     @Autowired
     private PaymentOrderMapper paymentOrderMapper;
 
+    @Autowired
+    private ShopOrderMapper shopOrderMapper;
+
+    @Autowired
+    private ShopOrderService shopOrderService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public AlipayPayResponseDto createPayOrder(AlipayPayRequestDto requestDto) {
-        logger.info("创建支付宝订单, subject={}, amount={}", requestDto.getSubject(), requestDto.getTotalAmount());
+        logger.info("创建支付宝订单, outTradeNo={}, subject={}, amount={}",
+                requestDto.getOutTradeNo(), requestDto.getSubject(), requestDto.getTotalAmount());
+
+        String outTradeNo = requestDto.getOutTradeNo();
+        if (outTradeNo == null || outTradeNo.trim().isEmpty()) {
+            outTradeNo = generateOutTradeNo();
+        } else {
+            outTradeNo = outTradeNo.trim();
+        }
+
+        // /api/alipay/pay 在 JwtInterceptor 的放行名单里, 属于无鉴权接口,
+        // 因此命中商城订单时金额一律以库里应付金额为准, 不信任前端上送值
+        ShopOrder shopOrder = shopOrderMapper.selectByOrderNo(outTradeNo);
+        if (shopOrder != null) {
+            if (!SHOP_PENDING.equals(shopOrder.getStatus())) {
+                throw new BusinessException("商城订单当前状态不可支付: " + shopOrder.getStatus());
+            }
+            if (requestDto.getTotalAmount() == null
+                    || requestDto.getTotalAmount().compareTo(shopOrder.getTotalAmount()) != 0) {
+                logger.warn("前端上送金额与商城订单不一致, 已改为以库为准: outTradeNo={}, 前端={}, 订单={}",
+                        outTradeNo, requestDto.getTotalAmount(), shopOrder.getTotalAmount());
+            }
+            requestDto.setTotalAmount(shopOrder.getTotalAmount());
+        }
 
         if (requestDto.getTotalAmount() == null || requestDto.getTotalAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new BusinessException("支付金额必须大于0");
         }
         if (requestDto.getSubject() == null || requestDto.getSubject().trim().isEmpty()) {
-            throw new BusinessException("订单标题不能为空");
+            if (shopOrder != null) {
+                requestDto.setSubject("商城订单-" + outTradeNo);
+            } else {
+                throw new BusinessException("订单标题不能为空");
+            }
         }
 
-        String outTradeNo = requestDto.getOutTradeNo();
-        if (outTradeNo == null || outTradeNo.trim().isEmpty()) {
-            outTradeNo = generateOutTradeNo();
+        // 重复点“去支付”时复用已有支付单, 避免同一 OUT_TRADE_NO 插出多条流水
+        PaymentOrder order = paymentOrderMapper.selectByOutTradeNo(outTradeNo);
+        if (order == null) {
+            order = new PaymentOrder();
+            order.setId(UUID.randomUUID().toString().replace("-", ""));
+            order.setOutTradeNo(outTradeNo);
+            order.setSubject(requestDto.getSubject());
+            order.setTotalAmount(requestDto.getTotalAmount());
+            order.setOrderStatus(STATUS_WAIT_PAY);
+            order.setCreateBy(requestDto.getCreateBy());
+            order.setRemark(requestDto.getRemark());
+            paymentOrderMapper.insert(order);
+        } else if (STATUS_PAID.equals(order.getOrderStatus())) {
+            throw new BusinessException("该订单已完成支付, 请勿重复发起: " + outTradeNo);
+        } else {
+            logger.info("复用已存在的支付单, outTradeNo={}, status={}", outTradeNo, order.getOrderStatus());
         }
-
-        PaymentOrder order = new PaymentOrder();
-        order.setId(UUID.randomUUID().toString().replace("-", ""));
-        order.setOutTradeNo(outTradeNo);
-        order.setSubject(requestDto.getSubject());
-        order.setTotalAmount(requestDto.getTotalAmount());
-        order.setOrderStatus(STATUS_WAIT_PAY);
-        order.setCreateBy(requestDto.getCreateBy());
-        order.setRemark(requestDto.getRemark());
-        paymentOrderMapper.insert(order);
 
         // 手机端直接使用 wap.pay，PC端优先尝试 precreate
         String userAgent = getUserAgent();
@@ -210,7 +257,14 @@ public class AlipayServiceImpl implements AlipayService {
             }
 
             // 交易成功
-            if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISHED".equals(tradeStatus)) {
+            if (TRADE_SUCCESS.equals(tradeStatus) || TRADE_FINISHED.equals(tradeStatus)) {
+                // 金额校验: 实付金额必须等于支付单应付金额, 否则不能推进任何业务状态
+                if (!amountEquals(order.getTotalAmount(), params.get("total_amount"))) {
+                    logger.error("支付宝通知金额与支付单不一致, 拒绝置为已支付: outTradeNo={}, 通知={}, 支付单={}",
+                            outTradeNo, params.get("total_amount"), order.getTotalAmount());
+                    return "failure";
+                }
+
                 Date payTime = null;
                 if (gmtPayment != null) {
                     try {
@@ -232,7 +286,8 @@ public class AlipayServiceImpl implements AlipayService {
                 );
                 logger.info("订单支付成功, outTradeNo={}, tradeNo={}", outTradeNo, tradeNo);
 
-                // TODO: 这里可以添加业务逻辑, 如: 更新业务订单状态、发送通知等
+                // 支付单只是资金流水, 业务侧最终状态记在 SHOP_ORDER 上
+                syncShopOrderPaid(outTradeNo, payTime);
             }
 
             return "success";
@@ -248,6 +303,7 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Map<String, String> queryTradeStatus(AlipayQueryRequestDto requestDto) {
         logger.info("查询支付宝交易状态, outTradeNo={}, tradeNo={}", 
                 requestDto.getOutTradeNo(), requestDto.getTradeNo());
@@ -274,6 +330,12 @@ public class AlipayServiceImpl implements AlipayService {
                 }
                 logger.info("查询交易状态成功, tradeNo={}, status={}", 
                         response.getTradeNo(), response.getTradeStatus());
+
+                // 兜底: 异步通知可能因内网穿透地址失效而丢失, 主动查到已收款时同样推进状态
+                if (TRADE_SUCCESS.equals(response.getTradeStatus())
+                        || TRADE_FINISHED.equals(response.getTradeStatus())) {
+                    settleByQuery(response);
+                }
             } else {
                 result.put("code", response.getCode());
                 result.put("msg", response.getMsg());
@@ -406,5 +468,72 @@ public class AlipayServiceImpl implements AlipayService {
         String dateStr = sdf.format(new Date());
         String randomStr = String.format("%04d", new Random().nextInt(10000));
         return "PAY" + dateStr + randomStr;
+    }
+
+    /** 金额一致性比对: 按数值比, 不受 597 与 597.00 这种格式差异影响 */
+    private boolean amountEquals(BigDecimal expect, String actual) {
+        if (expect == null || actual == null) {
+            return false;
+        }
+        try {
+            return expect.compareTo(new BigDecimal(actual.trim())) == 0;
+        } catch (NumberFormatException e) {
+            logger.warn("金额字段不是合法数字: {}", actual);
+            return false;
+        }
+    }
+
+    /**
+     * 支付宝确认收款后同步商城订单。
+     * 订单号不是商城业务时 (例如 PDA 支付流水) 直接返回, 不影响原有调用方。
+     */
+    private void syncShopOrderPaid(String outTradeNo, Date payTime) {
+        if (shopOrderMapper.selectByOrderNo(outTradeNo) == null) {
+            return;
+        }
+        ShopOrder updated = shopOrderService.markPaidByOrderNo(outTradeNo, payTime);
+        if (updated == null) {
+            logger.warn("同步商城订单时查不到该订单, orderNo={}", outTradeNo);
+        } else if (SHOP_PAID.equals(updated.getStatus())) {
+            logger.info("商城订单已置为已支付, orderNo={}, payTime={}", outTradeNo, updated.getPayTime());
+        } else {
+            logger.error("支付宝已收款但商城订单状态为 {}, 需人工核对并退款, orderNo={}",
+                    updated.getStatus(), outTradeNo);
+        }
+    }
+
+    /**
+     * 主动查询到已收款时, 把本地支付单和业务订单一并补成已支付。
+     */
+    private void settleByQuery(AlipayTradeQueryResponse response) {
+        String outTradeNo = response.getOutTradeNo() != null
+                ? response.getOutTradeNo() : response.getTradeNo();
+        PaymentOrder po = paymentOrderMapper.selectByOutTradeNo(outTradeNo);
+        if (po == null) {
+            logger.warn("支付宝已收款但本地无支付单, outTradeNo={}", outTradeNo);
+            return;
+        }
+        if (STATUS_PAID.equals(po.getOrderStatus())) {
+            // 通知已处理过, 只需确保业务订单也同步到位
+            syncShopOrderPaid(po.getOutTradeNo(), po.getPayTime());
+            return;
+        }
+        if (!amountEquals(po.getTotalAmount(), response.getTotalAmount())) {
+            logger.error("查询金额与支付单不一致, 不推进状态: outTradeNo={}, 查询={}, 支付单={}",
+                    outTradeNo, response.getTotalAmount(), po.getTotalAmount());
+            return;
+        }
+        paymentOrderMapper.updateStatus(
+                po.getId(),
+                STATUS_PAID,
+                response.getTradeNo(),
+                response.getBuyerLogonId(),
+                response.getBuyerUserId(),
+                response.getSendPayDate(),
+                new Date(),
+                "alipay_query"
+        );
+        logger.info("主动查询兜底: 支付单已置为已支付, outTradeNo={}", outTradeNo);
+        syncShopOrderPaid(po.getOutTradeNo(), response.getSendPayDate());
     }
 }

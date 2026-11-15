@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopOrderMapper">
+
+  <resultMap id="OrderMap" type="com.jcd.model.shop.ShopOrder">
+    <id     column="ID"               property="id"/>
+    <result column="ORDER_NO"         property="orderNo"/>
+    <result column="USER_ID"          property="userId"/>
+    <result column="TOTAL_AMOUNT"     property="totalAmount"/>
+    <result column="STATUS"           property="status"/>
+    <result column="RECEIVER_NAME"    property="receiverName"/>
+    <result column="RECEIVER_PHONE"   property="receiverPhone"/>
+    <result column="RECEIVER_ADDRESS" property="receiverAddress"/>
+    <result column="REMARK"           property="remark"/>
+    <result column="PAY_TIME"         property="payTime"/>
+    <result column="CREATE_TIME"      property="createTime"/>
+    <result column="UPDATE_TIME"      property="updateTime"/>
+  </resultMap>
+
+  <resultMap id="OrderItemMap" type="com.jcd.model.shop.ShopOrderItem">
+    <id     column="ID"           property="id"/>
+    <result column="ORDER_ID"     property="orderId"/>
+    <result column="PRODUCT_ID"   property="productId"/>
+    <result column="PRODUCT_NAME" property="productName"/>
+    <result column="PRICE"        property="price"/>
+    <result column="QUANTITY"     property="quantity"/>
+    <result column="SUBTOTAL"     property="subtotal"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopOrder">
+    insert into SHOP_ORDER (
+      ID, ORDER_NO, USER_ID, TOTAL_AMOUNT, STATUS,
+      RECEIVER_NAME, RECEIVER_PHONE, RECEIVER_ADDRESS, REMARK,
+      PAY_TIME, CREATE_TIME, UPDATE_TIME
+    ) values (
+      #{id}, #{orderNo}, #{userId}, #{totalAmount}, #{status},
+      #{receiverName}, #{receiverPhone}, #{receiverAddress}, #{remark},
+      #{payTime}, #{createTime}, #{updateTime}
+    )
+  </insert>
+
+  <insert id="insertItem" parameterType="com.jcd.model.shop.ShopOrderItem">
+    insert into SHOP_ORDER_ITEM (ID, ORDER_ID, PRODUCT_ID, PRODUCT_NAME, PRICE, QUANTITY, SUBTOTAL)
+    values (#{id}, #{orderId}, #{productId}, #{productName}, #{price}, #{quantity}, #{subtotal})
+  </insert>
+
+  <insert id="batchInsertItems" parameterType="java.util.List">
+    insert into SHOP_ORDER_ITEM (ID, ORDER_ID, PRODUCT_ID, PRODUCT_NAME, PRICE, QUANTITY, SUBTOTAL)
+    <foreach collection="items" item="it" separator=" union all ">
+      select #{it.id}, #{it.orderId}, #{it.productId}, #{it.productName},
+             #{it.price}, #{it.quantity}, #{it.subtotal}
+      from dual
+    </foreach>
+  </insert>
+
+  <select id="selectById" resultMap="OrderMap">
+    select ID, ORDER_NO, USER_ID, TOTAL_AMOUNT, STATUS, RECEIVER_NAME, RECEIVER_PHONE,
+           RECEIVER_ADDRESS, REMARK, PAY_TIME, CREATE_TIME, UPDATE_TIME
+    from SHOP_ORDER
+    where ID = #{id}
+  </select>
+
+  <select id="selectByOrderNo" resultMap="OrderMap">
+    select ID, ORDER_NO, USER_ID, TOTAL_AMOUNT, STATUS, RECEIVER_NAME, RECEIVER_PHONE,
+           RECEIVER_ADDRESS, REMARK, PAY_TIME, CREATE_TIME, UPDATE_TIME
+    from SHOP_ORDER
+    where ORDER_NO = #{orderNo}
+  </select>
+
+  <select id="selectItemsByOrderId" resultMap="OrderItemMap">
+    select ID, ORDER_ID, PRODUCT_ID, PRODUCT_NAME, PRICE, QUANTITY, SUBTOTAL
+    from SHOP_ORDER_ITEM
+    where ORDER_ID = #{orderId}
+  </select>
+
+  <update id="updateStatus">
+    update SHOP_ORDER
+    set STATUS = #{status}, UPDATE_TIME = #{updateTime}
+        <if test="payTime != null">, PAY_TIME = #{payTime}</if>
+    where ID = #{id}
+  </update>
+
+  <sql id="OrderUserWhere">
+    <where>
+      USER_ID = #{userId}
+      <if test="status != null and status != ''">
+        and STATUS = #{status}
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryByUser" resultMap="OrderMap">
+    select * from (
+      select t.*, ROWNUM rn from (
+        select ID, ORDER_NO, USER_ID, TOTAL_AMOUNT, STATUS, RECEIVER_NAME, RECEIVER_PHONE,
+               RECEIVER_ADDRESS, REMARK, PAY_TIME, CREATE_TIME, UPDATE_TIME
+        from SHOP_ORDER
+        <include refid="OrderUserWhere"/>
+        order by CREATE_TIME desc
+      ) t where ROWNUM &lt;= #{offset} + #{limit}
+    ) where rn &gt; #{offset}
+  </select>
+
+  <select id="queryByUserCount" resultType="java.lang.Integer">
+    select count(1) from SHOP_ORDER
+    <include refid="OrderUserWhere"/>
+  </select>
+
+  <select id="nextDailyOrderSeq" resultType="java.lang.Integer">
+    select nvl(max(to_number(substr(ORDER_NO, length(#{prefix}) + 1))), 0) + 1
+    from SHOP_ORDER
+    where ORDER_NO like #{prefix} || '%'
+  </select>
+
+</mapper>

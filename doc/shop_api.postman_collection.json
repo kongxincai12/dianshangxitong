@@ -1,0 +1,246 @@
+{
+  "info": {
+    "name": "简易电商 shop 接口测试",
+    "description": "电商模块 (product/category/cart/order) 接口测试集合。先执行 00-登录 自动获取 token, 其余接口自动携带。修改集合变量 baseUrl 即可切换环境。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:9900" },
+    { "key": "token", "value": "" },
+    { "key": "username", "value": "admin" },
+    { "key": "password", "value": "123456" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "00-登录 (获取token)",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var json = pm.response.json();",
+              "if (json && json.data && json.data.token) {",
+              "    pm.collectionVariables.set('token', json.data.token);",
+              "    console.log('token 已保存');",
+              "}",
+              "pm.test('登录成功', function () { pm.expect(json.code).to.eql(200); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "01-分类列表",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/shop/categories", "host": ["{{baseUrl}}"], "path": ["api", "shop", "categories"] }
+      }
+    },
+    {
+      "name": "02-新增分类",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/categories", "host": ["{{baseUrl}}"], "path": ["api", "shop", "categories"] },
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"电脑办公\",\n  \"sortNo\": 4\n}" }
+      }
+    },
+    {
+      "name": "03-商品分页查询",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/products?name=&categoryId=&status=1&pageNo=1&pageSize=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "products"],
+          "query": [
+            { "key": "name", "value": "" },
+            { "key": "categoryId", "value": "" },
+            { "key": "status", "value": "1" },
+            { "key": "pageNo", "value": "1" },
+            { "key": "pageSize", "value": "20" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "04-商品详情",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/shop/products/prd0000000000000000000000000001", "host": ["{{baseUrl}}"], "path": ["api", "shop", "products", "prd0000000000000000000000000001"] }
+      }
+    },
+    {
+      "name": "05-新增商品",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/products", "host": ["{{baseUrl}}"], "path": ["api", "shop", "products"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"机械键盘\",\n  \"categoryId\": \"cat0000000000000000000000000001\",\n  \"price\": 399.00,\n  \"stock\": 200,\n  \"description\": \"青轴 87键\",\n  \"status\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "06-商品上下架",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/products/prd0000000000000000000000000001/status?status=0",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "products", "prd0000000000000000000000000001", "status"],
+          "query": [{ "key": "status", "value": "0" }]
+        }
+      }
+    },
+    {
+      "name": "07-删除商品",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/api/shop/products/{id}", "host": ["{{baseUrl}}"], "path": ["api", "shop", "products", "{id}"], "variable": [{ "key": "id", "value": "" }] }
+      }
+    },
+    {
+      "name": "08-加入购物车",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/cart", "host": ["{{baseUrl}}"], "path": ["api", "shop", "cart"] },
+        "body": { "mode": "raw", "raw": "{\n  \"productId\": \"prd0000000000000000000000000001\",\n  \"quantity\": 2\n}" }
+      }
+    },
+    {
+      "name": "09-购物车列表",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/shop/cart", "host": ["{{baseUrl}}"], "path": ["api", "shop", "cart"] }
+      }
+    },
+    {
+      "name": "10-修改购物车数量",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/cart/{cartId}", "host": ["{{baseUrl}}"], "path": ["api", "shop", "cart", "{cartId}"], "variable": [{ "key": "cartId", "value": "" }] },
+        "body": { "mode": "raw", "raw": "{\n  \"quantity\": 5\n}" }
+      }
+    },
+    {
+      "name": "11-移除购物车条目",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/api/shop/cart/{cartId}", "host": ["{{baseUrl}}"], "path": ["api", "shop", "cart", "{cartId}"], "variable": [{ "key": "cartId", "value": "" }] }
+      }
+    },
+    {
+      "name": "12-清空购物车",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/api/shop/cart", "host": ["{{baseUrl}}"], "path": ["api", "shop", "cart"] }
+      }
+    },
+    {
+      "name": "13-结算下单(购物车)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/orders/checkout", "host": ["{{baseUrl}}"], "path": ["api", "shop", "orders", "checkout"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"receiverName\": \"张三\",\n  \"receiverPhone\": \"13800000000\",\n  \"receiverAddress\": \"北京市海淀区中关村1号\",\n  \"remark\": \"尽快发货\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var json = pm.response.json();",
+              "if (json && json.data && json.data.id) {",
+              "    pm.collectionVariables.set('lastOrderId', json.data.id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14-结算下单(指定明细)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/shop/orders/checkout", "host": ["{{baseUrl}}"], "path": ["api", "shop", "orders", "checkout"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"receiverName\": \"李四\",\n  \"receiverPhone\": \"13900000000\",\n  \"receiverAddress\": \"上海市浦东新区\",\n  \"items\": [\n    { \"productId\": \"prd0000000000000000000000000002\", \"quantity\": 1 },\n    { \"productId\": \"prd0000000000000000000000000004\", \"quantity\": 3 }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "15-支付订单",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/orders/{{lastOrderId}}/pay",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "orders", "{{lastOrderId}}", "pay"]
+        }
+      }
+    },
+    {
+      "name": "16-取消订单",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/orders/{{lastOrderId}}/cancel",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "orders", "{{lastOrderId}}", "cancel"]
+        }
+      }
+    },
+    {
+      "name": "17-订单详情",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/orders/{{lastOrderId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "orders", "{{lastOrderId}}"]
+        }
+      }
+    },
+    {
+      "name": "18-我的订单列表",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/shop/orders?status=&pageNo=1&pageSize=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shop", "orders"],
+          "query": [
+            { "key": "status", "value": "" },
+            { "key": "pageNo", "value": "1" },
+            { "key": "pageSize", "value": "20" }
+          ]
+        }
+      }
+    }
+  ]
+}

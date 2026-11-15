@@ -52,6 +52,11 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 这样，后续的Controller就可以通过 request.getAttribute("employeeId") 来获取
             request.setAttribute("current_employee_id", employeeId);
 
+            // 商城后台权限判定用: role 就是登录时写进去的 USERPROFILE.USERPOSITION,
+            // 老 Token 可能没有这个 claim, 取不到就留 null, 由 ShopAdminGuard 按非管理员处理
+            Object roleClaim = claims.get("role");
+            request.setAttribute("current_user_role", roleClaim == null ? null : String.valueOf(roleClaim));
+
 
         } catch (ExpiredJwtException e) {
             sendErrorResponse(response, 401, "认证失败：Token已过期");

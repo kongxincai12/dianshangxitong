@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简易电商接口测试台</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; margin: 0; background: #f4f6f9; color: #222; }
+    header { background: #1f2d3d; color: #fff; padding: 14px 20px; }
+    header h1 { font-size: 18px; margin: 0; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 16px; margin-bottom: 16px; }
+    .card h2 { font-size: 15px; margin: 0 0 10px; border-left: 4px solid #4a90e2; padding-left: 8px; }
+    label { font-size: 12px; color: #666; display: block; margin: 6px 0 2px; }
+    input, textarea, select { width: 100%; padding: 6px 8px; border: 1px solid #d5d9e0; border-radius: 5px; font-size: 13px; }
+    textarea { min-height: 90px; font-family: Consolas, monospace; resize: vertical; }
+    button { background: #4a90e2; color: #fff; border: none; border-radius: 5px; padding: 7px 12px; font-size: 13px; cursor: pointer; margin: 4px 6px 0 0; }
+    button:hover { background: #357ab8; }
+    button.gray { background: #7b8794; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .row > div { flex: 1; min-width: 140px; }
+    pre { background: #0f1c2e; color: #7ee787; padding: 10px; border-radius: 6px; font-size: 12px; overflow: auto; max-height: 320px; margin-top: 8px; }
+    .hint { font-size: 12px; color: #999; }
+    .full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+<header><h1>简易电商系统 · 接口测试台</h1></header>
+<div class="wrap">
+  <!-- 左列: 登录 + 商品/分类 -->
+  <div>
+    <div class="card">
+      <h2>基础配置 & 登录</h2>
+      <label>Base URL</label>
+      <input id="baseUrl" value="">
+      <div class="row">
+        <div><label>用户名</label><input id="username" value="admin"></div>
+        <div><label>密码</label><input id="password" type="password" value="123456"></div>
+      </div>
+      <label>Token (可手动粘贴，或点登录自动获取)</label>
+      <input id="token" placeholder="Bearer token">
+      <button onclick="doLogin()">00 登录获取Token</button>
+      <span class="hint">所有接口都会自动带上 Authorization: Bearer &lt;token&gt;</span>
+    </div>
+
+    <div class="card">
+      <h2>分类 / 商品</h2>
+      <button onclick="call('GET','/api/shop/categories')">01 分类列表</button>
+      <button onclick="call('POST','/api/shop/categories',body('catBody'))">02 新增分类</button>
+      <textarea id="catBody">{ "name": "电脑办公", "sortNo": 4 }</textarea>
+
+      <label>商品查询条件</label>
+      <div class="row">
+        <div><label>名称</label><input id="pName" value=""></div>
+        <div><label>分类ID</label><input id="pCat" value=""></div>
+        <div><label>状态</label>
+          <select id="pStatus"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select>
+        </div>
+      </div>
+      <button onclick="queryProducts()">03 商品分页查询</button>
+      <button onclick="call('GET','/api/shop/products/'+id('pDetailId'))">04 商品详情</button>
+      <input id="pDetailId" value="prd0000000000000000000000000001">
+
+      <label>新增/修改商品 Body</label>
+      <textarea id="prodBody">{ "name": "机械键盘", "categoryId": "cat0000000000000000000000000001", "price": 399.00, "stock": 200, "description": "青轴 87键", "status": 1 }</textarea>
+      <button onclick="call('POST','/api/shop/products',body('prodBody'))">05 保存商品</button>
+
+      <button onclick="call('POST','/api/shop/products/'+id('pStatusId')+'/status?status='+id('pStatusVal'))">06 上下架</button>
+      <input id="pStatusId" value="prd0000000000000000000000000001">
+      <input id="pStatusVal" value="0" title="0下架/1上架" style="width:120px">
+      <button class="gray" onclick="call('DELETE','/api/shop/products/'+id('pDelId'))">07 删除商品</button>
+      <input id="pDelId" value="">
+    </div>
+  </div>
+
+  <!-- 右列: 购物车 + 订单 -->
+  <div>
+    <div class="card">
+      <h2>购物车</h2>
+      <label>加入购物车 Body</label>
+      <textarea id="cartBody">{ "productId": "prd0000000000000000000000000001", "quantity": 2 }</textarea>
+      <button onclick="call('POST','/api/shop/cart',body('cartBody'))">08 加入购物车</button>
+      <button onclick="call('GET','/api/shop/cart')">09 购物车列表</button>
+
+      <label>修改数量 (cartId + 数量)</label>
+      <div class="row">
+        <div><input id="cartId" placeholder="cartId (从列表响应复制)"></div>
+        <div><input id="cartQty" value="5"></div>
+      </div>
+      <button onclick="call('PUT','/api/shop/cart/'+id('cartId'),'{\"quantity\":'+id('cartQty')+'}')">10 修改数量</button>
+      <button class="gray" onclick="call('DELETE','/api/shop/cart/'+id('cartId'))">11 移除条目</button>
+      <button class="gray" onclick="call('DELETE','/api/shop/cart')">12 清空购物车</button>
+    </div>
+
+    <div class="card">
+      <h2>订单</h2>
+      <label>结算(购物车) Body</label>
+      <textarea id="ckCart">{ "receiverName": "张三", "receiverPhone": "13800000000", "receiverAddress": "北京市海淀区中关村1号", "remark": "尽快发货" }</textarea>
+      <button onclick="checkout('ckCart')">13 结算下单(购物车)</button>
+
+      <label>结算(指定明细) Body</label>
+      <textarea id="ckItems">{ "receiverName": "李四", "receiverPhone": "13900000000", "receiverAddress": "上海市浦东新区", "items": [ { "productId": "prd0000000000000000000000000002", "quantity": 1 }, { "productId": "prd0000000000000000000000000004", "quantity": 3 } ] }</textarea>
+      <button onclick="checkout('ckItems')">14 结算下单(明细)</button>
+
+      <label>订单ID (默认取最近一次下单结果)</label>
+      <input id="orderId" value="">
+      <button onclick="call('POST','/api/shop/orders/'+id('orderId')+'/pay')">15 支付</button>
+      <button class="gray" onclick="call('POST','/api/shop/orders/'+id('orderId')+'/cancel')">16 取消</button>
+      <button onclick="call('GET','/api/shop/orders/'+id('orderId'))">17 详情</button>
+      <button onclick="call('GET','/api/shop/orders?pageNo=1&pageSize=20')">18 我的订单列表</button>
+    </div>
+  </div>
+
+  <div class="card full">
+    <h2>响应结果</h2>
+    <div class="hint" id="lastReq">-</div>
+    <pre id="output">等待请求...</pre>
+  </div>
+</div>
+
+<script>
+  const $ = (k) => document.getElementById(k).value.trim();
+  const id = (k) => encodeURIComponent($(k));
+  const body = (k) => $(k);
+
+  function fmt(obj) { return JSON.stringify(obj, null, 2); }
+
+  async function request(method, path, data) {
+    const base = $('baseUrl');
+    const url = base + path;
+    const headers = { 'Content-Type': 'application/json' };
+    const token = $('token');
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    document.getElementById('lastReq').textContent = method + ' ' + url;
+    const opt = { method, headers };
+    if (data) opt.body = data;
+    const resp = await fetch(url, opt);
+    const text = await resp.text();
+    let parsed;
+    try { parsed = JSON.parse(text); } catch (e) { parsed = text; }
+    document.getElementById('output').textContent =
+      'HTTP ' + resp.status + '\n\n' + (typeof parsed === 'string' ? parsed : fmt(parsed));
+    return parsed;
+  }
+
+  async function call(method, path, data) {
+    try { return await request(method, path, data); }
+    catch (e) { document.getElementById('output').textContent = '请求失败: ' + e.message; }
+  }
+
+  async function doLogin() {
+    const b = $('baseUrl');
+    const url = b + '/api/auth/login';
+    document.getElementById('lastReq').textContent = 'POST ' + url;
+    try {
+      const resp = await fetch(url, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: $('username'), password: $('password') })
+      });
+      const j = await resp.json();
+      document.getElementById('output').textContent = 'HTTP ' + resp.status + '\n\n' + fmt(j);
+      if (j && j.data && j.data.token) {
+        $('token') || document.getElementById('token').value = j.data.token;
+        document.getElementById('token').value = j.data.token;
+        alert('登录成功，Token 已自动填入');
+      } else {
+        alert('登录未返回 token，请检查账号密码');
+      }
+    } catch (e) { document.getElementById('output').textContent = '登录失败: ' + e.message; }
+  }
+
+  async function queryProducts() {
+    let p = '/api/shop/products?pageNo=1&pageSize=20';
+    if ($('pName')) p += '&name=' + encodeURIComponent($('pName'));
+    if ($('pCat')) p += '&categoryId=' + encodeURIComponent($('pCat'));
+    if ($('pStatus')) p += '&status=' + $('pStatus');
+    await call('GET', p);
+  }
+
+  async function checkout(bodyKey) {
+    const j = await call('POST', '/api/shop/orders/checkout', body(bodyKey));
+    if (j && j.data && j.data.id) document.getElementById('orderId').value = j.data.id;
+  }
+
+  // 默认 Base URL = 当前站点
+  window.addEventListener('load', () => {
+    document.getElementById('baseUrl').value = window.location.origin;
+  });
+</script>
+</body>
+</html>

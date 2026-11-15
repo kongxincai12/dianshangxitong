@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简易商城 · Vue3</title>
+  <style>
+    * { box-sizing: border-box; }
+    [v-cloak] { display: none; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f4f6f9; color: #222; }
+    .boot-error { display: none; margin: 40px auto; max-width: 640px; padding: 16px; background: #fff2f0; border: 1px solid #ffccc7; border-radius: 8px; color: #cf1322; }
+    .topbar { display: flex; align-items: center; gap: 20px; background: #1f2d3d; color: #fff; padding: 0 20px; height: 56px; position: sticky; top: 0; z-index: 20; }
+    .brand { font-size: 17px; font-weight: 600; }
+    .brand .sub { font-size: 12px; font-weight: 400; opacity: .6; margin-left: 6px; }
+    .tabs { display: flex; gap: 4px; flex: 1; }
+    .tabs a { color: #cdd6e0; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .tabs a:hover { background: rgba(255,255,255,.1); }
+    .tabs a.active { background: #4a90e2; color: #fff; }
+    .badge { background: #ff4d4f; color: #fff; border-radius: 10px; font-size: 11px; padding: 1px 6px; margin-left: 4px; }
+    .user { font-size: 13px; display: flex; align-items: center; gap: 10px; }
+    .wrap { max-width: 1160px; margin: 18px auto; padding: 0 16px; }
+    .card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); padding: 16px; margin-bottom: 16px; }
+    .card h2 { font-size: 15px; margin: 0 0 12px; border-left: 4px solid #4a90e2; padding-left: 8px; }
+    .cols { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; }
+    @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } .grid { grid-template-columns: repeat(2, 1fr) !important; } }
+    label { display: block; font-size: 12px; color: #666; margin: 8px 0 3px; }
+    input, select, textarea { width: 100%; padding: 7px 9px; border: 1px solid #d5d9e0; border-radius: 6px; font-size: 13px; font-family: inherit; background: #fff; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #4a90e2; }
+    .form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+    .form .span2 { grid-column: 1 / -1; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+    .filters > div { min-width: 150px; flex: 1; }
+    .filters .btns { flex: 0 0 auto; display: flex; gap: 8px; }
+    .inline { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .login-card { max-width: 360px; margin: 60px auto; }
+    .block { width: 100%; margin-top: 14px; }
+    button { border: none; border-radius: 6px; padding: 8px 14px; font-size: 13px; cursor: pointer; background: #eef1f5; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    button.pri { background: #4a90e2; color: #fff; }
+    button.pri:hover:not(:disabled) { background: #357ab8; }
+    button.ghost { background: #fff; border: 1px solid #d5d9e0; }
+    button.sm { padding: 5px 10px; font-size: 12px; }
+    button.link { background: none; color: #4a90e2; padding: 0 6px; font-size: 12px; }
+    button.link.danger { color: #ff4d4f; }
+    button:hover.link { text-decoration: underline; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 4px; }
+    .p-card { background: #fff; border: 1px solid #eef1f5; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .p-img { height: 150px; background: #f7f9fc; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; }
+    .p-img img { width: 100%; height: 100%; object-fit: cover; }
+    .p-img .ph { font-size: 42px; opacity: .35; }
+    .p-img .off { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 4px; }
+    .p-body { padding: 10px 12px 12px; }
+    .p-name { font-size: 14px; font-weight: 600; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .p-name:hover { color: #4a90e2; }
+    .p-cat { font-size: 12px; color: #999; margin: 3px 0 8px; }
+    .p-price { color: #ff4d4f; font-size: 17px; font-weight: 700; }
+    .p-stock { float: right; color: #999; font-size: 12px; font-weight: 400; }
+    .p-acts { margin-top: 10px; display: flex; gap: 8px; }
+    .p-acts .pri { flex: 1; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid #eef1f5; text-align: left; vertical-align: middle; }
+    th { background: #f7f9fc; color: #555; font-weight: 600; white-space: nowrap; }
+    .w70 { width: 70px; } .w90 { width: 90px; } .w100 { width: 100px; } .w140 { width: 140px; } .w220 { width: 220px; } .w260 { width: 260px; }
+    .cart-name { font-weight: 600; }
+    .qty { display: flex; align-items: center; gap: 6px; }
+    .qty input { width: 56px; text-align: center; padding: 4px; }
+    .list { list-style: none; padding: 0; margin: 10px 0 0; font-size: 13px; }
+    .list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #eef1f5; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; background: #eef1f5; }
+    .tag.st-PENDING, .tag.st-OFF { background: #fff7e6; color: #d46b08; }
+    .tag.st-PAID, .tag.st-ON { background: #f6ffed; color: #389e0d; }
+    .tag.st-CANCELLED { background: #f5f5f5; color: #999; }
+    .pager { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 16px 0 4px; font-size: 13px; color: #666; }
+    .cart-foot { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+    .cart-foot .sum { margin-left: auto; font-size: 14px; }
+    .cart-foot .sum b { color: #ff4d4f; font-size: 19px; }
+    .empty { text-align: center; color: #999; padding: 26px 0; font-size: 13px; }
+    .loading { text-align: center; color: #4a90e2; padding: 14px; }
+    .tip { font-size: 12px; color: #999; }
+    .mono { font-family: Consolas, monospace; }
+    .a { color: #4a90e2; cursor: pointer; text-decoration: underline; }
+    .mask { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+    .dialog { background: #fff; border-radius: 12px; padding: 20px; width: 560px; max-width: 100%; max-height: 88vh; overflow: auto; }
+    .dialog.wide { width: 760px; }
+    .dialog h2 { margin: 0 0 14px; font-size: 16px; border-left: 4px solid #4a90e2; padding-left: 8px; }
+    .d-row { display: flex; gap: 16px; }
+    .d-img { width: 190px; height: 190px; background: #f7f9fc; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+    .d-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .d-img .ph { font-size: 48px; opacity: .35; }
+    .d-info { flex: 1; font-size: 13px; }
+    .d-info > div { padding: 4px 0; }
+    .d-info .tip { display: inline-block; width: 52px; }
+    .price { color: #ff4d4f; font-size: 20px; }
+    .desc { margin-top: 14px; padding: 12px; background: #f7f9fc; border-radius: 8px; font-size: 13px; color: #555; min-height: 44px; }
+    .d-foot { text-align: right; margin-top: 16px; }
+    .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; font-size: 13px; margin-bottom: 8px; }
+    .kv .tip { display: inline-block; width: 70px; }
+    .qr { text-align: center; padding: 10px 0 4px; }
+    .qr img { width: 220px; height: 220px; border: 1px solid #e3e6ea; border-radius: 8px; }
+    .qr .mono { word-break: break-all; margin-top: 6px; }
+    .toast { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); background: rgba(0,0,0,.8); color: #fff; padding: 10px 18px; border-radius: 20px; font-size: 13px; z-index: 100; }
+    .toast.err { background: #d4380d; }
+  </style>
+</head>
+<body>
+
+<div id="boot-error" class="boot-error">
+  Vue 3 运行库加载失败。厂区无外网时，请把 <code>vue.global.prod.js</code> 放到
+  <code>src/main/resources/static/lib/vue.global.prod.js</code> 后重启并刷新页面。
+</div>
+
+<div id="app" v-cloak>
+  <header class="topbar">
+    <div class="brand">🛒 简易商城 <span class="sub">Vue3 + Spring Boot</span></div>
+    <nav class="tabs" v-if="authed">
+      <a :class="{ active: tab === 'goods' }" @click="switchTab('goods')">商品</a>
+      <a :class="{ active: tab === 'cart' }" @click="switchTab('cart')">购物车<span class="badge" v-if="cartCount > 0">{{ cartCount }}</span></a>
+      <a :class="{ active: tab === 'orders' }" @click="switchTab('orders')">我的订单</a>
+      <a :class="{ active: tab === 'admin' }" v-if="isAdmin" @click="switchTab('admin')">后台管理</a>
+    </nav>
+    <div class="user" v-if="authed"><span>{{ user.fullname || user.username }}</span><span class="tip" v-if="isAdmin">（管理员）</span><button class="link" @click="logout">退出</button></div>
+  </header>
+
+  <!-- 登录 -->
+  <section class="wrap" v-if="!authed">
+    <div class="card login-card">
+      <h2>登录</h2>
+      <p class="tip">商城接口需要 JWT，账号来自 MES 用户表（Userprofile）。</p>
+      <label>用户名</label><input v-model.trim="loginForm.username" placeholder="MES 登录账号" @keyup.enter="doLogin">
+      <label>密码</label><input v-model.trim="loginForm.password" type="password" @keyup.enter="doLogin">
+      <button class="pri block" :disabled="loginLoading" @click="doLogin">{{ loginLoading ? '登录中...' : '登录' }}</button>
+    </div>
+  </section>
+
+  <main class="wrap" v-else>
+    <!-- 商品 -->
+    <section v-show="tab === 'goods'">
+      <div class="card">
+        <div class="filters">
+          <div><label>商品名称</label><input v-model.trim="goods.name" @keyup.enter="loadGoods(1)"></div>
+          <div><label>分类</label>
+            <select v-model="goods.categoryId"><option value="">全部分类</option>
+              <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select>
+          </div>
+          <div class="btns"><button class="pri" @click="loadGoods(1)">查询</button><button class="ghost" @click="resetGoods">重置</button></div>
+        </div>
+      </div>
+      <div v-if="goods.loading" class="loading">加载中...</div>
+      <div class="grid">
+        <div class="p-card" v-for="p in goods.list" :key="p.id">
+          <div class="p-img" @click="openDetail(p)">
+            <img v-if="p.imageUrl" :src="p.imageUrl" :alt="p.name"><span v-else class="ph">📦</span>
+            <span class="off" v-if="p.status === 0">已下架</span>
+          </div>
+          <div class="p-body">
+            <div class="p-name" @click="openDetail(p)">{{ p.name }}</div>
+            <div class="p-cat">{{ p.categoryName || '未分类' }}</div>
+            <div class="p-price">¥{{ money(p.price) }}<span class="p-stock">库存 {{ p.stock }}</span></div>
+            <div class="p-acts">
+              <button class="pri sm" :disabled="p.status === 0" @click="quickAdd(p)">加入购物车</button>
+              <button class="ghost sm" @click="openDetail(p)">详情</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="!goods.loading && goods.list.length === 0" class="empty">暂无上架商品</div>
+      <div class="pager" v-if="goods.total > 0">
+        <button class="ghost sm" :disabled="goods.pageNo <= 1" @click="loadGoods(goods.pageNo - 1)">上一页</button>
+        <span>{{ goods.pageNo }} / {{ pageCount(goods.total, goods.pageSize) }}　共 {{ goods.total }} 条</span>
+        <button class="ghost sm" :disabled="goods.pageNo >= pageCount(goods.total, goods.pageSize)" @click="loadGoods(goods.pageNo + 1)">下一页</button>
+      </div>
+    </section>
+
+    <!-- 购物车 -->
+    <section v-show="tab === 'cart'">
+      <div class="card">
+        <h2>购物车</h2>
+        <table v-if="cart.length">
+          <thead><tr><th>商品</th><th class="w100">单价</th><th class="w140">数量</th><th class="w100">小计</th><th class="w100">操作</th></tr></thead>
+          <tbody>
+            <tr v-for="it in cart" :key="it.id">
+              <td><div class="cart-name">{{ it.productName }}</div><div class="tip" v-if="it.status === 0">该商品已下架</div></td>
+              <td>¥{{ money(it.price) }}</td>
+              <td><div class="qty">
+                <button class="ghost sm" @click="updateCartQty(it, it.quantity - 1)">-</button>
+                <input type="number" min="1" :value="it.quantity" @change="onQtyInput(it, $event)">
+                <button class="ghost sm" @click="updateCartQty(it, it.quantity + 1)">+</button>
+              </div></td>
+              <td>¥{{ money(it.price * it.quantity) }}</td>
+              <td><button class="link danger" @click="removeCartItem(it)">删除</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-else class="empty">购物车是空的，先去<a class="a" @click="switchTab('goods')">商品页</a>加购吧</div>
+        <div class="cart-foot" v-if="cart.length">
+          <button class="ghost" @click="clearCart">清空购物车</button>
+          <div class="sum">合计：<b>¥{{ money(cartAmount) }}</b></div>
+          <button class="pri" @click="gotoCheckout">去结算</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结算 -->
+    <section v-show="tab === 'checkout'">
+      <div class="card">
+        <h2>确认订单</h2>
+        <div class="form">
+          <div><label>收货人 *</label><input v-model.trim="checkoutForm.receiverName"></div>
+          <div><label>手机号 *</label><input v-model.trim="checkoutForm.receiverPhone"></div>
+          <div class="span2"><label>收货地址 *</label><input v-model.trim="checkoutForm.receiverAddress"></div>
+          <div class="span2"><label>备注</label><textarea v-model.trim="checkoutForm.remark" rows="2"></textarea></div>
+        </div>
+        <div class="tip">将结算购物车全部 {{ cartCount }} 件商品，金额 ¥{{ money(cartAmount) }}。下单后清空对应购物车条目并扣减库存。</div>
+        <div class="cart-foot">
+          <button class="ghost" @click="switchTab('cart')">返回购物车</button>
+          <button class="pri" :disabled="submitting || cart.length === 0" @click="doCheckout">{{ submitting ? '提交中...' : '提交订单' }}</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 订单 -->
+    <section v-show="tab === 'orders'">
+      <div class="card">
+        <div class="filters">
+          <div><label>订单状态</label>
+            <select v-model="orders.status" @change="loadOrders(1)">
+              <option value="">全部</option><option value="PENDING">待支付</option>
+              <option value="PAID">已支付</option><option value="CANCELLED">已取消</option>
+            </select>
+          </div>
+          <div class="btns"><button class="pri" @click="loadOrders(1)">刷新</button></div>
+        </div>
+        <table v-if="orders.list.length">
+          <thead><tr><th>订单号</th><th class="w100">金额</th><th class="w100">状态</th><th>下单时间</th><th class="w260">操作</th></tr></thead>
+          <tbody>
+            <tr v-for="o in orders.list" :key="o.id">
+              <td>{{ o.orderNo }}</td>
+              <td>¥{{ money(o.totalAmount) }}</td>
+              <td><span class="tag" :class="'st-' + o.status">{{ statusText(o.status) }}</span></td>
+              <td>{{ fmtDate(o.createTime) }}</td>
+              <td>
+                <button class="link" @click="openOrder(o.id)">详情</button>
+                <button class="link" v-if="o.status === 'PENDING'" @click="alipayPay(o)">去支付</button>
+                <button class="link" v-if="o.status === 'PENDING'" @click="payOrder(o)">模拟支付</button>
+                <button class="link danger" v-if="o.status === 'PENDING'" @click="cancelOrder(o)">取消</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-else class="empty">还没有订单</div>
+        <div class="pager" v-if="orders.total > 0">
+          <button class="ghost sm" :disabled="orders.pageNo <= 1" @click="loadOrders(orders.pageNo - 1)">上一页</button>
+          <span>{{ orders.pageNo }} / {{ pageCount(orders.total, orders.pageSize) }}　共 {{ orders.total }} 条</span>
+          <button class="ghost sm" :disabled="orders.pageNo >= pageCount(orders.total, orders.pageSize)" @click="loadOrders(orders.pageNo + 1)">下一页</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 后台管理：只由后端返回的身份决定能否渲染，前端改 tab 也进不来 -->
+    <section v-if="tab === 'admin' && isAdmin">
+      <div class="cols">
+        <div class="card">
+          <h2>分类</h2>
+          <div class="inline">
+            <input v-model.trim="catForm.name" placeholder="分类名称">
+            <input v-model.number="catForm.sortNo" type="number" style="width:80px" placeholder="排序">
+            <button class="pri sm" @click="addCategory">新增</button>
+          </div>
+          <ul class="list"><li v-for="c in categories" :key="c.id"><span>{{ c.sortNo }}. {{ c.name }}</span><span class="tip mono">{{ c.id }}</span></li></ul>
+        </div>
+        <div class="card">
+          <h2>{{ prodForm.id ? '修改商品' : '新增商品' }}</h2>
+          <div class="form">
+            <div><label>名称 *</label><input v-model.trim="prodForm.name"></div>
+            <div><label>分类</label><select v-model="prodForm.categoryId"><option value="">未分类</option>
+              <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select></div>
+            <div><label>价格 *</label><input v-model.number="prodForm.price" type="number" step="0.01" min="0"></div>
+            <div><label>库存 *</label><input v-model.number="prodForm.stock" type="number" min="0"></div>
+            <div><label>状态</label><select v-model.number="prodForm.status"><option :value="1">上架</option><option :value="0">下架</option></select></div>
+            <div><label>图片URL</label><input v-model.trim="prodForm.imageUrl"></div>
+            <div class="span2"><label>描述</label><textarea v-model.trim="prodForm.description" rows="2"></textarea></div>
+          </div>
+          <div class="inline">
+            <button class="pri sm" @click="saveProduct">{{ prodForm.id ? '保存修改' : '创建商品' }}</button>
+            <button class="ghost sm" @click="resetProdForm">清空</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="filters">
+          <div><label>名称</label><input v-model.trim="adminQuery.name" @keyup.enter="loadAdminProducts(1)"></div>
+          <div><label>状态</label><select v-model="adminQuery.status"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>
+          <div class="btns"><button class="pri" @click="loadAdminProducts(1)">查询</button></div>
+        </div>
+        <table v-if="adminProducts.length">
+          <thead><tr><th>名称</th><th class="w90">价格</th><th class="w90">库存</th><th class="w90">状态</th><th class="w220">操作</th></tr></thead>
+          <tbody>
+            <tr v-for="p in adminProducts" :key="p.id">
+              <td>{{ p.name }}<div class="tip mono">{{ p.id }}</div></td>
+              <td>¥{{ money(p.price) }}</td><td>{{ p.stock }}</td>
+              <td><span class="tag" :class="p.status === 1 ? 'st-ON' : 'st-OFF'">{{ p.status === 1 ? '上架' : '下架' }}</span></td>
+              <td>
+                <button class="link" @click="editProduct(p)">编辑</button>
+                <button class="link" @click="toggleProductStatus(p)">{{ p.status === 1 ? '下架' : '上架' }}</button>
+                <button class="link danger" @click="removeProduct(p)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-else class="empty">没有商品，先去右边新增一个</div>
+        <div class="pager" v-if="adminTotal > 0">
+          <button class="ghost sm" :disabled="adminQuery.pageNo <= 1" @click="loadAdminProducts(adminQuery.pageNo - 1)">上一页</button>
+          <span>{{ adminQuery.pageNo }} / {{ pageCount(adminTotal, adminQuery.pageSize) }}　共 {{ adminTotal }} 条</span>
+          <button class="ghost sm" :disabled="adminQuery.pageNo >= pageCount(adminTotal, adminQuery.pageSize)" @click="loadAdminProducts(adminQuery.pageNo + 1)">下一页</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 商品详情 -->
+  <div class="mask" v-if="detail.visible" @click.self="detail.visible = false">
+    <div class="dialog">
+      <h2>{{ detail.product.name }}</h2>
+      <div class="d-row">
+        <div class="d-img"><img v-if="detail.product.imageUrl" :src="detail.product.imageUrl"><span v-else class="ph">📦</span></div>
+        <div class="d-info">
+          <div><span class="tip">分类</span>{{ detail.product.categoryName || '未分类' }}</div>
+          <div><span class="tip">价格</span><b class="price">¥{{ money(detail.product.price) }}</b></div>
+          <div><span class="tip">库存</span>{{ detail.product.stock }}</div>
+          <div><span class="tip">状态</span>{{ detail.product.status === 1 ? '上架' : '下架' }}</div>
+          <div class="inline">
+            <label class="tip">数量</label>
+            <input type="number" min="1" v-model.number="detail.quantity" style="width:70px">
+            <button class="pri sm" :disabled="detail.product.status === 0" @click="addCartFromDetail">加入购物车</button>
+          </div>
+        </div>
+      </div>
+      <p class="desc">{{ detail.product.description || '暂无描述' }}</p>
+      <div class="d-foot"><button class="ghost" @click="detail.visible = false">关闭</button></div>
+    </div>
+  </div>
+
+  <!-- 订单详情 -->
+  <div class="mask" v-if="orderPage.visible" @click.self="orderPage.visible = false">
+    <div class="dialog wide">
+      <h2>订单 {{ orderPage.data ? orderPage.data.orderNo : '' }}</h2>
+      <div v-if="orderPage.loading" class="loading">加载中...</div>
+      <template v-else-if="orderPage.data">
+        <div class="kv">
+          <div><span class="tip">状态</span><span class="tag" :class="'st-' + orderPage.data.status">{{ statusText(orderPage.data.status) }}</span></div>
+          <div><span class="tip">金额</span><b class="price">¥{{ money(orderPage.data.totalAmount) }}</b></div>
+          <div><span class="tip">收货人</span>{{ orderPage.data.receiverName }} {{ orderPage.data.receiverPhone }}</div>
+          <div><span class="tip">地址</span>{{ orderPage.data.receiverAddress }}</div>
+          <div><span class="tip">下单时间</span>{{ fmtDate(orderPage.data.createTime) }}</div>
+          <div><span class="tip">支付时间</span>{{ fmtDate(orderPage.data.payTime) }}</div>
+        </div>
+        <table>
+          <thead><tr><th>商品</th><th class="w90">单价</th><th class="w90">数量</th><th class="w90">小计</th></tr></thead>
+          <tbody><tr v-for="it in (orderPage.data.items || [])" :key="it.id">
+            <td>{{ it.productName }}</td><td>¥{{ money(it.price) }}</td><td>{{ it.quantity }}</td><td>¥{{ money(it.subtotal) }}</td>
+          </tr></tbody>
+        </table>
+        <div class="tip" v-if="orderPage.data.remark">备注：{{ orderPage.data.remark }}</div>
+      </template>
+      <div class="d-foot">
+        <button class="ghost" @click="orderPage.visible = false">关闭</button>
+        <button class="pri" v-if="orderPage.data && orderPage.data.status === 'PENDING'" @click="alipayPay(orderPage.data)">去支付</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支付宝支付 -->
+  <div class="mask" v-if="pay.visible" @click.self="closePay">
+    <div class="dialog">
+      <h2>支付宝收款</h2>
+      <div v-if="pay.loading" class="loading">正在向支付宝下单...</div>
+      <template v-else-if="pay.info">
+        <div class="kv">
+          <div><span class="tip">订单号</span>{{ pay.orderNo }}</div>
+          <div><span class="tip">应付</span><b class="price">¥{{ money(pay.info.totalAmount) }}</b></div>
+          <div><span class="tip">方式</span>{{ pay.info.payType === 'QR' ? '扫码支付' : '手机网页支付' }}</div>
+          <div><span class="tip">结果</span><span class="tag" :class="'st-' + pay.orderStatus">{{ payResultText }}</span></div>
+        </div>
+        <div class="qr" v-if="pay.info.payType === 'QR'">
+          <img v-if="!pay.qrFailed" :src="pay.qrSrc" alt="支付宝支付二维码" @error="pay.qrFailed = true">
+          <div v-else class="tip">二维码图片加载不出来（本机无外网），请用支付宝扫下面的链接</div>
+          <div class="tip mono">{{ pay.info.payUrl }}</div>
+        </div>
+        <div class="tip" v-else>已在新窗口打开支付宝收银台，请在支付宝侧完成付款。</div>
+        <div class="inline">
+          <button class="pri sm" @click="openAlipayPage">打开收银台</button>
+          <button class="ghost sm" @click="refreshPayResult">我已完成支付，刷新结果</button>
+        </div>
+        <div class="tip">支付成功后支付宝回调 <span class="mono">/api/alipay/notify</span> 把订单置为已支付；若回调地址不可达，本弹窗会定期主动向支付宝查单兜底。</div>
+      </template>
+      <div class="d-foot"><button class="ghost" @click="closePay">关闭</button></div>
+    </div>
+  </div>
+
+  <div class="toast" :class="{ err: toast.err }" v-if="toast.show">{{ toast.msg }}</div>
+</div>
+
+<script>
+/* ---------- HTTP 封装：自动带 JWT，统一解析 Result{code,message,data} ---------- */
+var TOKEN_KEY = 'shop_jwt', USER_KEY = 'shop_user';
+function ApiError(code, message) { this.code = code; this.message = message; }
+ApiError.prototype = Object.create(Error.prototype);
+var http = {
+  base: '',
+  get token() { return localStorage.getItem(TOKEN_KEY) || ''; },
+  get user() { try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch (e) { return null; } },
+  saveAuth: function (t, u) { localStorage.setItem(TOKEN_KEY, t || ''); localStorage.setItem(USER_KEY, JSON.stringify(u || {})); },
+  clearAuth: function () { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); },
+  request: async function (method, path, body) {
+    var headers = { 'Content-Type': 'application/json' };
+    if (http.token) headers['Authorization'] = 'Bearer ' + http.token;
+    var resp;
+    try {
+      resp = await fetch(http.base + path, {
+        method: method, headers: headers,
+        body: (body === undefined || body === null) ? undefined : JSON.stringify(body)
+      });
+    } catch (e) { throw new ApiError(-1, '网络异常：' + e.message); }
+    var text = await resp.text(), json = null;
+    try { json = text ? JSON.parse(text) : null; }
+    catch (e) { throw new ApiError(resp.status, 'HTTP ' + resp.status + ' 返回非 JSON：' + text.slice(0, 120)); }
+    if (resp.status === 401) throw new ApiError(401, (json && json.message) || '未登录或 Token 失效');
+    if (json && json.code !== 200) throw new ApiError(json.code, json.message || ('请求失败 code=' + json.code));
+    return json ? json.data : null;
+  }
+};
+['get', 'post', 'put', 'delete'].forEach(function (m) {
+  var M = m.toUpperCase();
+  http[m] = function (p, b) { return http.request(M, p, b); };
+});
+
+/* ---------- Vue 3 加载：本地 -> unpkg -> jsdelivr -> cdnjs ---------- */
+(function () {
+  var sources = [
+    './lib/vue.global.prod.js',
+    'https://unpkg.com/vue@3/dist/vue.global.prod.js',
+    'https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js'
+  ];
+  function next(i) {
+    if (i >= sources.length) { document.getElementById('boot-error').style.display = 'block'; return; }
+    var s = document.createElement('script');
+    s.src = sources[i];
+    s.onload = function () { document.getElementById('boot-error').style.display = 'none'; boot(); };
+    s.onerror = function () { next(i + 1); };
+    document.head.appendChild(s);
+  }
+  next(0);
+})();
+
+function boot() {
+  var { ref, reactive, computed, watch } = Vue;
+
+  Vue.createApp({
+    setup: function () {
+      /* 提示 */
+      var toast = reactive({ show: false, msg: '', err: false }), tTimer = null;
+      function notify(msg, isErr) {
+        toast.msg = msg; toast.show = true; toast.err = !!isErr;
+        clearTimeout(tTimer); tTimer = setTimeout(function () { toast.show = false; }, 2600);
+      }
+      /* 非登录接口的 401 才代表 token 失效；登录接口的 401 是账号密码错误，必须原样提示 */
+      function fail(e) {
+        if (e && e.code === 401 && http.token) {
+          http.clearAuth(); authed.value = false; user.value = {};
+          notify('登录已过期，请重新登录', true); return;
+        }
+        notify((e && e.message) || '操作失败', true);
+      }
+
+      /* 格式化 */
+      function money(v) { return (Number(v) || 0).toFixed(2); }
+      function fmtDate(v) {
+        if (!v) return '-';
+        if (typeof v === 'number') return new Date(v).toLocaleString('zh-CN', { hour12: false });
+        return String(v).replace('T', ' ').replace(/\.\d+/, '').replace(/\+08:00$/, '');
+      }
+      function statusText(s) {
+        return s === 'PAID' ? '已支付' : s === 'CANCELLED' ? '已取消' : s === 'PENDING' ? '待支付' : (s || '-');
+      }
+      function pageCount(total, size) { return Math.max(1, Math.ceil((total || 0) / (size || 1))); }
+
+      /* 登录 */
+      var authed = ref(!!http.token), user = ref(http.user || {});
+      var loginForm = reactive({ username: '', password: '' }), loginLoading = ref(false);
+      var tab = ref('goods');
+      /* 是否商城管理员，完全由后端 /api/shop/profile 判定，前端不自己维护规则 */
+      var isAdmin = ref(false);
+
+      async function doLogin() {
+        if (!loginForm.username || !loginForm.password) { notify('请输入用户名和密码', true); return; }
+        loginLoading.value = true;
+        try {
+          var data = await http.post('/api/auth/login', { username: loginForm.username, password: loginForm.password });
+          http.saveAuth(data.token, data.user);
+          user.value = data.user || {}; authed.value = true; loginForm.password = '';
+          notify('登录成功'); enterApp();
+        } catch (e) {
+          // 登录失败直接把后端 message 显示出来（如“登录失败！账号或密码错误！”），不要伪装成 token 过期
+          notify((e && e.message) || '登录失败', true);
+        } finally { loginLoading.value = false; }
+      }
+      function logout() {
+        http.clearAuth(); authed.value = false; user.value = {}; cart.value = [];
+        isAdmin.value = false; tab.value = 'goods';
+        notify('已退出登录');
+      }
+
+      /* 当前身份 */
+      async function loadProfile() {
+        try {
+          var d = await http.get('/api/shop/profile');
+          isAdmin.value = !!(d && d.admin);
+        } catch (e) {
+          // 拿不到身份就按买家处理，不显示后台入口
+          isAdmin.value = false;
+          // 后端还没有 /api/shop/profile 这个接口时也会走到这里，给个提示，避免管理员以为菜单“莫名消失”
+          if (e && e.code !== 401) notify('无法确认管理员身份，后台入口已隐藏（请确认后端已更新重启）', true);
+        }
+      }
+
+      /* 分类 */
+      var categories = ref([]);
+      async function loadCategories() {
+        try { categories.value = (await http.get('/api/shop/categories')) || []; } catch (e) { fail(e); }
+      }
+
+      /* 商品 */
+      var goods = reactive({ name: '', categoryId: '', pageNo: 1, pageSize: 12, total: 0, list: [], loading: false });
+      async function loadGoods(pageNo) {
+        goods.loading = true; goods.pageNo = pageNo || goods.pageNo;
+        try {
+          var q = '?pageNo=' + goods.pageNo + '&pageSize=' + goods.pageSize + '&status=1';
+          if (goods.name) q += '&name=' + encodeURIComponent(goods.name);
+          if (goods.categoryId) q += '&categoryId=' + encodeURIComponent(goods.categoryId);
+          var d = await http.get('/api/shop/products' + q);
+          goods.list = d.list || []; goods.total = d.total || 0;
+        } catch (e) { fail(e); } finally { goods.loading = false; }
+      }
+      function resetGoods() { goods.name = ''; goods.categoryId = ''; loadGoods(1); }
+      var detail = reactive({ visible: false, product: {}, quantity: 1 });
+      function openDetail(p) { detail.product = p; detail.quantity = 1; detail.visible = true; }
+
+      /* 购物车 */
+      var cart = ref([]);
+      var cartCount = computed(function () { return cart.value.reduce(function (s, i) { return s + (i.quantity || 0); }, 0); });
+      var cartAmount = computed(function () {
+        return cart.value.reduce(function (s, i) { return s + Number(i.price || 0) * (i.quantity || 0); }, 0);
+      });
+      async function loadCart() {
+        try { cart.value = (await http.get('/api/shop/cart')) || []; } catch (e) { fail(e); }
+      }
+      async function addCart(productId, qty) {
+        try {
+          await http.post('/api/shop/cart', { productId: productId, quantity: qty });
+          notify('已加入购物车'); await loadCart();
+        } catch (e) { fail(e); }
+      }
+      function quickAdd(p) { addCart(p.id, 1); }
+      function addCartFromDetail() { addCart(detail.product.id, detail.quantity || 1); detail.visible = false; }
+      async function updateCartQty(it, qty) {
+        if (qty < 1) { notify('数量必须大于 0', true); return; }
+        try { await http.put('/api/shop/cart/' + it.id, { quantity: qty }); await loadCart(); } catch (e) { fail(e); }
+      }
+      function onQtyInput(it, ev) { updateCartQty(it, parseInt(ev.target.value, 10) || 1); }
+      async function removeCartItem(it) {
+        try { await http.delete('/api/shop/cart/' + it.id); notify('已移除'); await loadCart(); } catch (e) { fail(e); }
+      }
+      async function clearCart() {
+        try { await http.delete('/api/shop/cart'); notify('购物车已清空'); await loadCart(); } catch (e) { fail(e); }
+      }
+
+      /* 结算 / 订单 */
+      var checkoutForm = reactive({ receiverName: '', receiverPhone: '', receiverAddress: '', remark: '' });
+      var submitting = ref(false);
+      function gotoCheckout() {
+        if (!cart.value.length) { notify('购物车为空', true); return; }
+        tab.value = 'checkout';
+      }
+      async function doCheckout() {
+        if (!checkoutForm.receiverName || !checkoutForm.receiverPhone || !checkoutForm.receiverAddress) {
+          notify('收货人、手机号、地址为必填', true); return;
+        }
+        submitting.value = true;
+        try {
+          var order = await http.post('/api/shop/orders/checkout', {
+            receiverName: checkoutForm.receiverName, receiverPhone: checkoutForm.receiverPhone,
+            receiverAddress: checkoutForm.receiverAddress, remark: checkoutForm.remark || null
+          });
+          notify('下单成功：' + order.orderNo);
+          await loadCart(); await loadOrders(1); tab.value = 'orders'; openOrder(order.id);
+        } catch (e) { fail(e); } finally { submitting.value = false; }
+      }
+      var orders = reactive({ status: '', pageNo: 1, pageSize: 10, total: 0, list: [] });
+      async function loadOrders(pageNo) {
+        orders.pageNo = pageNo || orders.pageNo;
+        try {
+          var q = '?pageNo=' + orders.pageNo + '&pageSize=' + orders.pageSize;
+          if (orders.status) q += '&status=' + encodeURIComponent(orders.status);
+          var d = await http.get('/api/shop/orders' + q);
+          orders.list = d.list || []; orders.total = d.total || 0;
+        } catch (e) { fail(e); }
+      }
+      var orderPage = reactive({ visible: false, loading: false, data: null });
+      async function openOrder(id) {
+        orderPage.visible = true; orderPage.loading = true; orderPage.data = null;
+        try { orderPage.data = await http.get('/api/shop/orders/' + id); }
+        catch (e) { fail(e); orderPage.visible = false; } finally { orderPage.loading = false; }
+      }
+      async function payOrder(o) {
+        try {
+          await http.post('/api/shop/orders/' + o.id + '/pay');
+          notify('支付成功（模拟支付，真实支付走 /api/alipay/pay）');
+          await loadOrders(1);
+          if (orderPage.data && orderPage.data.id === o.id) openOrder(o.id);
+        } catch (e) { fail(e); }
+      }
+      async function cancelOrder(o) {
+        if (!confirm('确认取消订单 ' + o.orderNo + '？库存将回补')) return;
+        try {
+          await http.post('/api/shop/orders/' + o.id + '/cancel');
+          notify('订单已取消'); await loadOrders(1); await loadCart();
+        } catch (e) { fail(e); }
+      }
+
+      /* ---------- 支付宝真实支付 ---------- */
+      var pay = reactive({
+        visible: false, loading: false, info: null, orderId: '', orderNo: '',
+        orderStatus: 'PENDING', qrSrc: '', qrFailed: false, timer: null, tries: 0
+      });
+      /* window 对象不能放进 reactive，会被 Proxy 包住导致 closed/location 失效 */
+      var payWin = null;
+      var payResultText = computed(function () {
+        return pay.orderStatus === 'PAID' ? '已支付'
+             : pay.orderStatus === 'CANCELLED' ? '已取消' : '等待支付';
+      });
+      /* QR 类型 payUrl 是可访问的链接；WAP 类型 payUrl 是一整段自动提交的 <form>，只能写进页面，不能当 URL 用 */
+      function writeAlipayPage(d) {
+        if (!d || !d.payUrl) return false;
+        if (!payWin || payWin.closed) payWin = window.open('', 'alipay_checkout');
+        if (!payWin) return false;
+        try {
+          if (d.payType === 'QR') { payWin.location = d.payUrl; }
+          else {
+            payWin.document.open();
+            payWin.document.write(d.payUrl);
+            payWin.document.close();
+          }
+        } catch (e) { return false; }
+        return true;
+      }
+      async function alipayPay(o) {
+        /* 必须在点击的同步调用栈里先把标签页占下来，等 await 之后再 open 会被浏览器拦截 */
+        payWin = window.open('', 'alipay_checkout');
+        if (payWin) { try { payWin.document.title = '支付宝收银台'; } catch (e) {} }
+        pay.orderId = o.id; pay.orderNo = o.orderNo; pay.orderStatus = o.status;
+        pay.info = null; pay.qrSrc = ''; pay.qrFailed = false;
+        pay.visible = true; pay.loading = true;
+        var items = o.items || [];
+        try {
+          var d = await http.post('/api/alipay/pay', {
+            subject: '商城订单-' + o.orderNo,
+            body: items.length
+              ? items.map(function (it) { return it.productName + ' x' + it.quantity; }).join('，')
+              : '商城订单',
+            totalAmount: Number(o.totalAmount),
+            outTradeNo: o.orderNo,
+            timeoutExpress: '30m',
+            createBy: (user.value && user.value.username) || 'shop',
+            remark: '商城订单支付宝支付'
+          });
+          pay.info = d;
+          if (d.payType === 'QR') {
+            pay.qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='
+              + encodeURIComponent(d.payUrl);
+          }
+          if (!writeAlipayPage(d)) notify('浏览器拦截了新窗口，请点“打开收银台”重试', true);
+          startPayPolling();
+        } catch (e) {
+          pay.visible = false;
+          if (payWin && !payWin.closed) payWin.close();
+          payWin = null;
+          fail(e);
+        } finally { pay.loading = false; }
+      }
+      function openAlipayPage() {
+        if (!pay.info) return;
+        payWin = window.open('', 'alipay_checkout');
+        if (!writeAlipayPage(pay.info)) notify('请允许本页面弹出新窗口', true);
+      }
+      /* 支付结果只能靠后端回调落库，前端定时查订单状态即可 */
+      function startPayPolling() {
+        stopPayPolling(); pay.tries = 0;
+        pay.timer = setInterval(async function () {
+          if (++pay.tries > 100) {
+            stopPayPolling();
+            notify('查询支付结果超时，可稍后在订单列表查看', true);
+            return;
+          }
+          try {
+            /* 内网穿透地址失效时异步通知收不到，每 3 次轮询主动向支付宝查一次单，由后端把状态补回来 */
+            if (pay.info && pay.tries % 3 === 1) {
+              try { await http.post('/api/alipay/query/status', { outTradeNo: pay.info.outTradeNo }); } catch (q) { /* 未支付时查不到属正常 */ }
+            }
+            var o = await http.get('/api/shop/orders/' + pay.orderId);
+            pay.orderStatus = o.status;
+            if (o.status === 'PAID') {
+              stopPayPolling();
+              notify('支付成功，订单已置为已支付');
+              await loadOrders(1);
+              if (orderPage.data && orderPage.data.id === pay.orderId) orderPage.data = o;
+              setTimeout(closePay, 1500);
+            } else if (o.status === 'CANCELLED') {
+              stopPayPolling();
+              notify('订单已取消，无法继续支付', true);
+            }
+          } catch (e) { /* 轮询失败不打断，等下一轮 */ }
+        }, 3000);
+      }
+      function stopPayPolling() {
+        if (pay.timer) { clearInterval(pay.timer); pay.timer = null; }
+      }
+      async function refreshPayResult() {
+        if (!pay.info) return;
+        pay.loading = true;
+        try {
+          /* 异步通知可能因内网穿透地址失效而丢失，这里主动问一次支付宝，让后端把状态补回来 */
+          await http.post('/api/alipay/query/status', { outTradeNo: pay.info.outTradeNo });
+          var o = await http.get('/api/shop/orders/' + pay.orderId);
+          pay.orderStatus = o.status;
+          if (o.status === 'PAID') {
+            stopPayPolling();
+            notify('支付成功');
+            await loadOrders(1);
+            if (orderPage.data && orderPage.data.id === pay.orderId) orderPage.data = o;
+            closePay();
+          } else {
+            notify('支付宝侧还没有收款记录，订单仍是' + statusText(o.status), true);
+          }
+        } catch (e) { fail(e); } finally { pay.loading = false; }
+      }
+      function closePay() {
+        stopPayPolling();
+        pay.visible = false; pay.info = null;
+        if (payWin && !payWin.closed) payWin.close();
+        payWin = null;
+      }
+
+      /* 后台 */
+      var catForm = reactive({ name: '', sortNo: 0 });
+      async function addCategory() {
+        if (!catForm.name) { notify('请输入分类名称', true); return; }
+        try {
+          await http.post('/api/shop/categories', { name: catForm.name, sortNo: catForm.sortNo });
+          notify('分类已新增'); catForm.name = ''; await loadCategories();
+        } catch (e) { fail(e); }
+      }
+      var emptyProd = { id: '', name: '', categoryId: '', price: 0, stock: 0, description: '', imageUrl: '', status: 1 };
+      var prodForm = reactive(Object.assign({}, emptyProd));
+      function resetProdForm() { Object.assign(prodForm, emptyProd); }
+      function editProduct(p) {
+        Object.assign(prodForm, {
+          id: p.id, name: p.name, categoryId: p.categoryId || '', price: Number(p.price), stock: p.stock,
+          description: p.description || '', imageUrl: p.imageUrl || '', status: p.status
+        });
+        notify('已载入「' + p.name + '」，改完点保存');
+      }
+      async function saveProduct() {
+        if (!prodForm.name) { notify('商品名称不能为空', true); return; }
+        var body = Object.assign({}, prodForm);
+        if (!body.id) delete body.id;
+        if (!body.categoryId) body.categoryId = null;
+        try {
+          var saved = await http.post('/api/shop/products', body);
+          notify(prodForm.id ? '商品已更新' : '商品已创建：' + saved.id);
+          resetProdForm(); await loadAdminProducts(1); await loadCategories();
+        } catch (e) { fail(e); }
+      }
+      var adminQuery = reactive({ name: '', status: '', pageNo: 1, pageSize: 10 });
+      var adminProducts = ref([]), adminTotal = ref(0);
+      async function loadAdminProducts(pageNo) {
+        adminQuery.pageNo = pageNo || adminQuery.pageNo;
+        try {
+          var q = '?pageNo=' + adminQuery.pageNo + '&pageSize=' + adminQuery.pageSize;
+          if (adminQuery.name) q += '&name=' + encodeURIComponent(adminQuery.name);
+          if (adminQuery.status !== '') q += '&status=' + adminQuery.status;
+          var d = await http.get('/api/shop/products' + q);
+          adminProducts.value = d.list || []; adminTotal.value = d.total || 0;
+        } catch (e) { fail(e); }
+      }
+      async function toggleProductStatus(p) {
+        try {
+          await http.post('/api/shop/products/' + p.id + '/status?status=' + (p.status === 1 ? 0 : 1));
+          notify('状态已切换'); await loadAdminProducts();
+        } catch (e) { fail(e); }
+      }
+      async function removeProduct(p) {
+        if (!confirm('确认删除商品「' + p.name + '」？')) return;
+        try { await http.delete('/api/shop/products/' + p.id); notify('已删除'); await loadAdminProducts(1); }
+        catch (e) { fail(e); }
+      }
+
+      /* tab / 初始化 */
+      function switchTab(t) {
+        if (!authed.value) { notify('请先登录', true); return; }
+        if (t === 'admin' && !isAdmin.value) { notify('无权限：仅商城管理员可以进入后台', true); return; }
+        tab.value = t;
+        if (t === 'goods') loadGoods(1);
+        if (t === 'cart') loadCart();
+        if (t === 'orders') loadOrders(1);
+        if (t === 'admin') { loadCategories(); loadAdminProducts(1); }
+      }
+      function enterApp() { loadProfile(); loadCategories(); loadGoods(1); loadCart(); }
+      watch(authed, function (v) { if (!v) { orders.list = []; adminProducts.value = []; isAdmin.value = false; } });
+      if (authed.value) enterApp();
+
+      return {
+        toast, money, fmtDate, statusText, pageCount,
+        authed, user, loginForm, loginLoading, doLogin, logout, tab, switchTab, isAdmin, loadProfile,
+        categories, goods, loadGoods, resetGoods, detail, openDetail, quickAdd, addCartFromDetail,
+        cart, cartCount, cartAmount, updateCartQty, onQtyInput, removeCartItem, clearCart,
+        checkoutForm, submitting, gotoCheckout, doCheckout,
+        orders, loadOrders, orderPage, openOrder, payOrder, cancelOrder,
+        pay, payResultText, alipayPay, openAlipayPage, refreshPayResult, closePay,
+        catForm, addCategory, prodForm, resetProdForm, editProduct, saveProduct,
+        adminQuery, adminProducts, adminTotal, loadAdminProducts, toggleProductStatus, removeProduct
+      };
+    }
+  }).mount('#app');
+}
+</script>
+</body>
+</html>

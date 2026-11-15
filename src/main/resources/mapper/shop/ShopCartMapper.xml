@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopCartMapper">
+
+  <resultMap id="CartMap" type="com.jcd.model.shop.ShopCart">
+    <id     column="ID"           property="id"/>
+    <result column="USER_ID"      property="userId"/>
+    <result column="PRODUCT_ID"   property="productId"/>
+    <result column="QUANTITY"     property="quantity"/>
+    <result column="CREATE_TIME"  property="createTime"/>
+    <result column="UPDATE_TIME"  property="updateTime"/>
+    <result column="PRODUCT_NAME" property="productName"/>
+    <result column="PRICE"        property="price"/>
+    <result column="IMAGE_URL"    property="imageUrl"/>
+    <result column="STOCK"        property="stock"/>
+    <result column="STATUS"       property="status"/>
+  </resultMap>
+
+  <select id="selectByUserAndProduct" resultMap="CartMap">
+    select ID, USER_ID, PRODUCT_ID, QUANTITY, CREATE_TIME, UPDATE_TIME
+    from SHOP_CART
+    where USER_ID = #{userId} and PRODUCT_ID = #{productId}
+  </select>
+
+  <select id="selectByUser" resultMap="CartMap">
+    select CT.ID, CT.USER_ID, CT.PRODUCT_ID, CT.QUANTITY, CT.CREATE_TIME, CT.UPDATE_TIME,
+           PR.NAME as PRODUCT_NAME, PR.PRICE, PR.IMAGE_URL, PR.STOCK, PR.STATUS
+    from SHOP_CART CT
+    left join SHOP_PRODUCT PR on PR.ID = CT.PRODUCT_ID
+    where CT.USER_ID = #{userId}
+    order by CT.CREATE_TIME asc
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopCart">
+    insert into SHOP_CART (ID, USER_ID, PRODUCT_ID, QUANTITY, CREATE_TIME, UPDATE_TIME)
+    values (#{id}, #{userId}, #{productId}, #{quantity}, #{createTime}, #{updateTime})
+  </insert>
+
+  <update id="updateQuantity">
+    update SHOP_CART
+    set QUANTITY = #{quantity}, UPDATE_TIME = SYSTIMESTAMP
+    where ID = #{id}
+  </update>
+
+  <delete id="deleteById">
+    delete from SHOP_CART where ID = #{id}
+  </delete>
+
+  <delete id="deleteByUser">
+    delete from SHOP_CART where USER_ID = #{userId}
+  </delete>
+
+  <delete id="deleteByUserAndProducts">
+    delete from SHOP_CART
+    where USER_ID = #{userId}
+    and PRODUCT_ID in
+    <foreach collection="productIds" item="pid" open="(" separator="," close=")">
+      #{pid}
+    </foreach>
+  </delete>
+
+</mapper>

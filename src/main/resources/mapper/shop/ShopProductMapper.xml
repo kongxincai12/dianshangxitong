@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopProductMapper">
+
+  <resultMap id="ProductMap" type="com.jcd.model.shop.ShopProduct">
+    <id     column="ID"           property="id"/>
+    <result column="NAME"         property="name"/>
+    <result column="CATEGORY_ID"  property="categoryId"/>
+    <result column="PRICE"        property="price"/>
+    <result column="STOCK"        property="stock"/>
+    <result column="DESCRIPTION"  property="description"/>
+    <result column="IMAGE_URL"    property="imageUrl"/>
+    <result column="STATUS"       property="status"/>
+    <result column="CREATE_TIME"  property="createTime"/>
+    <result column="UPDATE_TIME"  property="updateTime"/>
+    <result column="CATEGORY_NAME" property="categoryName"/>
+  </resultMap>
+
+  <sql id="ProductColumns">
+    P.ID, P.NAME, P.CATEGORY_ID, P.PRICE, P.STOCK, P.DESCRIPTION, P.IMAGE_URL,
+    P.STATUS, P.CREATE_TIME, P.UPDATE_TIME, C.NAME as CATEGORY_NAME
+  </sql>
+
+  <sql id="ProductFrom">
+    from SHOP_PRODUCT P
+    left join SHOP_CATEGORY C on C.ID = P.CATEGORY_ID
+  </sql>
+
+  <sql id="ProductWhere">
+    <where>
+      <if test="name != null and name != ''">
+        and P.NAME like '%' || #{name} || '%'
+      </if>
+      <if test="categoryId != null and categoryId != ''">
+        and P.CATEGORY_ID = #{categoryId}
+      </if>
+      <if test="status != null">
+        and P.STATUS = #{status}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectById" resultMap="ProductMap">
+    select <include refid="ProductColumns"/>
+    <include refid="ProductFrom"/>
+    where P.ID = #{id}
+  </select>
+
+  <select id="queryList" resultMap="ProductMap">
+    select * from (
+      select t.*, ROWNUM rn from (
+        select <include refid="ProductColumns"/>
+        <include refid="ProductFrom"/>
+        <include refid="ProductWhere"/>
+        order by P.CREATE_TIME desc
+      ) t where ROWNUM &lt;= #{offset} + #{limit}
+    ) where rn &gt; #{offset}
+  </select>
+
+  <select id="queryListCount" resultType="java.lang.Integer">
+    select count(1) from SHOP_PRODUCT P
+    <include refid="ProductWhere"/>
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopProduct">
+    insert into SHOP_PRODUCT (
+      ID, NAME, CATEGORY_ID, PRICE, STOCK, DESCRIPTION, IMAGE_URL, STATUS, CREATE_TIME, UPDATE_TIME
+    ) values (
+      #{id}, #{name}, #{categoryId}, #{price}, #{stock}, #{description}, #{imageUrl}, #{status}, #{createTime}, #{updateTime}
+    )
+  </insert>
+
+  <update id="updateSelective" parameterType="com.jcd.model.shop.ShopProduct">
+    update SHOP_PRODUCT
+    <set>
+      <if test="name != null">        NAME = #{name},</if>
+      <if test="categoryId != null">   CATEGORY_ID = #{categoryId},</if>
+      <if test="price != null">        PRICE = #{price},</if>
+      <if test="stock != null">        STOCK = #{stock},</if>
+      <if test="description != null">  DESCRIPTION = #{description},</if>
+      <if test="imageUrl != null">     IMAGE_URL = #{imageUrl},</if>
+      <if test="status != null">       STATUS = #{status},</if>
+      UPDATE_TIME = #{updateTime}
+    </set>
+    where ID = #{id}
+  </update>
+
+  <delete id="deleteById">
+    delete from SHOP_PRODUCT where ID = #{id}
+  </delete>
+
+  <update id="deductStock">
+    update SHOP_PRODUCT
+    set STOCK = STOCK - #{qty}, UPDATE_TIME = SYSTIMESTAMP
+    where ID = #{id} and STOCK &gt;= #{qty}
+  </update>
+
+  <update id="restoreStock">
+    update SHOP_PRODUCT
+    set STOCK = STOCK + #{qty}, UPDATE_TIME = SYSTIMESTAMP
+    where ID = #{id}
+  </update>
+
+</mapper>

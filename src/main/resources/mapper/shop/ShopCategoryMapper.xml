@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopCategoryMapper">
+
+  <resultMap id="CategoryMap" type="com.jcd.model.shop.ShopCategory">
+    <id     column="ID"          property="id"/>
+    <result column="NAME"        property="name"/>
+    <result column="SORT_NO"     property="sortNo"/>
+    <result column="CREATE_TIME" property="createTime"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="CategoryMap">
+    select ID, NAME, SORT_NO, CREATE_TIME
+    from SHOP_CATEGORY
+    order by SORT_NO asc, CREATE_TIME asc
+  </select>
+
+  <select id="selectById" resultMap="CategoryMap">
+    select ID, NAME, SORT_NO, CREATE_TIME
+    from SHOP_CATEGORY
+    where ID = #{id}
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopCategory">
+    insert into SHOP_CATEGORY (ID, NAME, SORT_NO, CREATE_TIME)
+    values (#{id}, #{name}, #{sortNo}, #{createTime})
+  </insert>
+
+  <delete id="deleteById">
+    delete from SHOP_CATEGORY where ID = #{id}
+  </delete>
+
+</mapper>
