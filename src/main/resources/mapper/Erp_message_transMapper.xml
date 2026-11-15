@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Erp_message_transMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Erp_message_trans" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TRANSACTIONS" property="transactions" jdbcType="VARCHAR" />
+    <result column="LOGTABLE" property="logtable" jdbcType="VARCHAR" />
+    <result column="LOGTABLEID" property="logtableid" jdbcType="VARCHAR" />
+    <result column="TRANS_FLAG" property="transFlag" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TRANSACTIONS, LOGTABLE, LOGTABLEID, TRANS_FLAG, USERNAME, DATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Erp_message_transExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ERP_MESSAGE_TRANS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ERP_MESSAGE_TRANS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ERP_MESSAGE_TRANS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="Erp_message_transInsert" parameterType="com.jcd.model.Erp_message_trans" >
+    insert into ERP_MESSAGE_TRANS (ID, TRANSACTIONS, LOGTABLE, 
+      LOGTABLEID, TRANS_FLAG, USERNAME, 
+      DATETIME)
+    values (#{id,jdbcType=VARCHAR}, #{transactions,jdbcType=VARCHAR}, #{logtable,jdbcType=VARCHAR}, 
+      #{logtableid,jdbcType=VARCHAR}, #{transFlag,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Erp_message_trans" >
+    insert into ERP_MESSAGE_TRANS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="transactions != null" >
+        TRANSACTIONS,
+      </if>
+      <if test="logtable != null" >
+        LOGTABLE,
+      </if>
+      <if test="logtableid != null" >
+        LOGTABLEID,
+      </if>
+      <if test="transFlag != null" >
+        TRANS_FLAG,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="transactions != null" >
+        #{transactions,jdbcType=VARCHAR},
+      </if>
+      <if test="logtable != null" >
+        #{logtable,jdbcType=VARCHAR},
+      </if>
+      <if test="logtableid != null" >
+        #{logtableid,jdbcType=VARCHAR},
+      </if>
+      <if test="transFlag != null" >
+        #{transFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Erp_message_trans" >
+    update ERP_MESSAGE_TRANS
+    <set >
+      <if test="transactions != null" >
+        TRANSACTIONS = #{transactions,jdbcType=VARCHAR},
+      </if>
+      <if test="logtable != null" >
+        LOGTABLE = #{logtable,jdbcType=VARCHAR},
+      </if>
+      <if test="logtableid != null" >
+        LOGTABLEID = #{logtableid,jdbcType=VARCHAR},
+      </if>
+      <if test="transFlag != null" >
+        TRANS_FLAG = #{transFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Erp_message_trans" >
+    update ERP_MESSAGE_TRANS
+    set TRANSACTIONS = #{transactions,jdbcType=VARCHAR},
+      LOGTABLE = #{logtable,jdbcType=VARCHAR},
+      LOGTABLEID = #{logtableid,jdbcType=VARCHAR},
+      TRANS_FLAG = #{transFlag,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.InspectionMapper" >
+
+    <select id="findBySite" resultType="com.jcd.model.MesInspDefectItems">
+        SELECT
+            id,
+            site,
+            defect_name as "defectName",
+            display_order as "displayOrder"
+        FROM
+            MES_INSP_DEFECT_ITEMS
+        WHERE
+            site = #{site}
+        ORDER BY
+            display_order ASC, defect_name ASC
+    </select>
+
+    <insert id="insertRecord" parameterType="com.jcd.model.MesInspRecords">
+        INSERT INTO MES_INSP_RECORDS (
+            id, lot_code, equipment_code, inspector_id, site,
+            total_qty, sample_qty, status, inspection_time,
+            create_by, create_time
+        ) VALUES (
+                     #{id}, #{lotCode}, #{equipmentCode}, #{inspectorId}, #{site},
+                     #{totalQty}, #{sampleQty}, #{status}, #{inspectionTime, jdbcType=TIMESTAMP},
+                     #{createBy}, #{createTime, jdbcType=TIMESTAMP}
+                 )
+    </insert>
+
+    <update id="updateRecord" parameterType="com.jcd.model.MesInspRecords">
+        UPDATE MES_INSP_RECORDS
+        <set>
+            <if test="equipmentCode != null">equipment_code = #{equipmentCode},</if>
+            <if test="totalQty != null">total_qty = #{totalQty},</if>
+            <if test="sampleQty != null">sample_qty = #{sampleQty},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="inspectionTime != null">inspection_time = #{inspectionTime, jdbcType=TIMESTAMP},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime, jdbcType=TIMESTAMP},</if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="findRecordById" resultType="com.jcd.model.MesInspRecords">
+        SELECT * FROM MES_INSP_RECORDS WHERE id = #{id}
+    </select>
+
+    <delete id="deleteByRecordId">
+        DELETE FROM MES_INSP_RECORD_DETAILS WHERE record_id = #{recordId}
+    </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO MES_INSP_RECORD_DETAILS (id, record_id, defect_name, defect_qty)
+        <foreach collection="details" item="item" separator=" UNION ALL ">
+            SELECT #{item.id}, #{item.recordId}, #{item.defectName}, #{item.defectQty} FROM DUAL
+        </foreach>
+    </insert>
+
+    <select id="findByRecordId" resultType="com.jcd.model.MesInspRecordDetails">
+        SELECT
+            id,
+            record_id as "recordId",
+            defect_name as "defectName",
+            defect_qty as "defectQty"
+        FROM MES_INSP_RECORD_DETAILS
+        WHERE record_id = #{recordId}
+    </select>
+
+
+</mapper>

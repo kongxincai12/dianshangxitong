@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.IqcTaskMapper">
+
+    <!-- 定义结果映射 -->
+    <resultMap id="TaskResultMap" type="com.jcd.entity.IqcTaskInfo">
+        <id property="invoiceDetailId" column="INVOICEDETAILID"/>
+        <result property="invoiceId" column="INVOICEID"/>
+        <result property="invoiceNumber" column="INVOICENUMBER"/>
+        <result property="poNumber" column="PO"/>
+        <result property="partNumber" column="PN"/>
+        <result property="vendorName" column="VENDORNAME"/>
+        <result property="totalQty" column="TOTALQTY"/>
+        <!-- 这里需要注意：REMAININGQTY 是旧系统的字段，我们主要用 TOTALQTY -->
+        <result property="status" column="CHECKSTATUS"/>
+
+        <!-- 统计字段，子查询获取 -->
+        <result property="scannedQty" column="REMAININGQTY"/>
+
+        <result property="submitNumber" column="SUBMITNUMBER"/>
+        <result property="checkResult" column="CHECKRESULT"/>
+        <result property="materialType" column="MATERIALTYPE"/>
+        <result property="deliverNumber" column="DELIVERNUMBER"/>
+        <result property="pnId" column="PNID"/>
+        <result property="vendorCode" column="VENDORCODE"/>
+        <result property="vendorLotNo" column="VENDORLOTNO"/>
+        <result property="partSpec" column="PARTSPEC"/>
+        <result property="largeCategory" column="LARGECATEGORY"/>
+        <result property="unitQty" column="UNITQTY"/>
+        <result property="esdLevel" column="ESDLEVEL"/>
+        <result property="msdLevel" column="MSDLEVEL"/>
+        <result property="leadFree" column="LEADFREE"/>
+        <result property="rmaPo" column="RMAPO"/>
+        <result property="controlFlag" column="CONTROL_FLAG"/>
+        <result property="mark" column="MARK"/>
+        <result property="approvedFlag" column="APPROVED_FLAG"/>
+
+        <result property="datetime" column="DATETIME"/>
+        <result property="limitedDay" column="LIMITEDDAY"/>
+        <result property="packStyle" column="PACKSTYLE"/>
+        <result property="vendorWeekCode" column="VENDORWEEKCODE"/>
+        <result property="vendorSn" column="VENDORSN"/>
+        <result property="materialStorage" column="MATERIALSTORAGE"/>
+        <result property="unit" column="UNIT"/>
+
+    </resultMap>
+
+    <!-- 核心列表查询 -->
+    <select id="selectTaskList" resultMap="TaskResultMap">
+        SELECT * FROM (
+        SELECT T.*, ROWNUM RN FROM (
+        SELECT
+        D.INVOICEDETAILID,
+        M.INVOICEID,
+        nvl(M.Invoicenumber, ' ') Invoicenumber,
+        NVL(M.SUBMITNUMBER, ' ') SUBMITNUMBER,
+        NVL(D.CHECKSTATUS, ' ') CHECKSTATUS,
+        NVL(D.CHECKRESULT, '未检') CHECKRESULT,
+        NVL(D.MATERIALTYPE, ' ') MATERIALTYPE,
+        NVL(D.DELIVERNUMBER, ' ') DELIVERNUMBER,
+        NVL(D.PO, ' ') PO,
+        NVL(P.Pnid, ' ') PNID,
+        NVL(D.PN, ' ') PN,
+        NVL(D.VENDORCODE, ' ') VENDORCODE,
+        NVL(D.VENDORNAME, ' ') VENDORNAME,
+        NVL(D.TOTALQTY, 0) TOTALQTY,
+        D.TOTALQTY - NVL(D.REMAININGQTY, 0) REMAININGQTY,
+        NVL(D.VENDORLOTNO, ' ') VENDORLOTNO,
+        NVL(P.PARTSPEC, ' ') PARTSPEC,
+        NVL(P.LARGECATEGORY, ' ') LARGECATEGORY,
+        NVL(P.Unitqty, 1) UNITQTY,
+        NVL(p.ESDLEVEL, ' ') ESDLEVEL,
+        NVL(p.MSDLEVEL, ' ') MSDLEVEL,
+        NVL(p.LEADFREE, ' ') LEADFREE,
+        NVL(d.rmapo, ' ') RMAPO,
+        NVL(P.CONTROL_FLAG, 'N') CONTROL_FLAG,
+        NVL(GETMARK(D.PN), ' ') MARK,
+        NVL(V.LAST_NAME, ' ') CAIGOUYUANNAME,
+        'Y' APPROVED_FLAG,
+
+        nvl(d.DATETIME,sysdate) DATETIME,
+        nvl(d.LIMITEDDAY,sysdate) LIMITEDDAY,
+        nvl(d.PACKSTYLE,' ') PACKSTYLE,
+        nvl(d.VENDORWEEKCODE,' ') VENDORWEEKCODE,
+        nvl(d.VENDORSN,'/') VENDORSN,
+        nvl(d.MATERIALSTORAGE,' ') MATERIALSTORAGE,
+        P.UNIT
+        FROM
+        RMM_INVOICE                  M,
+        RMM_INVOICEDETAIL            D,
+        PARTNUMBER                   P,
+        cux_e2m_po_buyer_v@Jcd_Demo  V
+        WHERE 1 = 1
+        AND M.INVOICEID = D.Invoiceid(+)
+        AND D.PN = P.PN(+)
+        AND D.PO = V.PO_NUMBER(+)
+
+        <!-- 状态过滤 (PDA 默认只看 DEFAULT/OH 和 OPEN/PRINTING) -->
+        AND M.STATE IN ('OH','DEFAULT')
+        AND D.CHECKSTATUS IN ('OPEN','PRINTING')
+        AND P.CONTROL_FLAG='Y'
+        AND D.Invoicenumber LIKE 'TSIQC%'
+
+        <!-- 动态搜索条件 (匹配 单号/料号/PO/供应商) -->
+
+        <if test="poNumber != null and poNumber != ''">
+            AND D.PO = #{poNumber}
+        </if>
+        <if test="partNumber != null and partNumber != ''">
+            AND D.PN = #{partNumber}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            M.INVOICENUMBER LIKE '%' || #{keyword} || '%'
+            OR D.PN LIKE '%' || #{keyword} || '%'
+            OR D.PO LIKE '%' || #{keyword} || '%'
+            OR D.VENDORNAME LIKE '%' || #{keyword} || '%'
+            )
+        </if>
+
+        ORDER BY D.POLINENUM ASC
+        ) T
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE RN &gt; #{startRow}
+    </select>
+
+    <!-- 根据ID获取单条详情 (用于扫码页初始化校验) -->
+    <select id="selectTaskById" resultMap="TaskResultMap">
+        SELECT * FROM (SELECT D.INVOICEDETAILID,
+                              M.INVOICEID,
+                              nvl(M.Invoicenumber, ' ')   Invoicenumber,
+                              NVL(M.SUBMITNUMBER, ' ')    SUBMITNUMBER,
+                              NVL(D.CHECKSTATUS, ' ')     CHECKSTATUS,
+                              NVL(D.CHECKRESULT, '未检')  CHECKRESULT,
+                              NVL(D.MATERIALTYPE, ' ')    MATERIALTYPE,
+                              NVL(D.DELIVERNUMBER, ' ')   DELIVERNUMBER,
+                              NVL(D.PO, ' ')              PO,
+                              NVL(P.Pnid, ' ')            PNID,
+                              NVL(D.PN, ' ')              PN,
+                              NVL(D.VENDORCODE, ' ')      VENDORCODE,
+                              NVL(D.VENDORNAME, ' ')      VENDORNAME,
+                              NVL(D.TOTALQTY, 0)          TOTALQTY,
+                              D.TOTALQTY - NVL(D.REMAININGQTY, 0)      REMAININGQTY,
+                              NVL(D.VENDORLOTNO, ' ')     VENDORLOTNO,
+                              NVL(P.PARTSPEC, ' ')        PARTSPEC,
+                              NVL(P.LARGECATEGORY, ' ')   LARGECATEGORY,
+                              NVL(P.Unitqty, 1)           UNITQTY,
+                              NVL(p.ESDLEVEL, ' ')        ESDLEVEL,
+                              NVL(p.MSDLEVEL, ' ')        MSDLEVEL,
+                              NVL(p.LEADFREE, ' ')        LEADFREE,
+                              NVL(d.rmapo, ' ')           RMAPO,
+                              NVL(P.CONTROL_FLAG, 'N')    CONTROL_FLAG,
+                              NVL(GETMARK(D.PN), ' ')     MARK,
+                              NVL(V.LAST_NAME, ' ')       CAIGOUYUANNAME,
+                              'Y'                         APPROVED_FLAG,
+
+                              nvl(d.DATETIME, sysdate)    DATETIME,
+                              nvl(d.LIMITEDDAY, sysdate)  LIMITEDDAY,
+                              nvl(d.PACKSTYLE, ' ')       PACKSTYLE,
+                              nvl(d.VENDORWEEKCODE, ' ')  VENDORWEEKCODE,
+                              nvl(d.VENDORSN, '/')        VENDORSN,
+                              nvl(d.MATERIALSTORAGE, ' ') MATERIALSTORAGE,
+                              P.UNIT
+                       FROM RMM_INVOICE M,
+                            RMM_INVOICEDETAIL D,
+                            PARTNUMBER P,
+                            cux_e2m_po_buyer_v@Jcd_Demo V
+                       WHERE 1 = 1
+                         AND M.INVOICEID = D.Invoiceid(+)
+                         AND D.PN = P.PN(+)
+                         AND D.PO = V.PO_NUMBER(+)
+                         AND M.STATE IN ('OH', 'DEFAULT')
+                         AND D.CHECKSTATUS IN ('OPEN', 'PRINTING')
+                         AND P.CONTROL_FLAG = 'Y'
+                         AND D.Invoicenumber LIKE 'TSIQC%'
+                         AND D.INVOICEDETAILID = #{id}) WHERE ROWNUM=1
+
+    </select>
+
+    <!-- 更新旧系统状态 (当扫码完成后调用) -->
+    <update id="updateLegacyStatus">
+        UPDATE RMM_INVOICEDETAIL
+        SET CHECKSTATUS = 'CLOSE'
+        WHERE INVOICEDETAILID = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Mes_avi_alarmMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Mes_avi_alarm" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EQP_NO" property="eqpNo" jdbcType="VARCHAR" />
+    <result column="ALARM_DESCRIPTION" property="alarmDescription" jdbcType="VARCHAR" />
+    <result column="ALARM_TIME" property="alarmTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EQP_NO, ALARM_DESCRIPTION, ALARM_TIME, OPERATOR_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Mes_avi_alarmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from MES_AVI_ALARM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MES_AVI_ALARM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MES_AVI_ALARM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Mes_avi_alarm" >
+    insert into MES_AVI_ALARM (ID, EQP_NO, ALARM_DESCRIPTION, 
+      ALARM_TIME, OPERATOR_CODE)
+    values (#{id,jdbcType=VARCHAR}, #{eqpNo,jdbcType=VARCHAR}, #{alarmDescription,jdbcType=VARCHAR}, 
+      #{alarmTime,jdbcType=TIMESTAMP}, #{operatorCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Mes_avi_alarm" >
+    insert into MES_AVI_ALARM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="eqpNo != null" >
+        EQP_NO,
+      </if>
+      <if test="alarmDescription != null" >
+        ALARM_DESCRIPTION,
+      </if>
+      <if test="alarmTime != null" >
+        ALARM_TIME,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpNo != null" >
+        #{eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmDescription != null" >
+        #{alarmDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmTime != null" >
+        #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_AVI_ALARM
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eqpNo != null" >
+        EQP_NO = #{record.eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmDescription != null" >
+        ALARM_DESCRIPTION = #{record.alarmDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alarmTime != null" >
+        ALARM_TIME = #{record.alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorCode != null" >
+        OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_AVI_ALARM
+    set ID = #{record.id,jdbcType=VARCHAR},
+      EQP_NO = #{record.eqpNo,jdbcType=VARCHAR},
+      ALARM_DESCRIPTION = #{record.alarmDescription,jdbcType=VARCHAR},
+      ALARM_TIME = #{record.alarmTime,jdbcType=TIMESTAMP},
+      OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Mes_avi_alarm" >
+    update MES_AVI_ALARM
+    <set >
+      <if test="eqpNo != null" >
+        EQP_NO = #{eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmDescription != null" >
+        ALARM_DESCRIPTION = #{alarmDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="alarmTime != null" >
+        ALARM_TIME = #{alarmTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Mes_avi_alarm" >
+    update MES_AVI_ALARM
+    set EQP_NO = #{eqpNo,jdbcType=VARCHAR},
+      ALARM_DESCRIPTION = #{alarmDescription,jdbcType=VARCHAR},
+      ALARM_TIME = #{alarmTime,jdbcType=TIMESTAMP},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

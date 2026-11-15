@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.MaterialhistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Materialhistory" >
+    <id column="MHID" property="mhid" jdbcType="VARCHAR" />
+    <result column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="MONAME" property="moname" jdbcType="VARCHAR" />
+    <result column="TASKNAME" property="taskname" jdbcType="VARCHAR" />
+    <result column="EQPNAME" property="eqpname" jdbcType="VARCHAR" />
+    <result column="STAGE" property="stage" jdbcType="VARCHAR" />
+    <result column="SLOT" property="slot" jdbcType="VARCHAR" />
+    <result column="PN" property="pn" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="NUMERIC" />
+    <result column="BOARDSIDE" property="boardside" jdbcType="VARCHAR" />
+    <result column="UPNNAME" property="upnname" jdbcType="VARCHAR" />
+    <result column="UPNQTY" property="upnqty" jdbcType="NUMERIC" />
+    <result column="FEEDERNAME" property="feedername" jdbcType="VARCHAR" />
+    <result column="PREVIOUSLOCATION" property="previouslocation" jdbcType="VARCHAR" />
+    <result column="TOLOCATION" property="tolocation" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MHID, MOID, MONAME, TASKNAME, EQPNAME, STAGE, SLOT, PN, QTY, BOARDSIDE, UPNNAME, 
+    UPNQTY, FEEDERNAME, PREVIOUSLOCATION, TOLOCATION, DESCRIPTION, USERNAME, DATETIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MATERIALHISTORY
+    where MHID = #{mhid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MATERIALHISTORY
+    where MHID = #{mhid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Materialhistory" >
+    insert into MATERIALHISTORY (MHID, MOID, MONAME, 
+      TASKNAME, EQPNAME, STAGE, 
+      SLOT, PN, QTY, BOARDSIDE, 
+      UPNNAME, UPNQTY, FEEDERNAME, 
+      PREVIOUSLOCATION, TOLOCATION, DESCRIPTION, 
+      USERNAME, DATETIME)
+    values (#{mhid,jdbcType=VARCHAR}, #{moid,jdbcType=VARCHAR}, #{moname,jdbcType=VARCHAR}, 
+      #{taskname,jdbcType=VARCHAR}, #{eqpname,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, 
+      #{slot,jdbcType=VARCHAR}, #{pn,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{boardside,jdbcType=VARCHAR}, 
+      #{upnname,jdbcType=VARCHAR}, #{upnqty,jdbcType=NUMERIC}, #{feedername,jdbcType=VARCHAR}, 
+      #{previouslocation,jdbcType=VARCHAR}, #{tolocation,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Materialhistory" >
+    insert into MATERIALHISTORY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mhid != null" >
+        MHID,
+      </if>
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="moname != null" >
+        MONAME,
+      </if>
+      <if test="taskname != null" >
+        TASKNAME,
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME,
+      </if>
+      <if test="stage != null" >
+        STAGE,
+      </if>
+      <if test="slot != null" >
+        SLOT,
+      </if>
+      <if test="pn != null" >
+        PN,
+      </if>
+      <if test="qty != null" >
+        QTY,
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE,
+      </if>
+      <if test="upnname != null" >
+        UPNNAME,
+      </if>
+      <if test="upnqty != null" >
+        UPNQTY,
+      </if>
+      <if test="feedername != null" >
+        FEEDERNAME,
+      </if>
+      <if test="previouslocation != null" >
+        PREVIOUSLOCATION,
+      </if>
+      <if test="tolocation != null" >
+        TOLOCATION,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mhid != null" >
+        #{mhid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="moname != null" >
+        #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null" >
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="upnqty != null" >
+        #{upnqty,jdbcType=NUMERIC},
+      </if>
+      <if test="feedername != null" >
+        #{feedername,jdbcType=VARCHAR},
+      </if>
+      <if test="previouslocation != null" >
+        #{previouslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="tolocation != null" >
+        #{tolocation,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Materialhistory" >
+    update MATERIALHISTORY
+    <set >
+      <if test="moid != null" >
+        MOID = #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="moname != null" >
+        MONAME = #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null" >
+        TASKNAME = #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        STAGE = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        SLOT = #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        UPNNAME = #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="upnqty != null" >
+        UPNQTY = #{upnqty,jdbcType=NUMERIC},
+      </if>
+      <if test="feedername != null" >
+        FEEDERNAME = #{feedername,jdbcType=VARCHAR},
+      </if>
+      <if test="previouslocation != null" >
+        PREVIOUSLOCATION = #{previouslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="tolocation != null" >
+        TOLOCATION = #{tolocation,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MHID = #{mhid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Materialhistory" >
+    update MATERIALHISTORY
+    set MOID = #{moid,jdbcType=VARCHAR},
+      MONAME = #{moname,jdbcType=VARCHAR},
+      TASKNAME = #{taskname,jdbcType=VARCHAR},
+      EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      STAGE = #{stage,jdbcType=VARCHAR},
+      SLOT = #{slot,jdbcType=VARCHAR},
+      PN = #{pn,jdbcType=VARCHAR},
+      QTY = #{qty,jdbcType=NUMERIC},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      UPNNAME = #{upnname,jdbcType=VARCHAR},
+      UPNQTY = #{upnqty,jdbcType=NUMERIC},
+      FEEDERNAME = #{feedername,jdbcType=VARCHAR},
+      PREVIOUSLOCATION = #{previouslocation,jdbcType=VARCHAR},
+      TOLOCATION = #{tolocation,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR}
+    where MHID = #{mhid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaTemplateMapper">
+
+  <resultMap id="TemplateMap" type="com.jcd.model.qafa.QaFaTemplate">
+    <id     column="ID"            property="id"/>
+    <result column="PROCESS_CODE"  property="processCode"/>
+    <result column="PROCESS_NAME"  property="processName"/>
+    <result column="VERSION"       property="version"/>
+    <result column="NAME"          property="name"/>
+    <result column="SOP_REF"       property="sopRef"/>
+    <result column="STATUS"        property="status"/>
+    <result column="VALID_FROM"    property="validFrom"/>
+    <result column="VALID_TO"      property="validTo"/>
+    <result column="REMARK"        property="remark"/>
+    <result column="CREATE_BY"     property="createBy"/>
+    <result column="CREATE_TIME"   property="createTime"/>
+    <result column="UPDATE_BY"     property="updateBy"/>
+    <result column="UPDATE_TIME"   property="updateTime"/>
+  </resultMap>
+
+  <resultMap id="SectionMap" type="com.jcd.model.qafa.QaFaTemplateSection">
+    <id     column="ID"          property="id"/>
+    <result column="TEMPLATE_ID" property="templateId"/>
+    <result column="CODE"        property="code"/>
+    <result column="NAME"        property="name"/>
+    <result column="SORT_NO"     property="sortNo"/>
+    <result column="REMARK"      property="remark"/>
+    <result column="STAGE_CODE"      property="stageCode"/>
+    <result column="STAGE_NAME"      property="stageName"/>
+    <result column="STAGE_SORT_NO"   property="stageSortNo"/>
+    <result column="STAGE_ENABLED"   property="stageEnabled"/>
+    <result column="FINAL_REQUIRED"  property="finalRequired"/>
+    <result column="RELEASE_ON_PASS" property="releaseOnPass"/>
+  </resultMap>
+
+  <resultMap id="ItemMap" type="com.jcd.model.qafa.QaFaTemplateItem">
+    <id     column="ID"             property="id"/>
+    <result column="TEMPLATE_ID"    property="templateId"/>
+    <result column="SECTION_ID"     property="sectionId"/>
+    <result column="CODE"           property="code"/>
+    <result column="NAME"           property="name"/>
+    <result column="TOOL"           property="tool"/>
+    <result column="STANDARD_TEXT"  property="standardText"/>
+    <result column="INPUT_TYPE"     property="inputType"/>
+    <result column="UNIT"           property="unit"/>
+    <result column="RULE_JSON"      property="ruleJson"/>
+    <result column="FILL_ROLE"      property="fillRole"/>
+    <result column="REQUIRED"       property="required"/>
+    <result column="CRITICAL"       property="critical"/>
+    <result column="SORT_NO"        property="sortNo"/>
+    <result column="REMARK"         property="remark"/>
+  </resultMap>
+
+  <select id="selectActiveTemplates" resultMap="TemplateMap">
+    select * from QA_FA_TEMPLATE
+    where STATUS = 'ACTIVE'
+    <if test="processCode != null and processCode != ''">
+      and PROCESS_CODE = #{processCode}
+    </if>
+    order by PROCESS_CODE, VERSION desc
+  </select>
+
+  <select id="selectActiveProcesses" resultMap="TemplateMap">
+    select min(ID) as ID, PROCESS_CODE, PROCESS_NAME
+    from QA_FA_TEMPLATE
+    where STATUS = 'ACTIVE'
+    group by PROCESS_CODE, PROCESS_NAME
+    order by PROCESS_CODE
+  </select>
+
+  <select id="selectById" resultMap="TemplateMap">
+    select * from QA_FA_TEMPLATE where ID = #{id}
+  </select>
+
+  <select id="selectSectionsByTemplateId" resultMap="SectionMap">
+    select * from QA_FA_TEMPLATE_SECTION
+    where TEMPLATE_ID = #{templateId}
+    order by SORT_NO
+  </select>
+
+  <select id="selectItemsByTemplateId" resultMap="ItemMap">
+    select * from QA_FA_TEMPLATE_ITEM
+    where TEMPLATE_ID = #{templateId}
+    order by SORT_NO
+  </select>
+
+  <select id="selectItemById" resultMap="ItemMap">
+    select * from QA_FA_TEMPLATE_ITEM where ID = #{id}
+  </select>
+
+  <update id="disableActiveTemplatesByProcess">
+    update QA_FA_TEMPLATE
+    set STATUS = 'INACTIVE',
+        UPDATE_BY = #{updateBy},
+        UPDATE_TIME = #{updateTime}
+    where PROCESS_CODE = #{processCode}
+      and STATUS = 'ACTIVE'
+  </update>
+
+  <insert id="insertTemplate" parameterType="com.jcd.model.qafa.QaFaTemplate">
+    insert into QA_FA_TEMPLATE (
+      ID, PROCESS_CODE, PROCESS_NAME, VERSION, NAME, SOP_REF, STATUS,
+      VALID_FROM, VALID_TO, REMARK, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    ) values (
+      #{id}, #{processCode}, #{processName}, #{version}, #{name}, #{sopRef}, #{status},
+      #{validFrom}, #{validTo}, #{remark}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}
+    )
+  </insert>
+
+  <insert id="insertSection" parameterType="com.jcd.model.qafa.QaFaTemplateSection">
+    insert into QA_FA_TEMPLATE_SECTION (
+      ID, TEMPLATE_ID, CODE, NAME, SORT_NO, REMARK,
+      STAGE_CODE, STAGE_NAME, STAGE_SORT_NO, STAGE_ENABLED, FINAL_REQUIRED, RELEASE_ON_PASS
+    ) values (
+      #{id}, #{templateId}, #{code}, #{name}, #{sortNo}, #{remark},
+      #{stageCode}, #{stageName}, #{stageSortNo}, #{stageEnabled}, #{finalRequired}, #{releaseOnPass}
+    )
+  </insert>
+
+  <insert id="insertItem" parameterType="com.jcd.model.qafa.QaFaTemplateItem">
+    insert into QA_FA_TEMPLATE_ITEM (
+      ID, TEMPLATE_ID, SECTION_ID, CODE, NAME, TOOL, STANDARD_TEXT, INPUT_TYPE,
+      UNIT, RULE_JSON, FILL_ROLE, REQUIRED, CRITICAL, SORT_NO, REMARK
+    ) values (
+      #{id}, #{templateId}, #{sectionId}, #{code}, #{name}, #{tool}, #{standardText}, #{inputType},
+      #{unit}, #{ruleJson}, #{fillRole}, #{required}, #{critical}, #{sortNo}, #{remark}
+    )
+  </insert>
+
+</mapper>

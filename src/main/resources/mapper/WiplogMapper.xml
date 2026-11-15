@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.WiplogMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Wiplog" >
+    <result column="WIPLOGID" property="wiplogid" jdbcType="VARCHAR" />
+    <result column="WIPID" property="wipid" jdbcType="VARCHAR" />
+    <result column="STEPID" property="stepid" jdbcType="VARCHAR" />
+    <result column="STEPPASSTIME" property="steppasstime" jdbcType="TIMESTAMP" />
+    <result column="DEFECTFLAG" property="defectflag" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="LINEID" property="lineid" jdbcType="VARCHAR" />
+    <result column="STATIONID" property="stationid" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="WIPRESID" property="wipresid" jdbcType="VARCHAR" />
+    <result column="DEFECTQTY" property="defectqty" jdbcType="NUMERIC" />
+    <result column="WIPQTY" property="wipqty" jdbcType="NUMERIC" />
+    <result column="SCRAPQTY" property="scrapqty" jdbcType="NUMERIC" />
+    <result column="WORKINGHOURS" property="workinghours" jdbcType="NUMERIC" />
+    <result column="OSP_INVOICEDETAILID" property="ospInvoicedetailid" jdbcType="VARCHAR" />
+    <result column="TESTVERSION" property="testversion" jdbcType="VARCHAR" />
+    <result column="PROCESSSEQ" property="processseq" jdbcType="VARCHAR" />
+    <result column="WORKORDERID" property="workorderid" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="DATECODE" property="datecode" jdbcType="VARCHAR" />
+    <result column="SHIPID" property="shipid" jdbcType="VARCHAR" />
+    <result column="EQPWORKHOURS" property="eqpworkhours" jdbcType="NUMERIC" />
+    <result column="OSPVENDORCODE" property="ospvendorcode" jdbcType="VARCHAR" />
+    <result column="OSPVENDORNAME" property="ospvendorname" jdbcType="VARCHAR" />
+    <result column="STEPIDPARENT" property="stepidparent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WIPLOGID, WIPID, STEPID, STEPPASSTIME, DEFECTFLAG, REMARK, USERNAME, LINEID, STATIONID, 
+    LOTID, MOID, WIPRESID, DEFECTQTY, WIPQTY, SCRAPQTY, WORKINGHOURS, OSP_INVOICEDETAILID, 
+    TESTVERSION, PROCESSSEQ, WORKORDERID, STATUS, DATECODE, SHIPID, EQPWORKHOURS, OSPVENDORCODE, 
+    OSPVENDORNAME, STEPIDPARENT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.WiplogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from WIPLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByLotidAndStepid" resultMap="BaseResultMap" parameterType="com.jcd.model.WiplogExample" >
+    select
+    <include refid="Base_Column_List" />
+    from WIPLOG
+    where LOTID = #{lotid,jdbcType=VARCHAR}
+    and stepid = #{stepid,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.jcd.model.Wiplog" >
+    insert into WIPLOG (WIPLOGID, WIPID, STEPID, 
+      STEPPASSTIME, DEFECTFLAG, REMARK, 
+      USERNAME, LINEID, STATIONID, 
+      LOTID, MOID, WIPRESID, 
+      DEFECTQTY, WIPQTY, SCRAPQTY, 
+      WORKINGHOURS, OSP_INVOICEDETAILID, TESTVERSION, 
+      PROCESSSEQ, WORKORDERID, STATUS, 
+      DATECODE, SHIPID, EQPWORKHOURS, 
+      OSPVENDORCODE, OSPVENDORNAME, STEPIDPARENT
+      )
+    values (#{wiplogid,jdbcType=VARCHAR}, #{wipid,jdbcType=VARCHAR}, #{stepid,jdbcType=VARCHAR}, 
+      #{steppasstime,jdbcType=TIMESTAMP}, #{defectflag,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{lineid,jdbcType=VARCHAR}, #{stationid,jdbcType=VARCHAR}, 
+      #{lotid,jdbcType=VARCHAR}, #{moid,jdbcType=VARCHAR}, #{wipresid,jdbcType=VARCHAR}, 
+      #{defectqty,jdbcType=NUMERIC}, #{wipqty,jdbcType=NUMERIC}, #{scrapqty,jdbcType=NUMERIC}, 
+      #{workinghours,jdbcType=NUMERIC}, #{ospInvoicedetailid,jdbcType=VARCHAR}, #{testversion,jdbcType=VARCHAR}, 
+      #{processseq,jdbcType=VARCHAR}, #{workorderid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{datecode,jdbcType=VARCHAR}, #{shipid,jdbcType=VARCHAR}, #{eqpworkhours,jdbcType=NUMERIC}, 
+      #{ospvendorcode,jdbcType=VARCHAR}, #{ospvendorname,jdbcType=VARCHAR}, #{stepidparent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Wiplog" >
+    insert into WIPLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wiplogid != null" >
+        WIPLOGID,
+      </if>
+      <if test="wipid != null" >
+        WIPID,
+      </if>
+      <if test="stepid != null" >
+        STEPID,
+      </if>
+      <if test="steppasstime != null" >
+        STEPPASSTIME,
+      </if>
+      <if test="defectflag != null" >
+        DEFECTFLAG,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="stationid != null" >
+        STATIONID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="wipresid != null" >
+        WIPRESID,
+      </if>
+      <if test="defectqty != null" >
+        DEFECTQTY,
+      </if>
+      <if test="wipqty != null" >
+        WIPQTY,
+      </if>
+      <if test="scrapqty != null" >
+        SCRAPQTY,
+      </if>
+      <if test="workinghours != null" >
+        WORKINGHOURS,
+      </if>
+      <if test="ospInvoicedetailid != null" >
+        OSP_INVOICEDETAILID,
+      </if>
+      <if test="testversion != null" >
+        TESTVERSION,
+      </if>
+      <if test="processseq != null" >
+        PROCESSSEQ,
+      </if>
+      <if test="workorderid != null" >
+        WORKORDERID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="datecode != null" >
+        DATECODE,
+      </if>
+      <if test="shipid != null" >
+        SHIPID,
+      </if>
+      <if test="eqpworkhours != null" >
+        EQPWORKHOURS,
+      </if>
+      <if test="ospvendorcode != null" >
+        OSPVENDORCODE,
+      </if>
+      <if test="ospvendorname != null" >
+        OSPVENDORNAME,
+      </if>
+      <if test="stepidparent != null" >
+        STEPIDPARENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wiplogid != null" >
+        #{wiplogid,jdbcType=VARCHAR},
+      </if>
+      <if test="wipid != null" >
+        #{wipid,jdbcType=VARCHAR},
+      </if>
+      <if test="stepid != null" >
+        #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="steppasstime != null" >
+        #{steppasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defectflag != null" >
+        #{defectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        #{stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="wipresid != null" >
+        #{wipresid,jdbcType=VARCHAR},
+      </if>
+      <if test="defectqty != null" >
+        #{defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="wipqty != null" >
+        #{wipqty,jdbcType=NUMERIC},
+      </if>
+      <if test="scrapqty != null" >
+        #{scrapqty,jdbcType=NUMERIC},
+      </if>
+      <if test="workinghours != null" >
+        #{workinghours,jdbcType=NUMERIC},
+      </if>
+      <if test="ospInvoicedetailid != null" >
+        #{ospInvoicedetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="testversion != null" >
+        #{testversion,jdbcType=VARCHAR},
+      </if>
+      <if test="processseq != null" >
+        #{processseq,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderid != null" >
+        #{workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datecode != null" >
+        #{datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpworkhours != null" >
+        #{eqpworkhours,jdbcType=NUMERIC},
+      </if>
+      <if test="ospvendorcode != null" >
+        #{ospvendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="ospvendorname != null" >
+        #{ospvendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="stepidparent != null" >
+        #{stepidparent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update WIPLOG
+    <set >
+      <if test="record.wiplogid != null" >
+        WIPLOGID = #{record.wiplogid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wipid != null" >
+        WIPID = #{record.wipid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepid != null" >
+        STEPID = #{record.stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.steppasstime != null" >
+        STEPPASSTIME = #{record.steppasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.defectflag != null" >
+        DEFECTFLAG = #{record.defectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineid != null" >
+        LINEID = #{record.lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationid != null" >
+        STATIONID = #{record.stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotid != null" >
+        LOTID = #{record.lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moid != null" >
+        MOID = #{record.moid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wipresid != null" >
+        WIPRESID = #{record.wipresid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectqty != null" >
+        DEFECTQTY = #{record.defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.wipqty != null" >
+        WIPQTY = #{record.wipqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.scrapqty != null" >
+        SCRAPQTY = #{record.scrapqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.workinghours != null" >
+        WORKINGHOURS = #{record.workinghours,jdbcType=NUMERIC},
+      </if>
+      <if test="record.ospInvoicedetailid != null" >
+        OSP_INVOICEDETAILID = #{record.ospInvoicedetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testversion != null" >
+        TESTVERSION = #{record.testversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processseq != null" >
+        PROCESSSEQ = #{record.processseq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderid != null" >
+        WORKORDERID = #{record.workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datecode != null" >
+        DATECODE = #{record.datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipid != null" >
+        SHIPID = #{record.shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eqpworkhours != null" >
+        EQPWORKHOURS = #{record.eqpworkhours,jdbcType=NUMERIC},
+      </if>
+      <if test="record.ospvendorcode != null" >
+        OSPVENDORCODE = #{record.ospvendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ospvendorname != null" >
+        OSPVENDORNAME = #{record.ospvendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepidparent != null" >
+        STEPIDPARENT = #{record.stepidparent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update WIPLOG
+    set WIPLOGID = #{record.wiplogid,jdbcType=VARCHAR},
+      WIPID = #{record.wipid,jdbcType=VARCHAR},
+      STEPID = #{record.stepid,jdbcType=VARCHAR},
+      STEPPASSTIME = #{record.steppasstime,jdbcType=TIMESTAMP},
+      DEFECTFLAG = #{record.defectflag,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      LINEID = #{record.lineid,jdbcType=VARCHAR},
+      STATIONID = #{record.stationid,jdbcType=VARCHAR},
+      LOTID = #{record.lotid,jdbcType=VARCHAR},
+      MOID = #{record.moid,jdbcType=VARCHAR},
+      WIPRESID = #{record.wipresid,jdbcType=VARCHAR},
+      DEFECTQTY = #{record.defectqty,jdbcType=NUMERIC},
+      WIPQTY = #{record.wipqty,jdbcType=NUMERIC},
+      SCRAPQTY = #{record.scrapqty,jdbcType=NUMERIC},
+      WORKINGHOURS = #{record.workinghours,jdbcType=NUMERIC},
+      OSP_INVOICEDETAILID = #{record.ospInvoicedetailid,jdbcType=VARCHAR},
+      TESTVERSION = #{record.testversion,jdbcType=VARCHAR},
+      PROCESSSEQ = #{record.processseq,jdbcType=VARCHAR},
+      WORKORDERID = #{record.workorderid,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      DATECODE = #{record.datecode,jdbcType=VARCHAR},
+      SHIPID = #{record.shipid,jdbcType=VARCHAR},
+      EQPWORKHOURS = #{record.eqpworkhours,jdbcType=NUMERIC},
+      OSPVENDORCODE = #{record.ospvendorcode,jdbcType=VARCHAR},
+      OSPVENDORNAME = #{record.ospvendorname,jdbcType=VARCHAR},
+      STEPIDPARENT = #{record.stepidparent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

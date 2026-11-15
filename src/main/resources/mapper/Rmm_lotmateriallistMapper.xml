@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Rmm_lotmateriallistMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Rmm_lotmateriallist" >
+    <id column="LMID" property="lmid" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LOTNAME" property="lotname" jdbcType="VARCHAR" />
+    <result column="PN" property="pn" jdbcType="VARCHAR" />
+    <result column="UNITQTY" property="unitqty" jdbcType="NUMERIC" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="RELEASEQTY" property="releaseqty" jdbcType="NUMERIC" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="STEP" property="step" jdbcType="VARCHAR" />
+    <result column="MAINPN" property="mainpn" jdbcType="VARCHAR" />
+    <result column="MAINUNITQTY" property="mainunitqty" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LMID, LOTID, LOTNAME, PN, UNITQTY, TOTALQTY, RELEASEQTY, DESCRIPTION, DATETIME, STEP, 
+    MAINPN, MAINUNITQTY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RMM_LOTMATERIALLIST
+    where LMID = #{lmid,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByLotAndPn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from RMM_LOTMATERIALLIST
+        where LOTNAME = #{lotname,jdbcType=VARCHAR}
+        AND PN = #{pn,jdbcType=VARCHAR}
+        AND ROWNUM=1
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RMM_LOTMATERIALLIST
+    where LMID = #{lmid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Rmm_lotmateriallist" >
+    insert into RMM_LOTMATERIALLIST (LMID, LOTID, LOTNAME, 
+      PN, UNITQTY, TOTALQTY, 
+      RELEASEQTY, DESCRIPTION, DATETIME, 
+      STEP, MAINPN, MAINUNITQTY
+      )
+    values (#{lmid,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{lotname,jdbcType=VARCHAR}, 
+      #{pn,jdbcType=VARCHAR}, #{unitqty,jdbcType=NUMERIC}, #{totalqty,jdbcType=NUMERIC}, 
+      #{releaseqty,jdbcType=NUMERIC}, #{description,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{step,jdbcType=VARCHAR}, #{mainpn,jdbcType=VARCHAR}, #{mainunitqty,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Rmm_lotmateriallist" >
+    insert into RMM_LOTMATERIALLIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lmid != null" >
+        LMID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lotname != null" >
+        LOTNAME,
+      </if>
+      <if test="pn != null" >
+        PN,
+      </if>
+      <if test="unitqty != null" >
+        UNITQTY,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="step != null" >
+        STEP,
+      </if>
+      <if test="mainpn != null" >
+        MAINPN,
+      </if>
+      <if test="mainunitqty != null" >
+        MAINUNITQTY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lmid != null" >
+        #{lmid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotname != null" >
+        #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null" >
+        #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releaseqty != null" >
+        #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=VARCHAR},
+      </if>
+      <if test="mainpn != null" >
+        #{mainpn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainunitqty != null" >
+        #{mainunitqty,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Rmm_lotmateriallist" >
+    update RMM_LOTMATERIALLIST
+    <set >
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotname != null" >
+        LOTNAME = #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null" >
+        UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="step != null" >
+        STEP = #{step,jdbcType=VARCHAR},
+      </if>
+      <if test="mainpn != null" >
+        MAINPN = #{mainpn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainunitqty != null" >
+        MAINUNITQTY = #{mainunitqty,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where LMID = #{lmid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Rmm_lotmateriallist" >
+    update RMM_LOTMATERIALLIST
+    set LOTID = #{lotid,jdbcType=VARCHAR},
+      LOTNAME = #{lotname,jdbcType=VARCHAR},
+      PN = #{pn,jdbcType=VARCHAR},
+      UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      STEP = #{step,jdbcType=VARCHAR},
+      MAINPN = #{mainpn,jdbcType=VARCHAR},
+      MAINUNITQTY = #{mainunitqty,jdbcType=NUMERIC}
+    where LMID = #{lmid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.UserprofileMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Userprofile" >
+    <id column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="FULLNAME" property="fullname" jdbcType="VARCHAR" />
+    <result column="ACTIVATIONDATE" property="activationdate" jdbcType="TIMESTAMP" />
+    <result column="EXPIRATIONDATE" property="expirationdate" jdbcType="TIMESTAMP" />
+    <result column="AGAINPERIOD" property="againperiod" jdbcType="VARCHAR" />
+    <result column="LASTPASSWORDDATE" property="lastpassworddate" jdbcType="VARCHAR" />
+    <result column="EMAILADDRESS" property="emailaddress" jdbcType="VARCHAR" />
+    <result column="EMAILPWD" property="emailpwd" jdbcType="VARCHAR" />
+    <result column="EMAILSERVER" property="emailserver" jdbcType="VARCHAR" />
+    <result column="FACTORYNAME" property="factoryname" jdbcType="VARCHAR" />
+    <result column="LINENAME" property="linename" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="USERPOSITION" property="userposition" jdbcType="VARCHAR" />
+    <result column="PHONENUMBER" property="phonenumber" jdbcType="VARCHAR" />
+    <result column="OBJECT2" property="object2" jdbcType="VARCHAR" />
+    <result column="OBJECT3" property="object3" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="OAADDRESS" property="oaaddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USERID, USERNAME, PASSWORD, FULLNAME, ACTIVATIONDATE, EXPIRATIONDATE, AGAINPERIOD, 
+    LASTPASSWORDDATE, EMAILADDRESS, EMAILPWD, EMAILSERVER, FACTORYNAME, LINENAME, DEPARTMENT, 
+    USERPOSITION, PHONENUMBER, OBJECT2, OBJECT3, STATUS, OAADDRESS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.UserprofileExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from USERPROFILE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from USERPROFILE
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="UserprofileGetByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from USERPROFILE
+    where USERNAME = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="UserprofileGetByUserNameAndPassword" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    *
+    from USERPROFILE
+    where USERNAME = #{username,jdbcType=VARCHAR}
+    AND PASSWORD = #{password,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from USERPROFILE
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Userprofile" >
+    insert into USERPROFILE (USERID, USERNAME, PASSWORD, 
+      FULLNAME, ACTIVATIONDATE, EXPIRATIONDATE, 
+      AGAINPERIOD, LASTPASSWORDDATE, EMAILADDRESS, 
+      EMAILPWD, EMAILSERVER, FACTORYNAME, 
+      LINENAME, DEPARTMENT, USERPOSITION, 
+      PHONENUMBER, OBJECT2, OBJECT3, 
+      STATUS, OAADDRESS)
+    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{fullname,jdbcType=VARCHAR}, #{activationdate,jdbcType=TIMESTAMP}, #{expirationdate,jdbcType=TIMESTAMP}, 
+      #{againperiod,jdbcType=VARCHAR}, #{lastpassworddate,jdbcType=VARCHAR}, #{emailaddress,jdbcType=VARCHAR}, 
+      #{emailpwd,jdbcType=VARCHAR}, #{emailserver,jdbcType=VARCHAR}, #{factoryname,jdbcType=VARCHAR}, 
+      #{linename,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{userposition,jdbcType=VARCHAR}, 
+      #{phonenumber,jdbcType=VARCHAR}, #{object2,jdbcType=VARCHAR}, #{object3,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{oaaddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Userprofile" >
+    insert into USERPROFILE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="fullname != null" >
+        FULLNAME,
+      </if>
+      <if test="activationdate != null" >
+        ACTIVATIONDATE,
+      </if>
+      <if test="expirationdate != null" >
+        EXPIRATIONDATE,
+      </if>
+      <if test="againperiod != null" >
+        AGAINPERIOD,
+      </if>
+      <if test="lastpassworddate != null" >
+        LASTPASSWORDDATE,
+      </if>
+      <if test="emailaddress != null" >
+        EMAILADDRESS,
+      </if>
+      <if test="emailpwd != null" >
+        EMAILPWD,
+      </if>
+      <if test="emailserver != null" >
+        EMAILSERVER,
+      </if>
+      <if test="factoryname != null" >
+        FACTORYNAME,
+      </if>
+      <if test="linename != null" >
+        LINENAME,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="userposition != null" >
+        USERPOSITION,
+      </if>
+      <if test="phonenumber != null" >
+        PHONENUMBER,
+      </if>
+      <if test="object2 != null" >
+        OBJECT2,
+      </if>
+      <if test="object3 != null" >
+        OBJECT3,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="oaaddress != null" >
+        OAADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="activationdate != null" >
+        #{activationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationdate != null" >
+        #{expirationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="againperiod != null" >
+        #{againperiod,jdbcType=VARCHAR},
+      </if>
+      <if test="lastpassworddate != null" >
+        #{lastpassworddate,jdbcType=VARCHAR},
+      </if>
+      <if test="emailaddress != null" >
+        #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emailpwd != null" >
+        #{emailpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="emailserver != null" >
+        #{emailserver,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="linename != null" >
+        #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="userposition != null" >
+        #{userposition,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="object2 != null" >
+        #{object2,jdbcType=VARCHAR},
+      </if>
+      <if test="object3 != null" >
+        #{object3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="oaaddress != null" >
+        #{oaaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Userprofile" >
+    update USERPROFILE
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        FULLNAME = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="activationdate != null" >
+        ACTIVATIONDATE = #{activationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expirationdate != null" >
+        EXPIRATIONDATE = #{expirationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="againperiod != null" >
+        AGAINPERIOD = #{againperiod,jdbcType=VARCHAR},
+      </if>
+      <if test="lastpassworddate != null" >
+        LASTPASSWORDDATE = #{lastpassworddate,jdbcType=VARCHAR},
+      </if>
+      <if test="emailaddress != null" >
+        EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emailpwd != null" >
+        EMAILPWD = #{emailpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="emailserver != null" >
+        EMAILSERVER = #{emailserver,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        FACTORYNAME = #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="linename != null" >
+        LINENAME = #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="userposition != null" >
+        USERPOSITION = #{userposition,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="object2 != null" >
+        OBJECT2 = #{object2,jdbcType=VARCHAR},
+      </if>
+      <if test="object3 != null" >
+        OBJECT3 = #{object3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="oaaddress != null" >
+        OAADDRESS = #{oaaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Userprofile" >
+    update USERPROFILE
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      FULLNAME = #{fullname,jdbcType=VARCHAR},
+      ACTIVATIONDATE = #{activationdate,jdbcType=TIMESTAMP},
+      EXPIRATIONDATE = #{expirationdate,jdbcType=TIMESTAMP},
+      AGAINPERIOD = #{againperiod,jdbcType=VARCHAR},
+      LASTPASSWORDDATE = #{lastpassworddate,jdbcType=VARCHAR},
+      EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+      EMAILPWD = #{emailpwd,jdbcType=VARCHAR},
+      EMAILSERVER = #{emailserver,jdbcType=VARCHAR},
+      FACTORYNAME = #{factoryname,jdbcType=VARCHAR},
+      LINENAME = #{linename,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      USERPOSITION = #{userposition,jdbcType=VARCHAR},
+      PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      OBJECT2 = #{object2,jdbcType=VARCHAR},
+      OBJECT3 = #{object3,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      OAADDRESS = #{oaaddress,jdbcType=VARCHAR}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectByHrDetail" resultType="com.jcd.dto.Hrdetail" parameterType="java.lang.String" >
+        select * from(
+        SELECT HR_DEPT_NAME site ,USERNUMBER employeeId,USERNAME employeeName
+
+        from CUX_ERP_HR_HRDETAIL@JCD_DEMO WHERE CREATETIME > SYSDATE-30
+        and USERNUMBER = #{userid,jdbcType=VARCHAR}
+        order by CREATETIME desc
+                     ) where rownum=1
+    </select>
+</mapper>

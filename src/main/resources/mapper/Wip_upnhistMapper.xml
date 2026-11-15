@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Wip_upnhistMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Wip_upnhist" >
+    <id column="HISTID" property="histid" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="SLOT" property="slot" jdbcType="VARCHAR" />
+    <result column="UPNID" property="upnid" jdbcType="VARCHAR" />
+    <result column="BEGINTIME" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="ENDTIME" property="endtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    HISTID, LOTID, MOID, SLOT, UPNID, BEGINTIME, ENDTIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WIP_UPNHIST
+    where HISTID = #{histid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="Wip_upnhistsGetbyUpnidAndMoid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from WIP_UPNHIST
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+    AND MOID=#{moid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WIP_UPNHIST
+    where HISTID = #{histid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Wip_upnhist" >
+    insert into WIP_UPNHIST (HISTID, LOTID, MOID, 
+      SLOT, UPNID, BEGINTIME, 
+      ENDTIME)
+    values (#{histid,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{moid,jdbcType=VARCHAR}, 
+      #{slot,jdbcType=VARCHAR}, #{upnid,jdbcType=VARCHAR}, #{begintime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Wip_upnhist" >
+    insert into WIP_UPNHIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="histid != null" >
+        HISTID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="slot != null" >
+        SLOT,
+      </if>
+      <if test="upnid != null" >
+        UPNID,
+      </if>
+      <if test="begintime != null" >
+        BEGINTIME,
+      </if>
+      <if test="endtime != null" >
+        ENDTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="histid != null" >
+        #{histid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Wip_upnhist" >
+    update WIP_UPNHIST
+    <set >
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        MOID = #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        SLOT = #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        UPNID = #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        BEGINTIME = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where HISTID = #{histid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Wip_upnhist" >
+    update WIP_UPNHIST
+    set LOTID = #{lotid,jdbcType=VARCHAR},
+      MOID = #{moid,jdbcType=VARCHAR},
+      SLOT = #{slot,jdbcType=VARCHAR},
+      UPNID = #{upnid,jdbcType=VARCHAR},
+      BEGINTIME = #{begintime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP}
+    where HISTID = #{histid,jdbcType=VARCHAR}
+  </update>
+
+  <update id="Wip_upnhistUpdateEndtimeNull" parameterType="com.jcd.model.Wip_upnhist" >
+    update WIP_UPNHIST
+    set
+      ENDTIME = NULL
+    where MOID = #{moid,jdbcType=VARCHAR}
+    AND UPNID = #{upnid,jdbcType=VARCHAR}
+  </update>
+</mapper>

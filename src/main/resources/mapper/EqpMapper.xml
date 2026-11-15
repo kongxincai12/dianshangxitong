@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.EqpMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Eqp" >
+    <id column="EQPID" property="eqpid" jdbcType="VARCHAR" />
+    <result column="EQPNAME" property="eqpname" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="EQPTYPEID" property="eqptypeid" jdbcType="VARCHAR" />
+    <result column="TEMPLATEID" property="templateid" jdbcType="VARCHAR" />
+    <result column="MAXCAPACITY" property="maxcapacity" jdbcType="NUMERIC" />
+    <result column="CURRENTCAPACITY" property="currentcapacity" jdbcType="NUMERIC" />
+    <result column="UNITOFCAPACITY" property="unitofcapacity" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="CURRENTLOT" property="currentlot" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="EVENTSETID" property="eventsetid" jdbcType="VARCHAR" />
+    <result column="EQPMODULE" property="eqpmodule" jdbcType="VARCHAR" />
+    <result column="EQPSEQ" property="eqpseq" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="VARCHAR" />
+    <result column="BUYDATE" property="buydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    EQPID, EQPNAME, DESCRIPTION, EQPTYPEID, TEMPLATEID, MAXCAPACITY, CURRENTCAPACITY, 
+    UNITOFCAPACITY, STATE, CURRENTLOT, USERNAME, DATETIME, EVENTSETID, EQPMODULE, EQPSEQ, 
+    VERSION, BUYDATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from EQP
+    where EQPID = #{eqpid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="GetEqpbyEqpname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from EQP
+    where EQPNAME = #{eqpid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from EQP
+    where EQPID = #{eqpid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Eqp" >
+    insert into EQP (EQPID, EQPNAME, DESCRIPTION, 
+      EQPTYPEID, TEMPLATEID, MAXCAPACITY, 
+      CURRENTCAPACITY, UNITOFCAPACITY, STATE, 
+      CURRENTLOT, USERNAME, DATETIME, 
+      EVENTSETID, EQPMODULE, EQPSEQ, 
+      VERSION, BUYDATE)
+    values (#{eqpid,jdbcType=VARCHAR}, #{eqpname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{eqptypeid,jdbcType=VARCHAR}, #{templateid,jdbcType=VARCHAR}, #{maxcapacity,jdbcType=NUMERIC}, 
+      #{currentcapacity,jdbcType=NUMERIC}, #{unitofcapacity,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{currentlot,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}, 
+      #{eventsetid,jdbcType=VARCHAR}, #{eqpmodule,jdbcType=VARCHAR}, #{eqpseq,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{buydate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Eqp" >
+    insert into EQP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eqpid != null" >
+        EQPID,
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="eqptypeid != null" >
+        EQPTYPEID,
+      </if>
+      <if test="templateid != null" >
+        TEMPLATEID,
+      </if>
+      <if test="maxcapacity != null" >
+        MAXCAPACITY,
+      </if>
+      <if test="currentcapacity != null" >
+        CURRENTCAPACITY,
+      </if>
+      <if test="unitofcapacity != null" >
+        UNITOFCAPACITY,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="currentlot != null" >
+        CURRENTLOT,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="eventsetid != null" >
+        EVENTSETID,
+      </if>
+      <if test="eqpmodule != null" >
+        EQPMODULE,
+      </if>
+      <if test="eqpseq != null" >
+        EQPSEQ,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="buydate != null" >
+        BUYDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eqpid != null" >
+        #{eqpid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="eqptypeid != null" >
+        #{eqptypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null" >
+        #{templateid,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcapacity != null" >
+        #{maxcapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="currentcapacity != null" >
+        #{currentcapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="unitofcapacity != null" >
+        #{unitofcapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="currentlot != null" >
+        #{currentlot,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="eventsetid != null" >
+        #{eventsetid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpmodule != null" >
+        #{eqpmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpseq != null" >
+        #{eqpseq,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="buydate != null" >
+        #{buydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Eqp" >
+    update EQP
+    <set >
+      <if test="eqpname != null" >
+        EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="eqptypeid != null" >
+        EQPTYPEID = #{eqptypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null" >
+        TEMPLATEID = #{templateid,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcapacity != null" >
+        MAXCAPACITY = #{maxcapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="currentcapacity != null" >
+        CURRENTCAPACITY = #{currentcapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="unitofcapacity != null" >
+        UNITOFCAPACITY = #{unitofcapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="currentlot != null" >
+        CURRENTLOT = #{currentlot,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="eventsetid != null" >
+        EVENTSETID = #{eventsetid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpmodule != null" >
+        EQPMODULE = #{eqpmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpseq != null" >
+        EQPSEQ = #{eqpseq,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="buydate != null" >
+        BUYDATE = #{buydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where EQPID = #{eqpid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Eqp" >
+    update EQP
+    set EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      EQPTYPEID = #{eqptypeid,jdbcType=VARCHAR},
+      TEMPLATEID = #{templateid,jdbcType=VARCHAR},
+      MAXCAPACITY = #{maxcapacity,jdbcType=NUMERIC},
+      CURRENTCAPACITY = #{currentcapacity,jdbcType=NUMERIC},
+      UNITOFCAPACITY = #{unitofcapacity,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      CURRENTLOT = #{currentlot,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      EVENTSETID = #{eventsetid,jdbcType=VARCHAR},
+      EQPMODULE = #{eqpmodule,jdbcType=VARCHAR},
+      EQPSEQ = #{eqpseq,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=VARCHAR},
+      BUYDATE = #{buydate,jdbcType=TIMESTAMP}
+    where EQPID = #{eqpid,jdbcType=VARCHAR}
+  </update>
+</mapper>

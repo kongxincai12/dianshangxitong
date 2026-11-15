@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.UpnMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Upn" >
+    <id column="UPNID" property="upnid" jdbcType="VARCHAR" />
+    <result column="PNID" property="pnid" jdbcType="VARCHAR" />
+    <result column="FACTORYID" property="factoryid" jdbcType="VARCHAR" />
+    <result column="UPNNAME" property="upnname" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="IQCCHECKINFO" property="iqccheckinfo" jdbcType="VARCHAR" />
+    <result column="IQCSTATUS" property="iqcstatus" jdbcType="VARCHAR" />
+    <result column="RELEASEPRIORITY" property="releasepriority" jdbcType="NUMERIC" />
+    <result column="SPLITFLAG" property="splitflag" jdbcType="VARCHAR" />
+    <result column="RETURNFLAG" property="returnflag" jdbcType="VARCHAR" />
+    <result column="LOCATIONID" property="locationid" jdbcType="VARCHAR" />
+    <result column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="FEEDERID" property="feederid" jdbcType="VARCHAR" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="REMAININGQTY" property="remainingqty" jdbcType="NUMERIC" />
+    <result column="MSDLEVEL" property="msdlevel" jdbcType="VARCHAR" />
+    <result column="MSDSTARTTIME" property="msdstarttime" jdbcType="VARCHAR" />
+    <result column="MSDTOTALTIME" property="msdtotaltime" jdbcType="NUMERIC" />
+    <result column="LEADFREE" property="leadfree" jdbcType="VARCHAR" />
+    <result column="RESERVEDFOR" property="reservedfor" jdbcType="VARCHAR" />
+    <result column="EQPNAME" property="eqpname" jdbcType="VARCHAR" />
+    <result column="SLOT" property="slot" jdbcType="VARCHAR" />
+    <result column="CURRENTSTEPID" property="currentstepid" jdbcType="VARCHAR" />
+    <result column="FEEDERTYPE" property="feedertype" jdbcType="VARCHAR" />
+    <result column="DATECODE" property="datecode" jdbcType="VARCHAR" />
+    <result column="VERIFICATIONTIME" property="verificationtime" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="PROCESSID" property="processid" jdbcType="VARCHAR" />
+    <result column="NODEHANDLE" property="nodehandle" jdbcType="VARCHAR" />
+    <result column="ACTIONID" property="actionid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="CURRENTSECTION" property="currentsection" jdbcType="VARCHAR" />
+    <result column="OBJ01" property="obj01" jdbcType="VARCHAR" />
+    <result column="OBJ02" property="obj02" jdbcType="VARCHAR" />
+    <result column="OBJ03" property="obj03" jdbcType="VARCHAR" />
+    <result column="REPLENISHGROUPID" property="replenishgroupid" jdbcType="VARCHAR" />
+    <result column="UOM" property="uom" jdbcType="VARCHAR" />
+    <result column="MATERIALATTR" property="materialattr" jdbcType="VARCHAR" />
+    <result column="MATERIALSTORAGE" property="materialstorage" jdbcType="VARCHAR" />
+    <result column="PACKSTYLE" property="packstyle" jdbcType="VARCHAR" />
+    <result column="OUTQTY" property="outqty" jdbcType="NUMERIC" />
+    <result column="LINESITERETURNFLAG" property="linesitereturnflag" jdbcType="VARCHAR" />
+    <result column="RELEASEQTY" property="releaseqty" jdbcType="NUMERIC" />
+    <result column="SHIPID" property="shipid" jdbcType="VARCHAR" />
+    <result column="ASN" property="asn" jdbcType="VARCHAR" />
+    <result column="MATERIALATTR2" property="materialattr2" jdbcType="VARCHAR" />
+    <result column="OTHERS" property="others" jdbcType="VARCHAR" />
+    <result column="OBJ04" property="obj04" jdbcType="VARCHAR" />
+    <result column="OBJ05" property="obj05" jdbcType="VARCHAR" />
+    <result column="OBJ06" property="obj06" jdbcType="VARCHAR" />
+    <result column="OBJ07" property="obj07" jdbcType="VARCHAR" />
+    <result column="OBJ08" property="obj08" jdbcType="VARCHAR" />
+    <result column="OBJ09" property="obj09" jdbcType="VARCHAR" />
+    <result column="OBJ10" property="obj10" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UPNID, PNID, FACTORYID, UPNNAME, DESCRIPTION, IQCCHECKINFO, IQCSTATUS, RELEASEPRIORITY, 
+    SPLITFLAG, RETURNFLAG, LOCATIONID, MOID, FEEDERID, TOTALQTY, REMAININGQTY, MSDLEVEL, 
+    MSDSTARTTIME, MSDTOTALTIME, LEADFREE, RESERVEDFOR, EQPNAME, SLOT, CURRENTSTEPID, 
+    FEEDERTYPE, DATECODE, VERIFICATIONTIME, STATE, PROCESSID, NODEHANDLE, ACTIONID, USERNAME, 
+    DATETIME, CURRENTSECTION, OBJ01, OBJ02, OBJ03, REPLENISHGROUPID, UOM, MATERIALATTR, 
+    MATERIALSTORAGE, PACKSTYLE, OUTQTY, LINESITERETURNFLAG, RELEASEQTY, SHIPID, ASN, 
+    MATERIALATTR2, OTHERS, OBJ04, OBJ05, OBJ06, OBJ07, OBJ08, OBJ09, OBJ10
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from UPN
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from UPN
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="GetUpnByUpnname" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where UPNNAME = #{upname,jdbcType=VARCHAR}
+
+
+  </select>
+
+  <!-- 根据储位编码(LOC_NAME)查询该储位上的有效UPN -->
+  <select id="selectActiveUpnByLocationName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT U.* FROM UPN U
+    JOIN LOCATION L ON U.LOCATIONID = L.LOCATIONID
+    WHERE L.LOCATIONNAME = #{locName,jdbcType=VARCHAR}
+      AND U.REMAININGQTY > 0
+      AND U.STATE IN ('ACTIVE', 'HOLD', 'NG')
+  </select>
+
+  <select id="GetUpnByFeederid" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where FEEDERID = #{feederid,jdbcType=VARCHAR}
+  </select>
+  <select id="GetUpnByMoid" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where MOID = #{moid,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="UpnGetByMOIDAndEQPNameAndSlot" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where MOID = #{moid,jdbcType=VARCHAR}
+    AND EQPNAME = #{eqpname,jdbcType=VARCHAR}
+    AND SLOT = #{slot,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="UpnGetByMOIDAndEQPNameAndSlotAndFeeder" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where MOID = #{moid,jdbcType=VARCHAR}
+    AND EQPNAME = #{eqpname,jdbcType=VARCHAR}
+    AND SLOT = #{slot,jdbcType=VARCHAR}
+    AND FEEDERID IN (SELECT FEEDERID FROM FEEDER WHERE FEEDERNAME= #{feeder,jdbcType=VARCHAR})
+  </select>
+  <select id="UpnGetGDByMOID" resultType="com.jcd.model.Upn" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from UPN
+    where MOID = #{moid,jdbcType=VARCHAR}
+    AND UPNNAME LIKE '0000001%'
+
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.Upn" >
+    insert into UPN (UPNID, PNID, FACTORYID, 
+      UPNNAME, DESCRIPTION, IQCCHECKINFO, 
+      IQCSTATUS, RELEASEPRIORITY, SPLITFLAG, 
+      RETURNFLAG, LOCATIONID, MOID, 
+      FEEDERID, TOTALQTY, REMAININGQTY, 
+      MSDLEVEL, MSDSTARTTIME, MSDTOTALTIME, 
+      LEADFREE, RESERVEDFOR, EQPNAME, 
+      SLOT, CURRENTSTEPID, FEEDERTYPE, 
+      DATECODE, VERIFICATIONTIME, STATE, 
+      PROCESSID, NODEHANDLE, ACTIONID, 
+      USERNAME, DATETIME, CURRENTSECTION, 
+      OBJ01, OBJ02, OBJ03, 
+      REPLENISHGROUPID, UOM, MATERIALATTR, 
+      MATERIALSTORAGE, PACKSTYLE, OUTQTY, 
+      LINESITERETURNFLAG, RELEASEQTY, SHIPID, 
+      ASN, MATERIALATTR2, OTHERS, 
+      OBJ04, OBJ05, OBJ06, 
+      OBJ07, OBJ08, OBJ09, 
+      OBJ10)
+    values (#{upnid,jdbcType=VARCHAR}, #{pnid,jdbcType=VARCHAR}, #{factoryid,jdbcType=VARCHAR}, 
+      #{upnname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{iqccheckinfo,jdbcType=VARCHAR}, 
+      #{iqcstatus,jdbcType=VARCHAR}, #{releasepriority,jdbcType=NUMERIC}, #{splitflag,jdbcType=VARCHAR}, 
+      #{returnflag,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, #{moid,jdbcType=VARCHAR}, 
+      #{feederid,jdbcType=VARCHAR}, #{totalqty,jdbcType=NUMERIC}, #{remainingqty,jdbcType=NUMERIC}, 
+      #{msdlevel,jdbcType=VARCHAR}, #{msdstarttime,jdbcType=VARCHAR}, #{msdtotaltime,jdbcType=NUMERIC}, 
+      #{leadfree,jdbcType=VARCHAR}, #{reservedfor,jdbcType=VARCHAR}, #{eqpname,jdbcType=VARCHAR}, 
+      #{slot,jdbcType=VARCHAR}, #{currentstepid,jdbcType=VARCHAR}, #{feedertype,jdbcType=VARCHAR}, 
+      #{datecode,jdbcType=VARCHAR}, #{verificationtime,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{processid,jdbcType=VARCHAR}, #{nodehandle,jdbcType=VARCHAR}, #{actionid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{currentsection,jdbcType=VARCHAR}, 
+      #{obj01,jdbcType=VARCHAR}, #{obj02,jdbcType=VARCHAR}, #{obj03,jdbcType=VARCHAR}, 
+      #{replenishgroupid,jdbcType=VARCHAR}, #{uom,jdbcType=VARCHAR}, #{materialattr,jdbcType=VARCHAR}, 
+      #{materialstorage,jdbcType=VARCHAR}, #{packstyle,jdbcType=VARCHAR}, #{outqty,jdbcType=NUMERIC}, 
+      #{linesitereturnflag,jdbcType=VARCHAR}, #{releaseqty,jdbcType=NUMERIC}, #{shipid,jdbcType=VARCHAR}, 
+      #{asn,jdbcType=VARCHAR}, #{materialattr2,jdbcType=VARCHAR}, #{others,jdbcType=VARCHAR}, 
+      #{obj04,jdbcType=VARCHAR}, #{obj05,jdbcType=VARCHAR}, #{obj06,jdbcType=VARCHAR}, 
+      #{obj07,jdbcType=VARCHAR}, #{obj08,jdbcType=VARCHAR}, #{obj09,jdbcType=VARCHAR}, 
+      #{obj10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Upn" >
+    insert into UPN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="upnid != null" >
+        UPNID,
+      </if>
+      <if test="pnid != null" >
+        PNID,
+      </if>
+      <if test="factoryid != null" >
+        FACTORYID,
+      </if>
+      <if test="upnname != null" >
+        UPNNAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="iqccheckinfo != null" >
+        IQCCHECKINFO,
+      </if>
+      <if test="iqcstatus != null" >
+        IQCSTATUS,
+      </if>
+      <if test="releasepriority != null" >
+        RELEASEPRIORITY,
+      </if>
+      <if test="splitflag != null" >
+        SPLITFLAG,
+      </if>
+      <if test="returnflag != null" >
+        RETURNFLAG,
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID,
+      </if>
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="feederid != null" >
+        FEEDERID,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="remainingqty != null" >
+        REMAININGQTY,
+      </if>
+      <if test="msdlevel != null" >
+        MSDLEVEL,
+      </if>
+      <if test="msdstarttime != null" >
+        MSDSTARTTIME,
+      </if>
+      <if test="msdtotaltime != null" >
+        MSDTOTALTIME,
+      </if>
+      <if test="leadfree != null" >
+        LEADFREE,
+      </if>
+      <if test="reservedfor != null" >
+        RESERVEDFOR,
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME,
+      </if>
+      <if test="slot != null" >
+        SLOT,
+      </if>
+      <if test="currentstepid != null" >
+        CURRENTSTEPID,
+      </if>
+      <if test="feedertype != null" >
+        FEEDERTYPE,
+      </if>
+      <if test="datecode != null" >
+        DATECODE,
+      </if>
+      <if test="verificationtime != null" >
+        VERIFICATIONTIME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="processid != null" >
+        PROCESSID,
+      </if>
+      <if test="nodehandle != null" >
+        NODEHANDLE,
+      </if>
+      <if test="actionid != null" >
+        ACTIONID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="currentsection != null" >
+        CURRENTSECTION,
+      </if>
+      <if test="obj01 != null" >
+        OBJ01,
+      </if>
+      <if test="obj02 != null" >
+        OBJ02,
+      </if>
+      <if test="obj03 != null" >
+        OBJ03,
+      </if>
+      <if test="replenishgroupid != null" >
+        REPLENISHGROUPID,
+      </if>
+      <if test="uom != null" >
+        UOM,
+      </if>
+      <if test="materialattr != null" >
+        MATERIALATTR,
+      </if>
+      <if test="materialstorage != null" >
+        MATERIALSTORAGE,
+      </if>
+      <if test="packstyle != null" >
+        PACKSTYLE,
+      </if>
+      <if test="outqty != null" >
+        OUTQTY,
+      </if>
+      <if test="linesitereturnflag != null" >
+        LINESITERETURNFLAG,
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY,
+      </if>
+      <if test="shipid != null" >
+        SHIPID,
+      </if>
+      <if test="asn != null" >
+        ASN,
+      </if>
+      <if test="materialattr2 != null" >
+        MATERIALATTR2,
+      </if>
+      <if test="others != null" >
+        OTHERS,
+      </if>
+      <if test="obj04 != null" >
+        OBJ04,
+      </if>
+      <if test="obj05 != null" >
+        OBJ05,
+      </if>
+      <if test="obj06 != null" >
+        OBJ06,
+      </if>
+      <if test="obj07 != null" >
+        OBJ07,
+      </if>
+      <if test="obj08 != null" >
+        OBJ08,
+      </if>
+      <if test="obj09 != null" >
+        OBJ09,
+      </if>
+      <if test="obj10 != null" >
+        OBJ10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="upnid != null" >
+        #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="pnid != null" >
+        #{pnid,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryid != null" >
+        #{factoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="iqccheckinfo != null" >
+        #{iqccheckinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="iqcstatus != null" >
+        #{iqcstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="releasepriority != null" >
+        #{releasepriority,jdbcType=NUMERIC},
+      </if>
+      <if test="splitflag != null" >
+        #{splitflag,jdbcType=VARCHAR},
+      </if>
+      <if test="returnflag != null" >
+        #{returnflag,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="feederid != null" >
+        #{feederid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainingqty != null" >
+        #{remainingqty,jdbcType=NUMERIC},
+      </if>
+      <if test="msdlevel != null" >
+        #{msdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="msdstarttime != null" >
+        #{msdstarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="msdtotaltime != null" >
+        #{msdtotaltime,jdbcType=NUMERIC},
+      </if>
+      <if test="leadfree != null" >
+        #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedfor != null" >
+        #{reservedfor,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstepid != null" >
+        #{currentstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="feedertype != null" >
+        #{feedertype,jdbcType=VARCHAR},
+      </if>
+      <if test="datecode != null" >
+        #{datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationtime != null" >
+        #{verificationtime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="processid != null" >
+        #{processid,jdbcType=VARCHAR},
+      </if>
+      <if test="nodehandle != null" >
+        #{nodehandle,jdbcType=VARCHAR},
+      </if>
+      <if test="actionid != null" >
+        #{actionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentsection != null" >
+        #{currentsection,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishgroupid != null" >
+        #{replenishgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="uom != null" >
+        #{uom,jdbcType=VARCHAR},
+      </if>
+      <if test="materialattr != null" >
+        #{materialattr,jdbcType=VARCHAR},
+      </if>
+      <if test="materialstorage != null" >
+        #{materialstorage,jdbcType=VARCHAR},
+      </if>
+      <if test="packstyle != null" >
+        #{packstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="outqty != null" >
+        #{outqty,jdbcType=NUMERIC},
+      </if>
+      <if test="linesitereturnflag != null" >
+        #{linesitereturnflag,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseqty != null" >
+        #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="shipid != null" >
+        #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="asn != null" >
+        #{asn,jdbcType=VARCHAR},
+      </if>
+      <if test="materialattr2 != null" >
+        #{materialattr2,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        #{obj10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Upn" >
+    update UPN
+    <set >
+      <if test="pnid != null" >
+        PNID = #{pnid,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryid != null" >
+        FACTORYID = #{factoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        UPNNAME = #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="iqccheckinfo != null" >
+        IQCCHECKINFO = #{iqccheckinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="iqcstatus != null" >
+        IQCSTATUS = #{iqcstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="releasepriority != null" >
+        RELEASEPRIORITY = #{releasepriority,jdbcType=NUMERIC},
+      </if>
+      <if test="splitflag != null" >
+        SPLITFLAG = #{splitflag,jdbcType=VARCHAR},
+      </if>
+      <if test="returnflag != null" >
+        RETURNFLAG = #{returnflag,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        MOID = #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="feederid != null" >
+        FEEDERID = #{feederid,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainingqty != null" >
+        REMAININGQTY = #{remainingqty,jdbcType=NUMERIC},
+      </if>
+      <if test="msdlevel != null" >
+        MSDLEVEL = #{msdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="msdstarttime != null" >
+        MSDSTARTTIME = #{msdstarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="msdtotaltime != null" >
+        MSDTOTALTIME = #{msdtotaltime,jdbcType=NUMERIC},
+      </if>
+      <if test="leadfree != null" >
+        LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedfor != null" >
+        RESERVEDFOR = #{reservedfor,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        SLOT = #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstepid != null" >
+        CURRENTSTEPID = #{currentstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="feedertype != null" >
+        FEEDERTYPE = #{feedertype,jdbcType=VARCHAR},
+      </if>
+      <if test="datecode != null" >
+        DATECODE = #{datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationtime != null" >
+        VERIFICATIONTIME = #{verificationtime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="processid != null" >
+        PROCESSID = #{processid,jdbcType=VARCHAR},
+      </if>
+      <if test="nodehandle != null" >
+        NODEHANDLE = #{nodehandle,jdbcType=VARCHAR},
+      </if>
+      <if test="actionid != null" >
+        ACTIONID = #{actionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentsection != null" >
+        CURRENTSECTION = #{currentsection,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        OBJ03 = #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishgroupid != null" >
+        REPLENISHGROUPID = #{replenishgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="uom != null" >
+        UOM = #{uom,jdbcType=VARCHAR},
+      </if>
+      <if test="materialattr != null" >
+        MATERIALATTR = #{materialattr,jdbcType=VARCHAR},
+      </if>
+      <if test="materialstorage != null" >
+        MATERIALSTORAGE = #{materialstorage,jdbcType=VARCHAR},
+      </if>
+      <if test="packstyle != null" >
+        PACKSTYLE = #{packstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="outqty != null" >
+        OUTQTY = #{outqty,jdbcType=NUMERIC},
+      </if>
+      <if test="linesitereturnflag != null" >
+        LINESITERETURNFLAG = #{linesitereturnflag,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="shipid != null" >
+        SHIPID = #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="asn != null" >
+        ASN = #{asn,jdbcType=VARCHAR},
+      </if>
+      <if test="materialattr2 != null" >
+        MATERIALATTR2 = #{materialattr2,jdbcType=VARCHAR},
+      </if>
+      <if test="others != null" >
+        OTHERS = #{others,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        OBJ04 = #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        OBJ05 = #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        OBJ06 = #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        OBJ07 = #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        OBJ08 = #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        OBJ09 = #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        OBJ10 = #{obj10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Upn" >
+    update UPN
+    set PNID = #{pnid,jdbcType=VARCHAR},
+      FACTORYID = #{factoryid,jdbcType=VARCHAR},
+      UPNNAME = #{upnname,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      IQCCHECKINFO = #{iqccheckinfo,jdbcType=VARCHAR},
+      IQCSTATUS = #{iqcstatus,jdbcType=VARCHAR},
+      RELEASEPRIORITY = #{releasepriority,jdbcType=NUMERIC},
+      SPLITFLAG = #{splitflag,jdbcType=VARCHAR},
+      RETURNFLAG = #{returnflag,jdbcType=VARCHAR},
+      LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      MOID = #{moid,jdbcType=VARCHAR},
+      FEEDERID = #{feederid,jdbcType=VARCHAR},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      REMAININGQTY = #{remainingqty,jdbcType=NUMERIC},
+      MSDLEVEL = #{msdlevel,jdbcType=VARCHAR},
+      MSDSTARTTIME = #{msdstarttime,jdbcType=VARCHAR},
+      MSDTOTALTIME = #{msdtotaltime,jdbcType=NUMERIC},
+      LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      RESERVEDFOR = #{reservedfor,jdbcType=VARCHAR},
+      EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      SLOT = #{slot,jdbcType=VARCHAR},
+      CURRENTSTEPID = #{currentstepid,jdbcType=VARCHAR},
+      FEEDERTYPE = #{feedertype,jdbcType=VARCHAR},
+      DATECODE = #{datecode,jdbcType=VARCHAR},
+      VERIFICATIONTIME = #{verificationtime,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      PROCESSID = #{processid,jdbcType=VARCHAR},
+      NODEHANDLE = #{nodehandle,jdbcType=VARCHAR},
+      ACTIONID = #{actionid,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      CURRENTSECTION = #{currentsection,jdbcType=VARCHAR},
+      OBJ01 = #{obj01,jdbcType=VARCHAR},
+      OBJ02 = #{obj02,jdbcType=VARCHAR},
+      OBJ03 = #{obj03,jdbcType=VARCHAR},
+      REPLENISHGROUPID = #{replenishgroupid,jdbcType=VARCHAR},
+      UOM = #{uom,jdbcType=VARCHAR},
+      MATERIALATTR = #{materialattr,jdbcType=VARCHAR},
+      MATERIALSTORAGE = #{materialstorage,jdbcType=VARCHAR},
+      PACKSTYLE = #{packstyle,jdbcType=VARCHAR},
+      OUTQTY = #{outqty,jdbcType=NUMERIC},
+      LINESITERETURNFLAG = #{linesitereturnflag,jdbcType=VARCHAR},
+      RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      SHIPID = #{shipid,jdbcType=VARCHAR},
+      ASN = #{asn,jdbcType=VARCHAR},
+      MATERIALATTR2 = #{materialattr2,jdbcType=VARCHAR},
+      OTHERS = #{others,jdbcType=VARCHAR},
+      OBJ04 = #{obj04,jdbcType=VARCHAR},
+      OBJ05 = #{obj05,jdbcType=VARCHAR},
+      OBJ06 = #{obj06,jdbcType=VARCHAR},
+      OBJ07 = #{obj07,jdbcType=VARCHAR},
+      OBJ08 = #{obj08,jdbcType=VARCHAR},
+      OBJ09 = #{obj09,jdbcType=VARCHAR},
+      OBJ10 = #{obj10,jdbcType=VARCHAR}
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+  </update>
+</mapper>

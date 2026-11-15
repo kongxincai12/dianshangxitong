@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+  Namespace 必须与 Java Mapper 接口的完全限定名一致
+-->
+<mapper namespace="com.jcd.mapper.MaterialMismatchLogMapper">
+
+    <!--
+      1. 定义 MismatchLogDto 的结果映射
+      这使得 MyBatis 知道如何将数据库的下划线列名 (LOG_ID)
+      映射到 Java DTO 的驼峰属性名 (logId)
+    -->
+    <resultMap id="MismatchLogDtoResultMap" type="com.jcd.dto.materialcheck.MismatchLogDto">
+        <id property="logId" column="LOG_ID" />
+        <result property="scannedSupplierMaterial" column="SCANNED_SUPPLIER_MATERIAL" />
+        <result property="scannedUpn" column="SCANNED_UPN" />
+        <result property="fetchedMaterialDescription" column="FETCHED_MATERIAL_DESCRIPTION" />
+        <result property="operatorUsername" column="OPERATOR_USERNAME" />
+        <result property="logTime" column="LOG_TIME" />
+    </resultMap>
+
+    <!--
+      2. 插入日志 (insert 方法)
+      - 使用 <selectKey> 从 Oracle 序列获取主键 ID
+      - keyProperty="logId" 将获取到的值赋给传入的 log 对象的 logId 属性
+    -->
+    <insert id="insert" parameterType="com.jcd.model.MaterialMismatchLog">
+        <selectKey keyProperty="logId" resultType="long" order="BEFORE">
+            SELECT SEQ_MISMATCH_LOG_ID.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO MATERIAL_MISMATCH_LOG (
+        LOG_ID,
+        SCANNED_SUPPLIER_MATERIAL,
+        SCANNED_UPN,
+        FETCHED_MATERIAL_DESCRIPTION,
+        OPERATOR_USERNAME,
+        LOG_TIME
+        ) VALUES (
+        #{logId},
+        #{scannedSupplierMaterial},
+        #{scannedUpn},
+        #{fetchedMaterialDescription},
+        #{operatorUsername},
+        #{logTime, jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <!--
+      3. 定义可重用的 SQL 片段 (动态 WHERE 条件)
+    -->
+    <sql id="dynamicWhereConditions">
+        <where>
+            <!--
+              注意: Oracle 的 DATE 类型通常包含时间。
+              如果 startDate 和 endDate 是纯日期(不含时分秒)，
+              进行比较时可能需要使用 TRUNC() 函数。
+
+              假设: 传入的 startDate 和 endDate 已经是精确的 java.util.Date 时间戳
+            -->
+            <if test="startDate != null">
+                AND LOG_TIME >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                <!--
+                  通常结束时间查询包含当天，所以用 <=
+                  (或者在 Service 层将 endDate 设置为当天的 23:59:59)
+                -->
+                AND LOG_TIME &lt;= #{endDate}
+            </if>
+        </where>
+    </sql>
+
+    <!--
+      4. 查询日志总数 (countLogs 方法)
+    -->
+    <select id="countLogs" parameterType="map" resultType="long">
+        SELECT COUNT(*)
+        FROM MATERIAL_MISMATCH_LOG
+        <include refid="dynamicWhereConditions" />
+    </select>
+
+    <!--
+      5. 分页查询日志 (findLogs 方法)
+      - 使用 Oracle 的 ROWNUM 进行物理分页
+      - Service 层需要计算并传入 startRow 和 endRow
+      - startRow = (page - 1) * size
+      - endRow = page * size
+    -->
+    <select id="findLogs" parameterType="map" resultMap="MismatchLogDtoResultMap">
+        SELECT * FROM (
+        SELECT a.*, ROWNUM rnum FROM (
+
+        -- 内部查询 (排序 + 过滤)
+        SELECT
+        LOG_ID,
+        SCANNED_SUPPLIER_MATERIAL,
+        SCANNED_UPN,
+        FETCHED_MATERIAL_DESCRIPTION,
+        OPERATOR_USERNAME,
+        LOG_TIME
+        FROM MATERIAL_MISMATCH_LOG
+        <include refid="dynamicWhereConditions" />
+        ORDER BY LOG_TIME DESC
+
+        ) a
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rnum > #{startRow}
+    </select>
+
+</mapper>

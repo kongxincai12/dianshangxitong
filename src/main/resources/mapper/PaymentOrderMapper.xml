@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.PaymentOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.jcd.model.PaymentOrder">
+        <id property="id" column="ID"/>
+        <result property="outTradeNo" column="OUT_TRADE_NO"/>
+        <result property="tradeNo" column="TRADE_NO"/>
+        <result property="subject" column="SUBJECT"/>
+        <result property="totalAmount" column="TOTAL_AMOUNT"/>
+        <result property="orderStatus" column="ORDER_STATUS"/>
+        <result property="buyerLogonId" column="BUYER_LOGON_ID"/>
+        <result property="buyerId" column="BUYER_ID"/>
+        <result property="payTime" column="PAY_TIME"/>
+        <result property="notifyTime" column="NOTIFY_TIME"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="remark" column="REMARK"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, OUT_TRADE_NO, TRADE_NO, SUBJECT, TOTAL_AMOUNT, ORDER_STATUS,
+        BUYER_LOGON_ID, BUYER_ID, PAY_TIME, NOTIFY_TIME,
+        CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, REMARK
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM PDA_PAYMENT_ORDER
+        WHERE ID = #{id}
+    </select>
+
+    <select id="selectByOutTradeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM PDA_PAYMENT_ORDER
+        WHERE OUT_TRADE_NO = #{outTradeNo}
+    </select>
+
+    <select id="selectByTradeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM PDA_PAYMENT_ORDER
+        WHERE TRADE_NO = #{tradeNo}
+    </select>
+
+    <insert id="insert" parameterType="com.jcd.model.PaymentOrder">
+        INSERT INTO PDA_PAYMENT_ORDER (
+            ID, OUT_TRADE_NO, TRADE_NO, SUBJECT, TOTAL_AMOUNT, ORDER_STATUS,
+            BUYER_LOGON_ID, BUYER_ID, PAY_TIME, NOTIFY_TIME,
+            CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, REMARK
+        ) VALUES (
+            #{id}, #{outTradeNo}, #{tradeNo}, #{subject}, #{totalAmount}, #{orderStatus},
+            #{buyerLogonId}, #{buyerId}, #{payTime}, #{notifyTime},
+            #{createBy}, SYSDATE, #{updateBy}, SYSDATE, #{remark}
+        )
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE PDA_PAYMENT_ORDER
+        SET ORDER_STATUS = #{orderStatus},
+            TRADE_NO = #{tradeNo},
+            BUYER_LOGON_ID = #{buyerLogonId},
+            BUYER_ID = #{buyerId},
+            PAY_TIME = #{payTime},
+            NOTIFY_TIME = #{notifyTime},
+            UPDATE_TIME = SYSDATE,
+            UPDATE_BY = #{updateBy}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="selectByStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM PDA_PAYMENT_ORDER
+        WHERE ORDER_STATUS = #{orderStatus}
+        ORDER BY CREATE_TIME DESC
+    </select>
+
+    <select id="selectByCreateBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM PDA_PAYMENT_ORDER
+        WHERE CREATE_BY = #{createBy}
+        ORDER BY CREATE_TIME DESC
+    </select>
+
+</mapper>

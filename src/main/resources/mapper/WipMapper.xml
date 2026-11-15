@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.WipMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Wip" >
+    <id column="WIPID" property="wipid" jdbcType="VARCHAR" />
+    <result column="SN" property="sn" jdbcType="VARCHAR" />
+    <result column="TRACKINGUNIT" property="trackingunit" jdbcType="VARCHAR" />
+    <result column="PRODUCTID" property="productid" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LINEID" property="lineid" jdbcType="VARCHAR" />
+    <result column="CURRENTSTEPID" property="currentstepid" jdbcType="VARCHAR" />
+    <result column="NEXTSTEPID" property="nextstepid" jdbcType="VARCHAR" />
+    <result column="DEFECTFLAG" property="defectflag" jdbcType="VARCHAR" />
+    <result column="ACTIONID" property="actionid" jdbcType="VARCHAR" />
+    <result column="QTYIN" property="qtyin" jdbcType="NUMERIC" />
+    <result column="SUBCOMPQTYIN" property="subcompqtyin" jdbcType="NUMERIC" />
+    <result column="QTYOUT" property="qtyout" jdbcType="NUMERIC" />
+    <result column="SUBCOMPQTYOUT" property="subcompqtyout" jdbcType="NUMERIC" />
+    <result column="COMMENTID" property="commentid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="CURRENTNODEHANDLE" property="currentnodehandle" jdbcType="VARCHAR" />
+    <result column="WIPSTATUS" property="wipstatus" jdbcType="VARCHAR" />
+    <result column="WIPRESID" property="wipresid" jdbcType="VARCHAR" />
+    <result column="DEFECTQTY" property="defectqty" jdbcType="NUMERIC" />
+    <result column="TESTVERSION" property="testversion" jdbcType="VARCHAR" />
+    <result column="IPQCSTATUS" property="ipqcstatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WIPID, SN, TRACKINGUNIT, PRODUCTID, LOTID, LINEID, CURRENTSTEPID, NEXTSTEPID, DEFECTFLAG, 
+    ACTIONID, QTYIN, SUBCOMPQTYIN, QTYOUT, SUBCOMPQTYOUT, COMMENTID, USERNAME, DATETIME, 
+    CURRENTNODEHANDLE, WIPSTATUS, WIPRESID, DEFECTQTY, TESTVERSION, IPQCSTATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.WipExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from WIP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WIP
+    where WIPID = #{wipid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectBySn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from WIP
+    where SN = #{sn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WIP
+    where WIPID = #{wipid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Wip" >
+    insert into WIP (WIPID, SN, TRACKINGUNIT, 
+      PRODUCTID, LOTID, LINEID, 
+      CURRENTSTEPID, NEXTSTEPID, DEFECTFLAG, 
+      ACTIONID, QTYIN, SUBCOMPQTYIN, 
+      QTYOUT, SUBCOMPQTYOUT, COMMENTID, 
+      USERNAME, DATETIME, CURRENTNODEHANDLE, 
+      WIPSTATUS, WIPRESID, DEFECTQTY, 
+      TESTVERSION, IPQCSTATUS)
+    values (#{wipid,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, #{trackingunit,jdbcType=VARCHAR}, 
+      #{productid,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{lineid,jdbcType=VARCHAR}, 
+      #{currentstepid,jdbcType=VARCHAR}, #{nextstepid,jdbcType=VARCHAR}, #{defectflag,jdbcType=VARCHAR}, 
+      #{actionid,jdbcType=VARCHAR}, #{qtyin,jdbcType=NUMERIC}, #{subcompqtyin,jdbcType=NUMERIC}, 
+      #{qtyout,jdbcType=NUMERIC}, #{subcompqtyout,jdbcType=NUMERIC}, #{commentid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{currentnodehandle,jdbcType=VARCHAR}, 
+      #{wipstatus,jdbcType=VARCHAR}, #{wipresid,jdbcType=VARCHAR}, #{defectqty,jdbcType=NUMERIC}, 
+      #{testversion,jdbcType=VARCHAR}, #{ipqcstatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Wip" >
+    insert into WIP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wipid != null" >
+        WIPID,
+      </if>
+      <if test="sn != null" >
+        SN,
+      </if>
+      <if test="trackingunit != null" >
+        TRACKINGUNIT,
+      </if>
+      <if test="productid != null" >
+        PRODUCTID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="currentstepid != null" >
+        CURRENTSTEPID,
+      </if>
+      <if test="nextstepid != null" >
+        NEXTSTEPID,
+      </if>
+      <if test="defectflag != null" >
+        DEFECTFLAG,
+      </if>
+      <if test="actionid != null" >
+        ACTIONID,
+      </if>
+      <if test="qtyin != null" >
+        QTYIN,
+      </if>
+      <if test="subcompqtyin != null" >
+        SUBCOMPQTYIN,
+      </if>
+      <if test="qtyout != null" >
+        QTYOUT,
+      </if>
+      <if test="subcompqtyout != null" >
+        SUBCOMPQTYOUT,
+      </if>
+      <if test="commentid != null" >
+        COMMENTID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="currentnodehandle != null" >
+        CURRENTNODEHANDLE,
+      </if>
+      <if test="wipstatus != null" >
+        WIPSTATUS,
+      </if>
+      <if test="wipresid != null" >
+        WIPRESID,
+      </if>
+      <if test="defectqty != null" >
+        DEFECTQTY,
+      </if>
+      <if test="testversion != null" >
+        TESTVERSION,
+      </if>
+      <if test="ipqcstatus != null" >
+        IPQCSTATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wipid != null" >
+        #{wipid,jdbcType=VARCHAR},
+      </if>
+      <if test="sn != null" >
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingunit != null" >
+        #{trackingunit,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstepid != null" >
+        #{currentstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="nextstepid != null" >
+        #{nextstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="defectflag != null" >
+        #{defectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="actionid != null" >
+        #{actionid,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyin != null" >
+        #{qtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="subcompqtyin != null" >
+        #{subcompqtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="qtyout != null" >
+        #{qtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="subcompqtyout != null" >
+        #{subcompqtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="commentid != null" >
+        #{commentid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentnodehandle != null" >
+        #{currentnodehandle,jdbcType=VARCHAR},
+      </if>
+      <if test="wipstatus != null" >
+        #{wipstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="wipresid != null" >
+        #{wipresid,jdbcType=VARCHAR},
+      </if>
+      <if test="defectqty != null" >
+        #{defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="testversion != null" >
+        #{testversion,jdbcType=VARCHAR},
+      </if>
+      <if test="ipqcstatus != null" >
+        #{ipqcstatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update WIP
+    <set >
+      <if test="record.wipid != null" >
+        WIPID = #{record.wipid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sn != null" >
+        SN = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trackingunit != null" >
+        TRACKINGUNIT = #{record.trackingunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null" >
+        PRODUCTID = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotid != null" >
+        LOTID = #{record.lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineid != null" >
+        LINEID = #{record.lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentstepid != null" >
+        CURRENTSTEPID = #{record.currentstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextstepid != null" >
+        NEXTSTEPID = #{record.nextstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectflag != null" >
+        DEFECTFLAG = #{record.defectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionid != null" >
+        ACTIONID = #{record.actionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qtyin != null" >
+        QTYIN = #{record.qtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="record.subcompqtyin != null" >
+        SUBCOMPQTYIN = #{record.subcompqtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="record.qtyout != null" >
+        QTYOUT = #{record.qtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="record.subcompqtyout != null" >
+        SUBCOMPQTYOUT = #{record.subcompqtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="record.commentid != null" >
+        COMMENTID = #{record.commentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.currentnodehandle != null" >
+        CURRENTNODEHANDLE = #{record.currentnodehandle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wipstatus != null" >
+        WIPSTATUS = #{record.wipstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wipresid != null" >
+        WIPRESID = #{record.wipresid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectqty != null" >
+        DEFECTQTY = #{record.defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.testversion != null" >
+        TESTVERSION = #{record.testversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipqcstatus != null" >
+        IPQCSTATUS = #{record.ipqcstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update WIP
+    set WIPID = #{record.wipid,jdbcType=VARCHAR},
+      SN = #{record.sn,jdbcType=VARCHAR},
+      TRACKINGUNIT = #{record.trackingunit,jdbcType=VARCHAR},
+      PRODUCTID = #{record.productid,jdbcType=VARCHAR},
+      LOTID = #{record.lotid,jdbcType=VARCHAR},
+      LINEID = #{record.lineid,jdbcType=VARCHAR},
+      CURRENTSTEPID = #{record.currentstepid,jdbcType=VARCHAR},
+      NEXTSTEPID = #{record.nextstepid,jdbcType=VARCHAR},
+      DEFECTFLAG = #{record.defectflag,jdbcType=VARCHAR},
+      ACTIONID = #{record.actionid,jdbcType=VARCHAR},
+      QTYIN = #{record.qtyin,jdbcType=NUMERIC},
+      SUBCOMPQTYIN = #{record.subcompqtyin,jdbcType=NUMERIC},
+      QTYOUT = #{record.qtyout,jdbcType=NUMERIC},
+      SUBCOMPQTYOUT = #{record.subcompqtyout,jdbcType=NUMERIC},
+      COMMENTID = #{record.commentid,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      CURRENTNODEHANDLE = #{record.currentnodehandle,jdbcType=VARCHAR},
+      WIPSTATUS = #{record.wipstatus,jdbcType=VARCHAR},
+      WIPRESID = #{record.wipresid,jdbcType=VARCHAR},
+      DEFECTQTY = #{record.defectqty,jdbcType=NUMERIC},
+      TESTVERSION = #{record.testversion,jdbcType=VARCHAR},
+      IPQCSTATUS = #{record.ipqcstatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Wip" >
+    update WIP
+    <set >
+      <if test="sn != null" >
+        SN = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingunit != null" >
+        TRACKINGUNIT = #{trackingunit,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null" >
+        PRODUCTID = #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        LINEID = #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstepid != null" >
+        CURRENTSTEPID = #{currentstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="nextstepid != null" >
+        NEXTSTEPID = #{nextstepid,jdbcType=VARCHAR},
+      </if>
+      <if test="defectflag != null" >
+        DEFECTFLAG = #{defectflag,jdbcType=VARCHAR},
+      </if>
+      <if test="actionid != null" >
+        ACTIONID = #{actionid,jdbcType=VARCHAR},
+      </if>
+      <if test="qtyin != null" >
+        QTYIN = #{qtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="subcompqtyin != null" >
+        SUBCOMPQTYIN = #{subcompqtyin,jdbcType=NUMERIC},
+      </if>
+      <if test="qtyout != null" >
+        QTYOUT = #{qtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="subcompqtyout != null" >
+        SUBCOMPQTYOUT = #{subcompqtyout,jdbcType=NUMERIC},
+      </if>
+      <if test="commentid != null" >
+        COMMENTID = #{commentid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentnodehandle != null" >
+        CURRENTNODEHANDLE = #{currentnodehandle,jdbcType=VARCHAR},
+      </if>
+      <if test="wipstatus != null" >
+        WIPSTATUS = #{wipstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="wipresid != null" >
+        WIPRESID = #{wipresid,jdbcType=VARCHAR},
+      </if>
+      <if test="defectqty != null" >
+        DEFECTQTY = #{defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="testversion != null" >
+        TESTVERSION = #{testversion,jdbcType=VARCHAR},
+      </if>
+      <if test="ipqcstatus != null" >
+        IPQCSTATUS = #{ipqcstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WIPID = #{wipid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Wip" >
+    update WIP
+    set SN = #{sn,jdbcType=VARCHAR},
+      TRACKINGUNIT = #{trackingunit,jdbcType=VARCHAR},
+      PRODUCTID = #{productid,jdbcType=VARCHAR},
+      LOTID = #{lotid,jdbcType=VARCHAR},
+      LINEID = #{lineid,jdbcType=VARCHAR},
+      CURRENTSTEPID = #{currentstepid,jdbcType=VARCHAR},
+      NEXTSTEPID = #{nextstepid,jdbcType=VARCHAR},
+      DEFECTFLAG = #{defectflag,jdbcType=VARCHAR},
+      ACTIONID = #{actionid,jdbcType=VARCHAR},
+      QTYIN = #{qtyin,jdbcType=NUMERIC},
+      SUBCOMPQTYIN = #{subcompqtyin,jdbcType=NUMERIC},
+      QTYOUT = #{qtyout,jdbcType=NUMERIC},
+      SUBCOMPQTYOUT = #{subcompqtyout,jdbcType=NUMERIC},
+      COMMENTID = #{commentid,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      CURRENTNODEHANDLE = #{currentnodehandle,jdbcType=VARCHAR},
+      WIPSTATUS = #{wipstatus,jdbcType=VARCHAR},
+      WIPRESID = #{wipresid,jdbcType=VARCHAR},
+      DEFECTQTY = #{defectqty,jdbcType=NUMERIC},
+      TESTVERSION = #{testversion,jdbcType=VARCHAR},
+      IPQCSTATUS = #{ipqcstatus,jdbcType=VARCHAR}
+    where WIPID = #{wipid,jdbcType=VARCHAR}
+  </update>
+</mapper>

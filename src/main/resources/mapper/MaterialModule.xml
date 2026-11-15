@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.MaterialModuleMapper" >
+    <resultMap id="APPBaseResultMap" type="com.jcd.model.SysAppVersion">
+        <id property="id" column="id"/>
+        <result property="appId" column="app_id"/>
+        <result property="platform" column="platform"/>
+        <result property="versionName" column="version_name"/>
+        <result property="versionCode" column="version_code"/>
+        <result property="downloadUrl" column="download_url"/>
+        <result property="updateNotes" column="update_notes"/>
+        <result property="isForced" column="is_forced"/>
+        <result property="releaseTime" column="release_time"/>
+    </resultMap>
+    <select id="GetStorageWorkorderQty2"  parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT WO.ORDERID,
+        WO.ORDERNAME,
+        WO.TOTALQTY,
+        WO.STARTQTY,
+        SUM(PG.LOTQTY) LOTTOTALQTY
+        FROM PACKGIFT PG
+        INNER JOIN PACKCARTON PC ON PG.GIFTCODE = PC.GIFTCODE
+        INNER JOIN WIP_STORAGE WS  ON PC.CARTONCODE = WS.CARTONCODE
+        INNER JOIN WORKORDER WO ON WO.ORDERID = #{orderid,jdbcType=VARCHAR}
+        WHERE  PG.LOTID IN (SELECT PL.LOTID FROM PRP_LOT PL
+        WHERE PL.WORKORDERID = #{orderid,jdbcType=VARCHAR}
+        ) AND PG.DELETEFLAG='N'  AND PC.DELETEFLAG='N' AND (WS.STATUS = 'N' OR WS.STATUS = 'Y' )
+        GROUP BY WO.ORDERNAME, WO.ORDERID, WO.TOTALQTY, WO.STARTQTY
+    </select>
+    <select id="GetWorkordersByCarton" parameterType="java.lang.String" resultType="java.util.Map">
+       SELECT WO.ORDERID
+        FROM PACKGIFT PG
+        INNER JOIN PACKCARTON PC
+        ON PG.GIFTCODE = PC.GIFTCODE
+        INNER JOIN PRP_LOT PL
+        ON PG.LOTID = PL.LOTID
+        INNER JOIN WORKORDER WO
+        ON PL.WORKORDERID = WO.ORDERID
+        WHERE UPPER(WO.STATE) != 'FINISH'
+        AND PC.CARTONCODE = #{cartoncode,jdbcType=VARCHAR}
+        GROUP BY WO.ORDERNAME, WO.ORDERID, WO.TOTALQTY, WO.STARTQTY
+    </select>
+
+    <select id="GetPNMsg" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(1) RESULTNUM
+  FROM RMM_LOTMATERIALLIST RL, UPN U, PARTNUMBER PA, RMM_UPNPRINT RM
+ WHERE U.PNID = PA.PNID
+   AND RL.PN = PA.PN
+   AND RM.PNID = PA.PNID
+   AND RL.LOTNAME = #{lotname,jdbcType=VARCHAR}
+   AND U.UPNNAME = #{upnname,jdbcType=VARCHAR}
+   AND (INSTR(#{reelname,jdbcType=VARCHAR},RM.OBJ2)>0 OR (RM.MATERIALATTR like CONCAT(CONCAT('%',#{reelname,jdbcType=VARCHAR}),'%')))
+   AND LENGTH(obj2)>4
+   AND ROWNUM = 1
+    </select>
+
+    <select id="GetMobyEqpname" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM (SELECT DISTINCT MO.MOID,
+        MO.MONAME,
+        MO.LINEID,
+        MO.LOTID,
+        MO.STATUS,
+        MO.ISUSING,
+        MO.BOARDSIDE,
+        MO.LEADFREE,
+        MO.LLID,
+        MO.DESCRIPTION,
+        MO.USERNAME,
+        MO.DATETIME,
+        LO.EQPNAME,
+        AR.AREANAME
+        FROM MATERIALORDER MO
+        LEFT JOIN PRP_LOT PL
+        ON MO.LOTID = PL.LOTID
+        LEFT JOIN LOADMATERIAL LO
+        ON MO.MOID=LO.MOID
+        LEFT JOIN AREA AR
+        ON AR.AREAID=MO.LINEID
+        WHERE UPPER(MO.STATUS) !='CLOSE'
+        AND UPPER(MO.STATUS) NOT LIKE '%HOLD%'
+        AND UPPER(MO.STATUS) NOT LIKE '%LOADPARTS%'
+        AND UPPER(PL.STATUS) NOT LIKE  '%HOLD%'
+        AND EQPNAME= #{eqpname,jdbcType=VARCHAR}
+        ORDER BY TO_DATE(DATETIME, 'yyyy-mm-dd hh24:mi:ss') DESC)
+    </select>
+
+    <select id="GetLoadpartsMobyEqpname" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM (SELECT DISTINCT MO.MOID,
+        MO.MONAME,
+        MO.LINEID,
+        MO.LOTID,
+        MO.STATUS,
+        MO.ISUSING,
+        MO.BOARDSIDE,
+        MO.LEADFREE,
+        MO.LLID,
+        MO.DESCRIPTION,
+        MO.USERNAME,
+        MO.DATETIME,
+        LO.EQPNAME,
+        AR.AREANAME
+        FROM MATERIALORDER MO
+        LEFT JOIN PRP_LOT PL
+        ON MO.LOTID = PL.LOTID
+        LEFT JOIN LOADMATERIAL LO
+        ON MO.MOID=LO.MOID
+        LEFT JOIN AREA AR
+        ON AR.AREAID=MO.LINEID
+        WHERE UPPER(MO.STATUS)  LIKE 'LOADPARTS%'
+        AND EQPNAME= #{eqpname,jdbcType=VARCHAR}
+        ORDER BY TO_DATE(DATETIME, 'yyyy-mm-dd hh24:mi:ss') )
+    </select>
+    <select id="GetLoadMobyEqpname" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM (SELECT DISTINCT MO.MOID,
+        MO.MONAME,
+        MO.LINEID,
+        MO.LOTID,
+        MO.STATUS,
+        MO.ISUSING,
+        MO.BOARDSIDE,
+        MO.LEADFREE,
+        MO.LLID,
+        MO.DESCRIPTION,
+        MO.USERNAME,
+        MO.DATETIME,
+        LO.EQPNAME,
+        AR.AREANAME
+        FROM MATERIALORDER MO
+        LEFT JOIN PRP_LOT PL
+        ON MO.LOTID = PL.LOTID
+        LEFT JOIN LOADMATERIAL LO
+        ON MO.MOID=LO.MOID
+        LEFT JOIN AREA AR
+        ON AR.AREAID=MO.LINEID
+        WHERE   UPPER(MO.STATUS)  LIKE '%LOADPARTS%'
+
+        AND EQPNAME= #{eqpname,jdbcType=VARCHAR}
+        ORDER BY TO_DATE(DATETIME, 'yyyy-mm-dd hh24:mi:ss') DESC)
+    </select>
+
+
+    <select id="GetMobyEqpname2" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM (SELECT DISTINCT MO.MOID,
+        MO.MONAME,
+        MO.LINEID,
+        MO.LOTID,
+        MO.STATUS,
+        MO.ISUSING,
+        MO.BOARDSIDE,
+        MO.LEADFREE,
+        MO.LLID,
+        MO.DESCRIPTION,
+        MO.USERNAME,
+        MO.DATETIME,
+        LO.EQPNAME,
+        AR.AREANAME
+        FROM MATERIALORDER MO
+        LEFT JOIN PRP_LOT PL
+        ON MO.LOTID = PL.LOTID
+        LEFT JOIN LOADMATERIAL LO
+        ON MO.MOID=LO.MOID
+        LEFT JOIN AREA AR
+        ON AR.AREAID=MO.LINEID
+        WHERE (UPPER(MO.STATUS) !='CLOSE'
+        OR  UPPER(MO.STATUS)  LIKE '%HOLD%')
+        AND UPPER(PL.STATUS) NOT LIKE  '%HOLD%'
+
+        AND EQPNAME= #{eqpname,jdbcType=VARCHAR}
+        ORDER BY TO_DATE(DATETIME, 'yyyy-mm-dd hh24:mi:ss') DESC)
+    </select>
+
+
+    <select id="GetOkSlotCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM LOADMATERIAL  WHERE 1=1
+        AND MOID=#{moid,jdbcType=VARCHAR}
+        AND SLOT= #{slot,jdbcType=VARCHAR}
+        AND EQPNAME=#{eqpname,jdbcType=VARCHAR}
+        AND (TASKNAME IS NULL OR TASKNAME='ComfirmParts' OR TASKNAME='LoadFeeders')
+        AND PN =#{pn,jdbcType=VARCHAR}
+
+    </select>
+
+
+    <select id="GetFeerderbyFeedername" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT FEEDERID,
+       FEEDERNAME,
+       DESCRIPTION,
+       FEEDERTYPE,
+       EQPTYPEID,
+       NEEDPM,
+       MAXQTY,
+       USEDQTY,
+       MOID,
+       EQPID,
+       STAGE,
+       SLOT,
+       USERNAME,
+       DATETIME,
+       WARNINGQTY
+       FROM FEEDER
+       WHERE FEEDERNAME=#{feedername,jdbcType=VARCHAR}
+    </select>
+
+    <select id="Rmm_picklistsGetByPnAndLot" parameterType="java.lang.String" resultType="com.jcd.model.Rmm_picklist">
+    SELECT DISTINCT * FROM (SELECT RP.*
+  FROM RMM_PICKLIST RP,UPN U,PARTNUMBER P
+ WHERE RP.Picktype = 'EDGEINVENTORY'
+   AND RP.Status = 'RELEASE'
+   AND RP.TRANSFERID = #{workorderid,jdbcType=VARCHAR}
+   AND RP.UPN=U.UPNNAME
+   AND U.PNID=P.PNID
+   AND PN = #{pn,jdbcType=VARCHAR}
+   AND U.REMAININGQTY>0
+UNION ALL
+  SELECT RP.*
+  FROM RMM_PICKLIST RP,PACKCARTON PC,PACKGIFT PG
+ WHERE RP.Picktype = 'EDGEINVENTORY'
+   AND RP.Status = 'RELEASE'
+   AND RP.TRANSFERID = #{workorderid,jdbcType=VARCHAR}
+   AND RP.UPN=PC.CARTONCODE
+   AND PC.DELETEFLAG='N'
+   AND PC.GIFTCODE=PG.GIFTCODE
+   AND PG.GIFTQTY>0
+   AND PC.PRODUCTPN = #{pn,jdbcType=VARCHAR}
+UNION ALL
+  SELECT RP.*
+  FROM RMM_PICKLIST RP,UPN U,PARTNUMBER P
+ WHERE RP.Picktype = 'EDGEINVENTORY'
+   AND RP.Status = 'RELEASE'
+   AND RP.TRANSFERID =#{lotid,jdbcType=VARCHAR}
+   AND RP.UPN=U.UPNNAME
+   AND U.PNID=P.PNID
+   AND PN = #{pn,jdbcType=VARCHAR}
+   AND U.REMAININGQTY>0
+UNION ALL
+  SELECT RP.*
+  FROM RMM_PICKLIST RP,PACKCARTON PC,PACKGIFT PG
+ WHERE RP.Picktype = 'EDGEINVENTORY'
+   AND RP.Status = 'RELEASE'
+   AND RP.TRANSFERID =#{lotid,jdbcType=VARCHAR}
+   AND RP.UPN=PC.CARTONCODE
+   AND PC.DELETEFLAG='N'
+   AND PC.GIFTCODE=PG.GIFTCODE
+   AND PG.GIFTQTY>0
+   AND PC.PRODUCTPN =#{pn,jdbcType=VARCHAR})
+    </select>
+
+    <select id="LoadinglistcontentGetbyPnAndLine"  parameterType="java.lang.String" resultType="com.jcd.model.Loadinglistcontent">
+        SELECT A.*
+        FROM LOADINGLISTCONTENT A,
+       (SELECT *
+          FROM (SELECT C.*
+                  FROM LOADINGLIST C
+                 WHERE C.PRODUCTNAME = #{productname,jdbcType=VARCHAR}
+                   AND C.LINENAME = #{linename,jdbcType=VARCHAR}
+                 ORDER BY VERSION DESC)
+         WHERE ROWNUM = 1) B
+ WHERE A.llid = B.LLID
+    </select>
+
+    <select id="Searchematerialstatus"  parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT DISTINCT LM.MOID moid,
+        LM.EQPNAME EQPNAME,
+        LM.MFUNAME MFUNAME,
+        LM.SLOT slot,
+        LM.STAGE STAGE,
+        LM.PN PN,
+        LM.QTY QTY,
+        CASE WHEN LM.TASKNAME IS NULL AND MO.STATUS  NOT IN ('FINISH','CLOSE') THEN
+        '未上料'
+        WHEN LM.TASKNAME = 'LoadFeeders' THEN
+        '上料未对料'
+        WHEN LM.TASKNAME = 'ReplenishFeeders' THEN
+        '续料未对料'
+        WHEN LM.TASKNAME = 'ComfirmParts'  THEN
+        '已对料'
+        WHEN LM.TASKNAME IS NULL  THEN
+        '已卸料'
+        else ' '
+
+        END  status,
+        NVL(LM.TASKNAME, ' ') TASKNAME,
+        U.UPNNAME  upn,
+        U.REMAININGQTY  REMAININGQTY,
+        decode(F.FEEDERNAME,null,'',substr(F.FEEDERNAME,-3)) AS feeder,
+        CASE
+        WHEN LM.TASKNAME IS NULL AND MO.STATUS NOT IN ('FINISH','CLOSE') THEN
+        1
+        WHEN LM.TASKNAME = 'LoadFeeders' THEN
+        2
+        WHEN LM.TASKNAME = 'ReplenishFeeders' THEN
+        2
+        WHEN LM.TASKNAME = 'ComfirmParts'  THEN
+        3
+        WHEN LM.TASKNAME IS NULL  THEN
+        4
+        else 4
+        END AS COLOR,
+        nvl(U.TOTALQTY,-1) AS TOTALQTY,
+        LM.QTY * PR.TOTALQTY ALLQTY
+        FROM LOADMATERIAL LM
+
+        INNER JOIN MATERIALORDER MO ON MO.MOID=LM.MOID
+        INNER JOIN PRP_LOT PR ON MO.LOTID=PR.LOTID
+
+
+        LEFT JOIN FEEDER F2 ON F2.FEEDERNAME=LM.FEEDER
+        LEFT JOIN UPN U ON U.MOID=LM.MOID AND U.SLOT=LM.SLOT AND U.EQPNAME=LM.EQPNAME  AND U.FEEDERID=F2.FEEDERID
+        LEFT JOIN FEEDER F ON  U.FEEDERID = F.FEEDERID
+        WHERE  LM.MOID =  #{moid,jdbcType=VARCHAR}
+        AND LM.EQPNAME =  #{eqpname,jdbcType=VARCHAR}
+        ORDER BY  LM.MOID, LM.EQPNAME, LM.SLOT
+
+    </select>
+
+    <select id="SearchematerialstatusNoCom"  parameterType="java.lang.String" resultType="java.util.Map">
+   select * from (
+    SELECT DISTINCT LM.MOID moid,
+        LM.EQPNAME EQPNAME,
+        LM.MFUNAME MFUNAME,
+        LM.SLOT slot,
+        LM.STAGE STAGE,
+        LM.PN PN,
+        LM.QTY QTY,
+        CASE WHEN LM.TASKNAME IS NULL AND MO.STATUS  NOT IN ('FINISH','CLOSE') THEN
+        '未上料'
+        WHEN LM.TASKNAME = 'LoadFeeders' THEN
+        '上料未对料'
+        WHEN LM.TASKNAME = 'ReplenishFeeders' THEN
+        '续料未对料'
+        WHEN LM.TASKNAME = 'ComfirmParts'  THEN
+        '已对料'
+        WHEN LM.TASKNAME IS NULL  THEN
+        '已卸料'
+        else ''
+
+        END  status,
+        NVL(LM.TASKNAME, ' ') TASKNAME,
+        U.UPNNAME  upn,
+        U.REMAININGQTY  REMAININGQTY,
+        decode(F.FEEDERNAME,null,'',substr(F.FEEDERNAME,-3)) AS feeder,
+        CASE
+        WHEN LM.TASKNAME IS NULL AND MO.STATUS NOT IN ('FINISH','CLOSE') THEN
+        1
+        WHEN LM.TASKNAME = 'LoadFeeders' THEN
+        2
+        WHEN LM.TASKNAME = 'ReplenishFeeders' THEN
+        2
+        WHEN LM.TASKNAME = 'ComfirmParts'  THEN
+        3
+        WHEN LM.TASKNAME IS NULL  THEN
+        4
+        else 4
+        END AS COLOR,
+        nvl(U.TOTALQTY,-1) AS TOTALQTY,
+        LM.QTY * PR.TOTALQTY ALLQTY
+        FROM LOADMATERIAL LM
+
+        INNER JOIN MATERIALORDER MO ON MO.MOID=LM.MOID
+        INNER JOIN PRP_LOT PR ON MO.LOTID=PR.LOTID
+
+
+        LEFT JOIN FEEDER F2 ON F2.FEEDERNAME=LM.FEEDER
+        LEFT JOIN UPN U ON U.MOID=LM.MOID AND U.SLOT=LM.SLOT AND U.EQPNAME=LM.EQPNAME  AND U.FEEDERID=F2.FEEDERID
+        LEFT JOIN FEEDER F ON  U.FEEDERID = F.FEEDERID
+        WHERE  LM.MOID =  #{moid,jdbcType=VARCHAR}
+        AND LM.EQPNAME =  #{eqpname,jdbcType=VARCHAR}
+        AND LM.TASKNAME != 'ComfirmParts'
+        ORDER BY  LM.MOID, LM.EQPNAME, LM.SLOT
+) where rownum &lt; 4
+    </select>
+
+    <select id="SearchLoadinglistcontentSlot"  parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT #{upn,jdbcType=VARCHAR} UPN, SLOT,EQPNAME
+  FROM Loadinglistcontent
+ WHERE pn = #{pn,jdbcType=VARCHAR}
+   AND llid = #{llid,jdbcType=VARCHAR}
+UNION
+SELECT #{upn,jdbcType=VARCHAR} UPN,SLOT,EQPNAME
+  FROM Loadinglistcontent
+ WHERE ALTERNATEPN = #{pn,jdbcType=VARCHAR}
+   AND llid = #{llid,jdbcType=VARCHAR}
+
+
+    </select>
+
+    <select id="SearchSTENCIL"  parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT * FROM A01_SMT_STENCILUSEDHISTORY  WHERE MOID= #{moid,jdbcType=VARCHAR}
+    </select>
+    <select id="GetGDUpn"  parameterType="java.lang.String" resultType="java.util.Map">
+        select
+        UPNNAME,TOTALQTY,RELEASEQTY
+        from UPN
+        where UPNNAME = #{upnname,jdbcType=VARCHAR}
+        AND UPNNAME LIKE '0000001%'
+    </select>
+    <select id="A03_SHIMIN_SMT" statementType="CALLABLE" parameterType="java.lang.String" >
+        {call A03_SHIMIN_SMT(
+        #{P_CAOZUOTYPE,mode=IN,jdbcType=VARCHAR},
+        #{P_UPNNAME,mode=IN,jdbcType=VARCHAR},
+        #{P_MOID,mode=IN,jdbcType=VARCHAR},
+        #{P_LINEID,mode=IN,jdbcType=VARCHAR},
+        #{P_OLDUPNNAME,mode=IN,jdbcType=VARCHAR},
+        #{P_OLDMOID,mode=IN,jdbcType=VARCHAR},
+        #{P_USERID,mode=IN,jdbcType=VARCHAR},
+        #{P_ERRMSG,mode=OUT,jdbcType=VARCHAR},
+        #{P_FLAG,mode=OUT,jdbcType=INTEGER}
+        )}
+    </select>
+
+    <select id="GetNotLoadPN" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT COUNT(1) contpn
+  FROM Loadinglistcontent l
+ WHERE NOT EXISTS
+ (SELECT lc.*
+          FROM upn u, partnumber pa, materialorder ma, Loadinglistcontent lc
+         WHERE u.pnid = pa.pnid
+           AND u.moid = ma.moid
+           AND ma.moid = #{moid,jdbcType=VARCHAR}
+           AND lc.llid = ma.llid
+           AND (pa.pn = lc.pn OR pa.pn = lc.alternatepn)
+           AND ((lc.pn = l.pn OR lc.alternatepn = l.pn) OR
+               (lc.pn = l.alternatepn OR lc.alternatepn = l.alternatepn)))
+   AND llid = #{llid,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="GetPACK_MERGE_SPLITFROMCODE" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT FROMCODE CARTONCODE FROM PACK_MERGE_SPLIT WHERE TOCODE=  #{cartoncode,jdbcType=VARCHAR}
+    </select>
+
+    <select id="GetAOI_SMT_TARGETByLine" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT A.* FROM AOI_SMT_TARGET A,AREA B WHERE A.LINE= B.AREANAME AND B.AREAID= #{line,jdbcType=VARCHAR}
+    </select>
+
+    <select id="GetCHQTY" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT COUNT(PCSRESULT)- (UPNQTY-TARGET/100*UPNQTY ) QTY, line
+        FROM (
+
+        SELECT nvl(A1.PANELCODE, A1.DBNAME || A1.PID) PID,
+        SUBSTR(nvl(UPDATEMACHINENO, A1.MACHINEUNICODE), 0, 8) line,
+        PRODUCTPN liaohao,
+        A1.PCBUNICODE pcsunicode,
+        A1.BOARDSTATUS pcsresult,
+        A1.CHECKENDTIME,
+        MACHINEUNICODE,
+        UPNQTY,
+        TARGET
+        FROM A01_CHECKDATA_AOI A1
+        INNER JOIN (SELECT *
+        FROM (
+        SELECT MIN(mh.datetime) AS datetime, CEIL(mh.UPNQTY/lm.qty) upnqty, REPLACE(a.areaname, 'AUTOSMT-L', 'CZSMT-') areaname,AT.TARGET
+        FROM materialhistory mh
+        INNER JOIN materialorder mo ON mh.MOID = mo.MOID
+        INNER JOIN area a ON mo.LINEID = a.AREAID
+        INNER JOIN aoi_smt_target at ON a.AREANAME = at.LINE
+        INNER JOIN upn u ON u.upnname=mh.upnname
+        INNER JOIN partnumber pa ON pa.pnid=u.pnid
+        INNER JOIN loadmaterial lm ON lm.moid = mo.moid AND lm.pn=pa.pn
+        WHERE at.OBJ01 = 'ON'
+        AND mh.UPNNAME =  #{upn,jdbcType=VARCHAR}
+        GROUP BY mh.UPNQTY, a.areaname,lm.qty,AT.TARGET
+        ORDER BY datetime
+        )
+        WHERE ROWNUM = 1) a2  ON  a2.areaname = SUBSTR(nvl(A1.UPDATEMACHINENO, A1.MACHINEUNICODE), 0, 8)
+        WHERE CHECKENDTIME BETWEEN TO_DATE(A2.DATETIME,'YYYY-MM-DD HH24:MI:SS')
+        AND sysdate
+        AND BOARDSTATUS IN ('Y', 'M', 'R', 'P')
+        AND (nvl(UPDATEMACHINENO, A1.MACHINEUNICODE) LIKE 'CZSMT%' OR
+        LINENAME LIKE 'CZSMT%'))
+        GROUP BY line,UPNQTY,TARGET
+    </select>
+
+    <select id="GetOnloadGW" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT U.UPNNAME,SM.CURRENTFREQUENCY,SH.USEDID,SH.LINE
+        FROM STENCILMANAGE SM, UPN U, PARTNUMBER B, stencilhis SH
+        WHERE SH.LINE = #{line,jdbcType=VARCHAR}
+        AND SM.UPNID = U.UPNID
+        AND B.PN = '0000000'
+        AND U.PNID = B.PNID
+        AND SH.USEDID = SM.STENCILUSEDHISTID
+        AND ROWNUM = 1
+    </select>
+
+    <select id="findLotInfo" resultType="com.jcd.dto.LotInfoDto">
+        SELECT
+            PR.PRODUCTPN AS product,
+            PR.PANELPCS AS panelPcs,
+            PR.WIPQTY AS wipQty,
+            pr.lotname AS lotCode,
+            pr.status AS status,
+            CASE
+                WHEN s2.stepid IS NULL OR UPPER(s2.STEPNAME) LIKE '%TRACKIN'
+                    THEN s1.description
+                ELSE s2.description
+                END AS lotSite
+        FROM
+            wip w
+                LEFT JOIN prp_lot pr ON pr.lotname = w.sn
+                LEFT JOIN step s1 ON s1.stepid = w.currentstepid
+                LEFT JOIN vprocessstep vp ON vp.PROCESSID = pr.processid AND vp.STEPID = s1.stepid AND VP.PATHNAME = 'PASS'
+                LEFT JOIN step s2 ON vp.NEXTSTEPID = s2.stepid
+        WHERE
+            W.SN = #{lotCode}
+        AND ROWNUM=1
+    </select>
+
+    <select id="countByUpnName" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            upn
+        WHERE
+            upnname = #{upnName}
+    </select>
+
+    <select id="countByLotNameAndSection" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            prp_lot
+        WHERE
+            SECTION = #{section} AND lotname = #{lotName}
+    </select>
+
+    <select id="countByLotNameAndUpn" resultType="java.lang.Integer">
+        SELECT COUNT(1) from UPN U,PRP_LOT PR,RMM_WOMATERIALLIST RW,PARTNUMBER PA
+                        WHERE U.PNID = PA.PNID AND PA.PN=RW.PN AND PR.WORKORDERID=RW.WORKORDERID
+                        AND PR.LOTNAME=#{lotName}
+                        AND U.UPNNAME=#{upnName}
+    </select>
+
+    <select id="countByLotNameAndLotName" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM PRP_LOT PR1,PRP_LOT PR2,RMM_WOMATERIALLIST RW
+                        WHERE PR2.PRODUCTPN=RW.PN
+                         AND PR1.WORKORDERID=RW.WORKORDERID
+                         AND PR1.LOTNAME=#{lotName1}
+                         AND PR2.LOTNAME=#{lotName2}
+    </select>
+
+
+
+
+
+    <select id="findLatestVersion" resultMap="APPBaseResultMap">
+        SELECT * FROM (
+                          SELECT
+                              id,
+                              app_id,
+                              platform,
+                              version_name,
+                              version_code,
+                              download_url,
+                              update_notes,
+                              is_forced,
+                              release_time
+                          FROM
+                              SYS_APP_VERSION
+                          WHERE
+                              app_id = #{appId} AND platform = #{platform}
+                          ORDER BY
+                              release_time DESC
+                      )
+        WHERE ROWNUM = 1
+    </select>
+
+    <select id="findUsedStatusByUpn" resultType="java.lang.String">
+        SELECT USEDSTATUS FROM VA03_SM_锡膏信息 WHERE UPNNAME = #{upn}
+    </select>
+
+    <select id="findLastLineIdByUpn" resultType="java.lang.String">
+        <!-- 注意: ROWNUM=1 是 Oracle 的语法, 如果使用其他数据库 (如MySQL), 需改为 LIMIT 1 -->
+        SELECT LINEID FROM (
+        SELECT LINEID FROM A03_SM_USED_LOT
+        WHERE UPNNAME = #{upn}
+        AND LINEID = #{lineId}
+        ORDER BY USEDTIME DESC
+        ) WHERE ROWNUM = 1
+    </select>
+
+    <insert id="insertLoadingLog">
+        INSERT INTO T_SOLDER_LOADING_LOG
+            (EMPLOYEE_ID, UPN, LINE_ID, LOADING_TIME)
+        VALUES
+            (#{employeeId}, #{upn}, #{lineId}, #{loadingTime})
+    </insert>
+
+</mapper>

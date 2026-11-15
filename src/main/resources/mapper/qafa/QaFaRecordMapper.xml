@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaRecordMapper">
+
+  <resultMap id="RecordMap" type="com.jcd.model.qafa.QaFaRecord">
+    <id     column="ID"               property="id"/>
+    <result column="RECORD_NO"        property="recordNo"/>
+    <result column="TEMPLATE_ID"      property="templateId"/>
+    <result column="PROCESS_CODE"     property="processCode"/>
+    <result column="LOT_ID"           property="lotId"/>
+    <result column="LOT_NAME"         property="lotName"/>
+    <result column="PRODUCT_PN"       property="productPn"/>
+    <result column="LINE_CODE"        property="lineCode"/>
+    <result column="SAMPLE_QTY"       property="sampleQty"/>
+    <result column="SAMPLE_UNIT"      property="sampleUnit"/>
+    <result column="SAMPLE_TIME"      property="sampleTime"/>
+    <result column="STATUS"           property="status"/>
+    <result column="CURRENT_ROUND"    property="currentRound"/>
+    <result column="PROD_USER_ID"     property="prodUserId"/>
+    <result column="PROD_USER_NAME"   property="prodUserName"/>
+    <result column="PROD_SUBMIT_TIME" property="prodSubmitTime"/>
+    <result column="QC_USER_ID"       property="qcUserId"/>
+    <result column="QC_USER_NAME"     property="qcUserName"/>
+    <result column="QC_REVIEW_TIME"   property="qcReviewTime"/>
+    <result column="FINAL_JUDGE"      property="finalJudge"/>
+    <result column="PROBLEM_DESC"     property="problemDesc"/>
+    <result column="REJECT_REASON"    property="rejectReason"/>
+    <result column="CREATE_TIME"      property="createTime"/>
+    <result column="UPDATE_TIME"      property="updateTime"/>
+  </resultMap>
+
+  <resultMap id="ItemMap" type="com.jcd.model.qafa.QaFaRecordItem">
+    <id     column="ID"               property="id"/>
+    <result column="RECORD_ID"        property="recordId"/>
+    <result column="TEMPLATE_ITEM_ID" property="templateItemId"/>
+    <result column="SECTION_CODE"     property="sectionCode"/>
+    <result column="ITEM_CODE"        property="itemCode"/>
+    <result column="ITEM_NAME"        property="itemName"/>
+    <result column="ROUND_NO"         property="roundNo"/>
+    <result column="PROD_VALUE"       property="prodValue"/>
+    <result column="PROD_PASS"        property="prodPass"/>
+    <result column="PROD_USER_ID"     property="prodUserId"/>
+    <result column="PROD_TIME"        property="prodTime"/>
+    <result column="QC_VALUE"         property="qcValue"/>
+    <result column="QC_PASS"          property="qcPass"/>
+    <result column="QC_USER_ID"       property="qcUserId"/>
+    <result column="QC_TIME"          property="qcTime"/>
+    <result column="REMARK"           property="remark"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jcd.model.qafa.QaFaRecord">
+    insert into QA_FA_RECORD (
+      ID, RECORD_NO, TEMPLATE_ID, PROCESS_CODE, LOT_ID, LOT_NAME, PRODUCT_PN, LINE_CODE,
+      SAMPLE_QTY, SAMPLE_UNIT, SAMPLE_TIME, STATUS, CURRENT_ROUND,
+      PROD_USER_ID, PROD_USER_NAME, PROD_SUBMIT_TIME,
+      QC_USER_ID, QC_USER_NAME, QC_REVIEW_TIME,
+      FINAL_JUDGE, PROBLEM_DESC, REJECT_REASON, CREATE_TIME, UPDATE_TIME
+    ) values (
+      #{id}, #{recordNo}, #{templateId}, #{processCode}, #{lotId}, #{lotName}, #{productPn}, #{lineCode},
+      #{sampleQty}, #{sampleUnit}, #{sampleTime}, #{status}, #{currentRound},
+      #{prodUserId}, #{prodUserName}, #{prodSubmitTime},
+      #{qcUserId}, #{qcUserName}, #{qcReviewTime},
+      #{finalJudge}, #{problemDesc}, #{rejectReason}, #{createTime}, #{updateTime}
+    )
+  </insert>
+
+  <update id="updateSelective" parameterType="com.jcd.model.qafa.QaFaRecord">
+    update QA_FA_RECORD
+    <set>
+      <if test="status != null">         STATUS = #{status},</if>
+      <if test="currentRound != null">   CURRENT_ROUND = #{currentRound},</if>
+      <if test="prodUserId != null">     PROD_USER_ID = #{prodUserId},</if>
+      <if test="prodUserName != null">   PROD_USER_NAME = #{prodUserName},</if>
+      <if test="prodSubmitTime != null"> PROD_SUBMIT_TIME = #{prodSubmitTime},</if>
+      <if test="qcUserId != null">       QC_USER_ID = #{qcUserId},</if>
+      <if test="qcUserName != null">     QC_USER_NAME = #{qcUserName},</if>
+      <if test="qcReviewTime != null">   QC_REVIEW_TIME = #{qcReviewTime},</if>
+      <if test="finalJudge != null">     FINAL_JUDGE = #{finalJudge},</if>
+      <if test="problemDesc != null">    PROBLEM_DESC = #{problemDesc},</if>
+      <if test="rejectReason != null">   REJECT_REASON = #{rejectReason},</if>
+      <if test="sampleQty != null">      SAMPLE_QTY = #{sampleQty},</if>
+      <if test="sampleUnit != null">     SAMPLE_UNIT = #{sampleUnit},</if>
+      <if test="sampleTime != null">     SAMPLE_TIME = #{sampleTime},</if>
+      <if test="lineCode != null">       LINE_CODE = #{lineCode},</if>
+      UPDATE_TIME = #{updateTime}
+    </set>
+    where ID = #{id}
+  </update>
+
+  <sql id="RecordSelectColumns">
+    R.ID, R.RECORD_NO, R.TEMPLATE_ID, R.PROCESS_CODE, R.LOT_ID, R.LOT_NAME,
+    R.PRODUCT_PN, R.LINE_CODE, R.SAMPLE_QTY, R.SAMPLE_UNIT, R.SAMPLE_TIME,
+    R.STATUS, R.CURRENT_ROUND,
+    R.PROD_USER_ID,
+    NVL(UP.FULLNAME, R.PROD_USER_NAME) as PROD_USER_NAME,
+    R.PROD_SUBMIT_TIME,
+    R.QC_USER_ID,
+    NVL(UQ.FULLNAME, R.QC_USER_NAME) as QC_USER_NAME,
+    R.QC_REVIEW_TIME, R.FINAL_JUDGE, R.PROBLEM_DESC, R.REJECT_REASON,
+    R.CREATE_TIME, R.UPDATE_TIME
+  </sql>
+
+  <sql id="RecordSelectFrom">
+    from QA_FA_RECORD R
+    left join USERPROFILE UP on UP.USERNAME = R.PROD_USER_ID
+    left join USERPROFILE UQ on UQ.USERNAME = R.QC_USER_ID
+  </sql>
+
+  <select id="selectById" resultMap="RecordMap">
+    select <include refid="RecordSelectColumns"/>
+    <include refid="RecordSelectFrom"/>
+    where R.ID = #{id}
+  </select>
+
+  <select id="selectByLotName" resultMap="RecordMap">
+    select <include refid="RecordSelectColumns"/>
+    <include refid="RecordSelectFrom"/>
+    where R.LOT_NAME = #{lotName}
+    order by R.CREATE_TIME desc
+  </select>
+
+  <delete id="deleteById">
+    delete from QA_FA_RECORD where ID = #{id}
+  </delete>
+
+  <delete id="deleteItemsByRecordId">
+    delete from QA_FA_RECORD_ITEM where RECORD_ID = #{recordId}
+  </delete>
+
+  <delete id="deleteAuditLogsByRecordId">
+    delete from QA_FA_AUDIT_LOG where RECORD_ID = #{recordId}
+  </delete>
+
+  <select id="nextDailyRecordSeq" resultType="java.lang.Integer">
+    select nvl(max(to_number(substr(RECORD_NO, 11, 4))), 0) + 1
+    from QA_FA_RECORD
+    where RECORD_NO like #{prefix} || '%'
+      and length(RECORD_NO) = 14
+      and regexp_like(substr(RECORD_NO, 11, 4), '^[0-9]{4}$')
+  </select>
+
+  <sql id="QueryWhere">
+    <where>
+      <if test="statusList != null and statusList.size() > 0">
+        and R.STATUS in
+        <foreach collection="statusList" item="s" open="(" separator="," close=")">#{s}</foreach>
+      </if>
+      <if test="processCode != null and processCode != ''">
+        and R.PROCESS_CODE = #{processCode}
+      </if>
+      <if test="lotName != null and lotName != ''">
+        and R.LOT_NAME like '%' || #{lotName} || '%'
+      </if>
+      <if test="dateFrom != null">
+        and R.CREATE_TIME &gt;= #{dateFrom}
+      </if>
+      <if test="dateTo != null">
+        and R.CREATE_TIME &lt;= #{dateTo}
+      </if>
+      <if test="ownerUserId != null and ownerUserId != ''">
+        and (R.PROD_USER_ID = #{ownerUserId} or R.QC_USER_ID = #{ownerUserId})
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryList" resultMap="RecordMap">
+    select * from (
+      select t.*, ROWNUM rn from (
+        select <include refid="RecordSelectColumns"/>
+        <include refid="RecordSelectFrom"/>
+        <include refid="QueryWhere"/>
+        order by R.CREATE_TIME desc
+      ) t where ROWNUM &lt;= #{offset} + #{limit}
+    ) where rn &gt; #{offset}
+  </select>
+
+  <select id="queryListCount" resultType="java.lang.Integer">
+    select count(1) from QA_FA_RECORD R
+    <include refid="QueryWhere"/>
+  </select>
+
+  <!-- ============== record_item ============== -->
+
+  <insert id="insertItem" parameterType="com.jcd.model.qafa.QaFaRecordItem">
+    insert into QA_FA_RECORD_ITEM (
+      ID, RECORD_ID, TEMPLATE_ITEM_ID, SECTION_CODE, ITEM_CODE, ITEM_NAME, ROUND_NO,
+      PROD_VALUE, PROD_PASS, PROD_USER_ID, PROD_TIME,
+      QC_VALUE, QC_PASS, QC_USER_ID, QC_TIME, REMARK
+    ) values (
+      #{id}, #{recordId}, #{templateItemId}, #{sectionCode}, #{itemCode}, #{itemName}, #{roundNo},
+      #{prodValue}, #{prodPass}, #{prodUserId}, #{prodTime},
+      #{qcValue}, #{qcPass}, #{qcUserId}, #{qcTime}, #{remark}
+    )
+  </insert>
+
+  <insert id="batchInsertItems" parameterType="java.util.List">
+    insert into QA_FA_RECORD_ITEM (
+      ID, RECORD_ID, TEMPLATE_ITEM_ID, SECTION_CODE, ITEM_CODE, ITEM_NAME, ROUND_NO,
+      PROD_VALUE, PROD_PASS, PROD_USER_ID, PROD_TIME,
+      QC_VALUE, QC_PASS, QC_USER_ID, QC_TIME, REMARK
+    )
+    <foreach collection="items" item="it" separator=" union all ">
+      select
+        #{it.id}, #{it.recordId}, #{it.templateItemId}, #{it.sectionCode}, #{it.itemCode}, #{it.itemName}, #{it.roundNo},
+        #{it.prodValue}, #{it.prodPass}, #{it.prodUserId}, #{it.prodTime},
+        #{it.qcValue}, #{it.qcPass}, #{it.qcUserId}, #{it.qcTime}, #{it.remark}
+      from dual
+    </foreach>
+  </insert>
+
+  <update id="updateItemSelective" parameterType="com.jcd.model.qafa.QaFaRecordItem">
+    update QA_FA_RECORD_ITEM
+    <set>
+      <if test="prodValue != null">    PROD_VALUE = #{prodValue},</if>
+      <if test="prodPass != null">     PROD_PASS = #{prodPass},</if>
+      <if test="prodUserId != null">   PROD_USER_ID = #{prodUserId},</if>
+      <if test="prodTime != null">     PROD_TIME = #{prodTime},</if>
+      <if test="qcValue != null">      QC_VALUE = #{qcValue},</if>
+      <if test="qcPass != null">       QC_PASS = #{qcPass},</if>
+      <if test="qcUserId != null">     QC_USER_ID = #{qcUserId},</if>
+      <if test="qcTime != null">       QC_TIME = #{qcTime},</if>
+      <if test="remark != null">       REMARK = #{remark},</if>
+      ID = ID
+    </set>
+    where ID = #{id}
+  </update>
+
+  <select id="selectItemById" resultMap="ItemMap">
+    select * from QA_FA_RECORD_ITEM where ID = #{id}
+  </select>
+
+  <select id="selectItemsByRecordAndRound" resultMap="ItemMap">
+    select * from QA_FA_RECORD_ITEM
+    where RECORD_ID = #{recordId} and ROUND_NO = #{roundNo}
+  </select>
+
+  <select id="selectAllItemsByRecord" resultMap="ItemMap">
+    select * from QA_FA_RECORD_ITEM
+    where RECORD_ID = #{recordId}
+    order by ROUND_NO desc
+  </select>
+
+  <select id="selectItemByKey" resultMap="ItemMap">
+    select * from QA_FA_RECORD_ITEM
+    where RECORD_ID = #{recordId}
+      and TEMPLATE_ITEM_ID = #{templateItemId}
+      and ROUND_NO = #{roundNo}
+  </select>
+
+</mapper>

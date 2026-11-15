@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.IqcMaterialStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.IqcMaterialStatus" >
+    <id column="STATUSID" property="statusid" jdbcType="VARCHAR" />
+    <result column="STATUSNAME" property="statusname" jdbcType="VARCHAR" />
+    <result column="FIFOPRIORITY" property="fifopriority" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STATUSID, STATUSNAME, FIFOPRIORITY, DESCRIPTION, USERNAME, DATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.IqcMaterialStatusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from IQCMATERIALSTATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from IQCMATERIALSTATUS
+    where STATUSID = #{statusid,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from IQCMATERIALSTATUS
+        where STATUSNAME = #{status,jdbcType=VARCHAR}
+        and rownum=1
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from IQCMATERIALSTATUS
+    where STATUSID = #{statusid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcd.model.IqcMaterialStatusExample" >
+    delete from IQCMATERIALSTATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.IqcMaterialStatus" >
+    insert into IQCMATERIALSTATUS (STATUSID, STATUSNAME, FIFOPRIORITY, 
+      DESCRIPTION, USERNAME, DATETIME
+      )
+    values (#{statusid,jdbcType=VARCHAR}, #{statusname,jdbcType=VARCHAR}, #{fifopriority,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.IqcMaterialStatus" >
+    insert into IQCMATERIALSTATUS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="statusid != null" >
+        STATUSID,
+      </if>
+      <if test="statusname != null" >
+        STATUSNAME,
+      </if>
+      <if test="fifopriority != null" >
+        FIFOPRIORITY,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="statusid != null" >
+        #{statusid,jdbcType=VARCHAR},
+      </if>
+      <if test="statusname != null" >
+        #{statusname,jdbcType=VARCHAR},
+      </if>
+      <if test="fifopriority != null" >
+        #{fifopriority,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcd.model.IqcMaterialStatusExample" resultType="java.lang.Integer" >
+    select count(*) from IQCMATERIALSTATUS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update IQCMATERIALSTATUS
+    <set >
+      <if test="record.statusid != null" >
+        STATUSID = #{record.statusid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusname != null" >
+        STATUSNAME = #{record.statusname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fifopriority != null" >
+        FIFOPRIORITY = #{record.fifopriority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update IQCMATERIALSTATUS
+    set STATUSID = #{record.statusid,jdbcType=VARCHAR},
+      STATUSNAME = #{record.statusname,jdbcType=VARCHAR},
+      FIFOPRIORITY = #{record.fifopriority,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.IqcMaterialStatus" >
+    update IQCMATERIALSTATUS
+    <set >
+      <if test="statusname != null" >
+        STATUSNAME = #{statusname,jdbcType=VARCHAR},
+      </if>
+      <if test="fifopriority != null" >
+        FIFOPRIORITY = #{fifopriority,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where STATUSID = #{statusid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.IqcMaterialStatus" >
+    update IQCMATERIALSTATUS
+    set STATUSNAME = #{statusname,jdbcType=VARCHAR},
+      FIFOPRIORITY = #{fifopriority,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP}
+    where STATUSID = #{statusid,jdbcType=VARCHAR}
+  </update>
+</mapper>

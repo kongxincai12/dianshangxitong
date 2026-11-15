@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Rmm_dewcelltimecontrolMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Rmm_dewcelltimecontrol" >
+    <id column="DEWCELLTCID" property="dewcelltcid" jdbcType="VARCHAR" />
+    <result column="UPNID" property="upnid" jdbcType="VARCHAR" />
+    <result column="FSH" property="fsh" jdbcType="NUMERIC" />
+    <result column="DRYINGTIME" property="dryingtime" jdbcType="NUMERIC" />
+    <result column="LFSH" property="lfsh" jdbcType="NUMERIC" />
+    <result column="WARNINGTIMEY" property="warningtimey" jdbcType="NUMERIC" />
+    <result column="WARNINGTIMER" property="warningtimer" jdbcType="NUMERIC" />
+    <result column="LEFTFSH" property="leftfsh" jdbcType="NUMERIC" />
+    <result column="FSHSTARTTIME" property="fshstarttime" jdbcType="TIMESTAMP" />
+    <result column="FSHBREAKTIME" property="fshbreaktime" jdbcType="TIMESTAMP" />
+    <result column="BAKEINTIME" property="bakeintime" jdbcType="TIMESTAMP" />
+    <result column="BAKEOUTTIME" property="bakeouttime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DEWCELLTCID, UPNID, FSH, DRYINGTIME, LFSH, WARNINGTIMEY, WARNINGTIMER, LEFTFSH, FSHSTARTTIME, 
+    FSHBREAKTIME, BAKEINTIME, BAKEOUTTIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RMM_DEWCELLTIMECONTROL
+    where DEWCELLTCID = #{dewcelltcid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUpnid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from RMM_DEWCELLTIMECONTROL
+    where upnid = #{upnid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RMM_DEWCELLTIMECONTROL
+    where DEWCELLTCID = #{dewcelltcid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Rmm_dewcelltimecontrol" >
+    insert into RMM_DEWCELLTIMECONTROL (DEWCELLTCID, UPNID, FSH, 
+      DRYINGTIME, LFSH, WARNINGTIMEY, 
+      WARNINGTIMER, LEFTFSH, FSHSTARTTIME, 
+      FSHBREAKTIME, BAKEINTIME, BAKEOUTTIME
+      )
+    values (#{dewcelltcid,jdbcType=VARCHAR}, #{upnid,jdbcType=VARCHAR}, #{fsh,jdbcType=NUMERIC}, 
+      #{dryingtime,jdbcType=NUMERIC}, #{lfsh,jdbcType=NUMERIC}, #{warningtimey,jdbcType=NUMERIC}, 
+      #{warningtimer,jdbcType=NUMERIC}, #{leftfsh,jdbcType=NUMERIC}, #{fshstarttime,jdbcType=TIMESTAMP}, 
+      #{fshbreaktime,jdbcType=TIMESTAMP}, #{bakeintime,jdbcType=TIMESTAMP}, #{bakeouttime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Rmm_dewcelltimecontrol" >
+    insert into RMM_DEWCELLTIMECONTROL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dewcelltcid != null" >
+        DEWCELLTCID,
+      </if>
+      <if test="upnid != null" >
+        UPNID,
+      </if>
+      <if test="fsh != null" >
+        FSH,
+      </if>
+      <if test="dryingtime != null" >
+        DRYINGTIME,
+      </if>
+      <if test="lfsh != null" >
+        LFSH,
+      </if>
+      <if test="warningtimey != null" >
+        WARNINGTIMEY,
+      </if>
+      <if test="warningtimer != null" >
+        WARNINGTIMER,
+      </if>
+      <if test="leftfsh != null" >
+        LEFTFSH,
+      </if>
+      <if test="fshstarttime != null" >
+        FSHSTARTTIME,
+      </if>
+      <if test="fshbreaktime != null" >
+        FSHBREAKTIME,
+      </if>
+      <if test="bakeintime != null" >
+        BAKEINTIME,
+      </if>
+      <if test="bakeouttime != null" >
+        BAKEOUTTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dewcelltcid != null" >
+        #{dewcelltcid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="fsh != null" >
+        #{fsh,jdbcType=NUMERIC},
+      </if>
+      <if test="dryingtime != null" >
+        #{dryingtime,jdbcType=NUMERIC},
+      </if>
+      <if test="lfsh != null" >
+        #{lfsh,jdbcType=NUMERIC},
+      </if>
+      <if test="warningtimey != null" >
+        #{warningtimey,jdbcType=NUMERIC},
+      </if>
+      <if test="warningtimer != null" >
+        #{warningtimer,jdbcType=NUMERIC},
+      </if>
+      <if test="leftfsh != null" >
+        #{leftfsh,jdbcType=NUMERIC},
+      </if>
+      <if test="fshstarttime != null" >
+        #{fshstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fshbreaktime != null" >
+        #{fshbreaktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakeintime != null" >
+        #{bakeintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakeouttime != null" >
+        #{bakeouttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Rmm_dewcelltimecontrol" >
+    update RMM_DEWCELLTIMECONTROL
+    <set >
+      <if test="upnid != null" >
+        UPNID = #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="fsh != null" >
+        FSH = #{fsh,jdbcType=NUMERIC},
+      </if>
+      <if test="dryingtime != null" >
+        DRYINGTIME = #{dryingtime,jdbcType=NUMERIC},
+      </if>
+      <if test="lfsh != null" >
+        LFSH = #{lfsh,jdbcType=NUMERIC},
+      </if>
+      <if test="warningtimey != null" >
+        WARNINGTIMEY = #{warningtimey,jdbcType=NUMERIC},
+      </if>
+      <if test="warningtimer != null" >
+        WARNINGTIMER = #{warningtimer,jdbcType=NUMERIC},
+      </if>
+      <if test="leftfsh != null" >
+        LEFTFSH = #{leftfsh,jdbcType=NUMERIC},
+      </if>
+      <if test="fshstarttime != null" >
+        FSHSTARTTIME = #{fshstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fshbreaktime != null" >
+        FSHBREAKTIME = #{fshbreaktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakeintime != null" >
+        BAKEINTIME = #{bakeintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakeouttime != null" >
+        BAKEOUTTIME = #{bakeouttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DEWCELLTCID = #{dewcelltcid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Rmm_dewcelltimecontrol" >
+    update RMM_DEWCELLTIMECONTROL
+    set UPNID = #{upnid,jdbcType=VARCHAR},
+      FSH = #{fsh,jdbcType=NUMERIC},
+      DRYINGTIME = #{dryingtime,jdbcType=NUMERIC},
+      LFSH = #{lfsh,jdbcType=NUMERIC},
+      WARNINGTIMEY = #{warningtimey,jdbcType=NUMERIC},
+      WARNINGTIMER = #{warningtimer,jdbcType=NUMERIC},
+      LEFTFSH = #{leftfsh,jdbcType=NUMERIC},
+      FSHSTARTTIME = #{fshstarttime,jdbcType=TIMESTAMP},
+      FSHBREAKTIME = #{fshbreaktime,jdbcType=TIMESTAMP},
+      BAKEINTIME = #{bakeintime,jdbcType=TIMESTAMP},
+      BAKEOUTTIME = #{bakeouttime,jdbcType=TIMESTAMP}
+    where DEWCELLTCID = #{dewcelltcid,jdbcType=VARCHAR}
+  </update>
+</mapper>

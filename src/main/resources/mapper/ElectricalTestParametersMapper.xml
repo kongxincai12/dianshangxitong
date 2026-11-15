@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ElectricalTestParametersMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.ElectricalTestParameters" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ELECTRICAL_TEST_ID" property="electricalTestId" jdbcType="VARCHAR" />
+    <result column="EQP_ID" property="eqpId" jdbcType="VARCHAR" />
+    <result column="PARAMETER_NAME" property="parameterName" jdbcType="VARCHAR" />
+    <result column="PARAMETER_VALUE" property="parameterValue" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="IS_CUSTOM" property="isCustom" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, ELECTRICAL_TEST_ID, EQP_ID, PARAMETER_NAME, PARAMETER_VALUE, CREATE_TIME,IS_CUSTOM,DISPLAY_ORDER
+  </sql>
+
+  <select id="selectByRecordId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ELECTRICAL_TEST_PARAMETERS
+    where ELECTRICAL_TEST_ID = #{recordId,jdbcType=VARCHAR}
+    order by DISPLAY_ORDER
+  </select>
+
+  <select id="selectElectricalTestCraftParameters" resultType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from ELECTRICAL_TEST_PARAMETERS
+    where ELECTRICAL_TEST_ID = #{recordId,jdbcType=VARCHAR}
+    order by DISPLAY_ORDER
+  </select>
+
+
+  <delete id="deleteByRecordId" parameterType="java.lang.String" >
+    delete from ELECTRICAL_TEST_PARAMETERS
+    where ELECTRICAL_TEST_ID = #{recordId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.jcd.model.ElectricalTestParameters" >
+    insert into ELECTRICAL_TEST_PARAMETERS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="electricalTestId != null" >
+        ELECTRICAL_TEST_ID,
+      </if>
+      <if test="eqpId != null" >
+        EQP_ID,
+      </if>
+      <if test="parameterName != null" >
+        PARAMETER_NAME,
+      </if>
+      <if test="parameterValue != null" >
+        PARAMETER_VALUE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="isCustom != null" >
+        IS_CUSTOM,
+      </if>
+      <if test="displayOrder != null" >
+        DISPLAY_ORDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="electricalTestId != null" >
+        #{electricalTestId,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpId != null" >
+        #{eqpId,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterName != null" >
+        #{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterValue != null" >
+        #{parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isCustom != null" >
+        #{isCustom,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ElectricalTestParameters" >
+    update ELECTRICAL_TEST_PARAMETERS
+    <set >
+      <if test="electricalTestId != null" >
+        ELECTRICAL_TEST_ID=#{electricalTestId,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpId != null" >
+        EQP_ID=#{eqpId,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterName != null" >
+        PARAMETER_NAME=#{parameterName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterValue != null" >
+        PARAMETER_VALUE=#{parameterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME=#{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        IS_CUSTOM=#{isCustom,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != 0" >
+        DISPLAY_ORDER=#{displayOrder,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

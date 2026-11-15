@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaLabDataMapper">
+
+  <resultMap id="LabDataMap" type="com.jcd.model.qafa.QaFaLabData">
+    <id     column="ID"                property="id"/>
+    <result column="RECORD_ID"         property="recordId"/>
+    <result column="SOURCE_TYPE"       property="sourceType"/>
+    <result column="SMB_FULL_PATH"     property="smbFullPath"/>
+    <result column="FILE_NAME"         property="fileName"/>
+    <result column="FILE_LOT_PARSED"   property="fileLotParsed"/>
+    <result column="LOT_MATCH_RESULT"  property="lotMatchResult"/>
+    <result column="SAMPLE_NAME"       property="sampleName"/>
+    <result column="MEASURER"          property="measurer"/>
+    <result column="MACHINE_NAME"      property="machineName"/>
+    <result column="JUDGE_STD_TEXT"    property="judgeStdText"/>
+    <result column="JUDGE_STD_AU_MIN"  property="judgeStdAuMin"/>
+    <result column="JUDGE_STD_AU_MAX"  property="judgeStdAuMax"/>
+    <result column="JUDGE_STD_NI_MIN"  property="judgeStdNiMin"/>
+    <result column="JUDGE_STD_NI_MAX"  property="judgeStdNiMax"/>
+    <result column="JUDGE_RESULT"      property="judgeResult"/>
+    <result column="TEST_DATE"         property="testDate"/>
+    <result column="PARSED_TIME"       property="parsedTime"/>
+    <result column="PARSED_BY"         property="parsedBy"/>
+    <result column="PARSE_STATUS"      property="parseStatus"/>
+    <result column="PARSE_ERROR"       property="parseError"/>
+    <result column="RAW_JSON"          property="rawJson" jdbcType="CLOB"/>
+  </resultMap>
+
+  <resultMap id="LabItemMap" type="com.jcd.model.qafa.QaFaLabDataItem">
+    <id     column="ID"             property="id"/>
+    <result column="LAB_DATA_ID"    property="labDataId"/>
+    <result column="COLUMN_NAME"    property="columnName"/>
+    <result column="UNIT"           property="unit"/>
+    <result column="AVG_VAL"        property="avgVal"/>
+    <result column="STD_VAL"        property="stdVal"/>
+    <result column="CV_VAL"         property="cvVal"/>
+    <result column="RANGE_VAL"      property="rangeVal"/>
+    <result column="MAX_VAL"        property="maxVal"/>
+    <result column="MIN_VAL"        property="minVal"/>
+    <result column="INFINITE_FLAG"  property="infiniteFlag"/>
+    <result column="RAW_VALUES_JSON" property="rawValuesJson"/>
+    <result column="SORT_NO"        property="sortNo"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jcd.model.qafa.QaFaLabData">
+    insert into QA_FA_LAB_DATA (
+      ID, RECORD_ID, SOURCE_TYPE, SMB_FULL_PATH, FILE_NAME, FILE_LOT_PARSED, LOT_MATCH_RESULT,
+      SAMPLE_NAME, MEASURER, MACHINE_NAME, JUDGE_STD_TEXT,
+      JUDGE_STD_AU_MIN, JUDGE_STD_AU_MAX, JUDGE_STD_NI_MIN, JUDGE_STD_NI_MAX,
+      JUDGE_RESULT, TEST_DATE, PARSED_TIME, PARSED_BY, PARSE_STATUS, PARSE_ERROR, RAW_JSON
+    ) values (
+      #{id}, #{recordId}, #{sourceType}, #{smbFullPath}, #{fileName}, #{fileLotParsed}, #{lotMatchResult},
+      #{sampleName}, #{measurer}, #{machineName}, #{judgeStdText},
+      #{judgeStdAuMin}, #{judgeStdAuMax}, #{judgeStdNiMin}, #{judgeStdNiMax},
+      #{judgeResult}, #{testDate}, #{parsedTime}, #{parsedBy}, #{parseStatus}, #{parseError},
+      #{rawJson, jdbcType=CLOB}
+    )
+  </insert>
+
+  <insert id="batchInsertItems" parameterType="java.util.List">
+    insert into QA_FA_LAB_DATA_ITEM (
+      ID, LAB_DATA_ID, COLUMN_NAME, UNIT, AVG_VAL, STD_VAL, CV_VAL, RANGE_VAL,
+      MAX_VAL, MIN_VAL, INFINITE_FLAG, RAW_VALUES_JSON, SORT_NO
+    )
+    <foreach collection="items" item="it" separator=" union all ">
+      select
+        #{it.id,jdbcType=VARCHAR},
+        #{it.labDataId,jdbcType=VARCHAR},
+        #{it.columnName,jdbcType=VARCHAR},
+        #{it.unit,jdbcType=VARCHAR},
+        #{it.avgVal,jdbcType=DECIMAL},
+        #{it.stdVal,jdbcType=DECIMAL},
+        #{it.cvVal,jdbcType=DECIMAL},
+        #{it.rangeVal,jdbcType=DECIMAL},
+        #{it.maxVal,jdbcType=DECIMAL},
+        #{it.minVal,jdbcType=DECIMAL},
+        #{it.infiniteFlag,jdbcType=INTEGER},
+        #{it.rawValuesJson,jdbcType=VARCHAR},
+        #{it.sortNo,jdbcType=INTEGER}
+      from dual
+    </foreach>
+  </insert>
+
+  <select id="selectById" resultMap="LabDataMap">
+    select * from QA_FA_LAB_DATA where ID = #{id}
+  </select>
+
+  <select id="selectByRecordId" resultMap="LabDataMap">
+    select * from QA_FA_LAB_DATA where RECORD_ID = #{recordId}
+    order by PARSED_TIME desc
+  </select>
+
+  <select id="selectItemsByLabDataId" resultMap="LabItemMap">
+    select * from QA_FA_LAB_DATA_ITEM where LAB_DATA_ID = #{labDataId}
+    order by SORT_NO
+  </select>
+
+  <delete id="deleteById">
+    delete from QA_FA_LAB_DATA where ID = #{id}
+  </delete>
+
+  <delete id="deleteItemsByLabDataId">
+    delete from QA_FA_LAB_DATA_ITEM where LAB_DATA_ID = #{labDataId}
+  </delete>
+
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Rmm_womateriallistMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Rmm_womateriallist" >
+    <id column="WMID" property="wmid" jdbcType="VARCHAR" />
+    <result column="WORKORDERID" property="workorderid" jdbcType="VARCHAR" />
+    <result column="WORKORDERNAME" property="workordername" jdbcType="VARCHAR" />
+    <result column="PN" property="pn" jdbcType="VARCHAR" />
+    <result column="UNITQTY" property="unitqty" jdbcType="NUMERIC" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="RELEASEQTY" property="releaseqty" jdbcType="NUMERIC" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="OPERATETIME" property="operatetime" jdbcType="TIMESTAMP" />
+    <result column="ERPID" property="erpid" jdbcType="VARCHAR" />
+    <result column="ERPMOID" property="erpmoid" jdbcType="VARCHAR" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="STEP" property="step" jdbcType="VARCHAR" />
+    <result column="MAINPN" property="mainpn" jdbcType="VARCHAR" />
+    <result column="MAINUNITQTY" property="mainunitqty" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    WMID, WORKORDERID, WORKORDERNAME, PN, UNITQTY, TOTALQTY, RELEASEQTY, DESCRIPTION, 
+    DATETIME, OPERATETIME, ERPID, ERPMOID, UNIT, STEP, MAINPN, MAINUNITQTY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RMM_WOMATERIALLIST
+    where WMID = #{wmid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RMM_WOMATERIALLIST
+    where WMID = #{wmid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Rmm_womateriallist" >
+    insert into RMM_WOMATERIALLIST (WMID, WORKORDERID, WORKORDERNAME, 
+      PN, UNITQTY, TOTALQTY, 
+      RELEASEQTY, DESCRIPTION, DATETIME, 
+      OPERATETIME, ERPID, ERPMOID, 
+      UNIT, STEP, MAINPN, 
+      MAINUNITQTY)
+    values (#{wmid,jdbcType=VARCHAR}, #{workorderid,jdbcType=VARCHAR}, #{workordername,jdbcType=VARCHAR}, 
+      #{pn,jdbcType=VARCHAR}, #{unitqty,jdbcType=NUMERIC}, #{totalqty,jdbcType=NUMERIC}, 
+      #{releaseqty,jdbcType=NUMERIC}, #{description,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{operatetime,jdbcType=TIMESTAMP}, #{erpid,jdbcType=VARCHAR}, #{erpmoid,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{step,jdbcType=VARCHAR}, #{mainpn,jdbcType=VARCHAR}, 
+      #{mainunitqty,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Rmm_womateriallist" >
+    insert into RMM_WOMATERIALLIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wmid != null" >
+        WMID,
+      </if>
+      <if test="workorderid != null" >
+        WORKORDERID,
+      </if>
+      <if test="workordername != null" >
+        WORKORDERNAME,
+      </if>
+      <if test="pn != null" >
+        PN,
+      </if>
+      <if test="unitqty != null" >
+        UNITQTY,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="operatetime != null" >
+        OPERATETIME,
+      </if>
+      <if test="erpid != null" >
+        ERPID,
+      </if>
+      <if test="erpmoid != null" >
+        ERPMOID,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+      <if test="step != null" >
+        STEP,
+      </if>
+      <if test="mainpn != null" >
+        MAINPN,
+      </if>
+      <if test="mainunitqty != null" >
+        MAINUNITQTY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wmid != null" >
+        #{wmid,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderid != null" >
+        #{workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="workordername != null" >
+        #{workordername,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null" >
+        #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releaseqty != null" >
+        #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatetime != null" >
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="erpid != null" >
+        #{erpid,jdbcType=VARCHAR},
+      </if>
+      <if test="erpmoid != null" >
+        #{erpmoid,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=VARCHAR},
+      </if>
+      <if test="mainpn != null" >
+        #{mainpn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainunitqty != null" >
+        #{mainunitqty,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Rmm_womateriallist" >
+    update RMM_WOMATERIALLIST
+    <set >
+      <if test="workorderid != null" >
+        WORKORDERID = #{workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="workordername != null" >
+        WORKORDERNAME = #{workordername,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null" >
+        UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatetime != null" >
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="erpid != null" >
+        ERPID = #{erpid,jdbcType=VARCHAR},
+      </if>
+      <if test="erpmoid != null" >
+        ERPMOID = #{erpmoid,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null" >
+        STEP = #{step,jdbcType=VARCHAR},
+      </if>
+      <if test="mainpn != null" >
+        MAINPN = #{mainpn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainunitqty != null" >
+        MAINUNITQTY = #{mainunitqty,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where WMID = #{wmid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Rmm_womateriallist" >
+    update RMM_WOMATERIALLIST
+    set WORKORDERID = #{workorderid,jdbcType=VARCHAR},
+      WORKORDERNAME = #{workordername,jdbcType=VARCHAR},
+      PN = #{pn,jdbcType=VARCHAR},
+      UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      ERPID = #{erpid,jdbcType=VARCHAR},
+      ERPMOID = #{erpmoid,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      STEP = #{step,jdbcType=VARCHAR},
+      MAINPN = #{mainpn,jdbcType=VARCHAR},
+      MAINUNITQTY = #{mainunitqty,jdbcType=NUMERIC}
+    where WMID = #{wmid,jdbcType=VARCHAR}
+  </update>
+</mapper>

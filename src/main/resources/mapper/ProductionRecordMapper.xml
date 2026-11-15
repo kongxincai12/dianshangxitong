@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.ProductionRecordMapper">
+  <resultMap id="BaseResultMap" type="com.jcd.model.ProductionRecord">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="RECORD_TYPE" jdbcType="VARCHAR" property="recordType" />
+    <result column="EMPLOYEE_ID" jdbcType="VARCHAR" property="employeeId" />
+    <result column="EQUIPMENT_ID" jdbcType="VARCHAR" property="equipmentId" />
+    <result column="LOT_CODE" jdbcType="VARCHAR" property="lotCode" />
+    <result column="PNL_QTY" jdbcType="NUMERIC" property="pnlQty" />
+    <result column="PCS_QTY" jdbcType="NUMERIC" property="pcsQty" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="SITE_CODE" jdbcType="VARCHAR" property="siteCode" />
+    <result column="LOT_SITE" jdbcType="VARCHAR" property="lotSite" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="WORKSTATION_ID" jdbcType="VARCHAR" property="workstationId" />
+      <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+      <result column="BATCH_GROUP_ID" jdbcType="VARCHAR" property="batchGroupId" />
+      <result column="REQUEST_ID" jdbcType="VARCHAR" property="requestId" />
+
+  </resultMap>
+
+    <resultMap id="RepairResultMap" type="com.jcd.dto.RepairProductionAddDto">
+        <result column="LOT_CODE" jdbcType="VARCHAR" property="lotCode" />
+        <result column="PNL_QTY" jdbcType="NUMERIC" property="pnl" />
+        <result column="PCS_QTY" jdbcType="NUMERIC" property="pcs" />
+        <result column="countQty" jdbcType="NUMERIC" property="countQty" />
+        <result column="TOTALQTY" jdbcType="NUMERIC" property="totalQty" />
+        <result column="PANELPCS" jdbcType="NUMERIC" property="panelPcs" />
+
+    </resultMap>
+
+    <resultMap id="ProductionRecordDetailResultMap" type="com.jcd.dto.ProductionRecordDetailVO">
+        <id property="id" column="id"/>
+        <result property="recordType" column="record_type"/>
+        <result property="employeeId" column="employee_id"/>
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="workstationId" column="workstation_id"/>
+        <result property="lotCode" column="lot_code"/>
+        <result property="pnlQty" column="pnl_qty"/>
+        <result property="pcsQty" column="pcs_qty"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="siteCode" column="site_code"/>
+        <result property="lotSite" column="lot_site"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="productCode" column="productCode"/>
+        <result property="remark" column="remark"/>
+        <result property="batchGroupId" column="batch_group_id"/>
+        <result property="requestId" column="request_id"/>
+    </resultMap>
+
+    <!-- 【新增】定义 RecordMaterial 的结果集映射 -->
+    <resultMap id="RecordMaterialResultMap" type="com.jcd.model.RecordMaterial">
+        <id property="id" column="id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="materialCode" column="material_code"/>
+    </resultMap>
+
+    <!-- 【新增】定义 RecordParameter 的结果集映射 -->
+    <resultMap id="RecordParameterResultMap" type="com.jcd.model.RecordParameter">
+        <id property="id" column="id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="paramKey" column="param_key"/>
+        <result property="paramName" column="param_name"/>
+        <result property="paramValue" column="param_value"/>
+        <result property="standardDisplay" column="standard_display"/>
+        <result property="isValid" column="is_valid"/>
+    </resultMap>
+
+
+  <sql id="Base_Column_List">
+    ID, RECORD_TYPE, EMPLOYEE_ID, EQUIPMENT_ID, LOT_CODE, PNL_QTY, PCS_QTY, START_TIME, 
+    END_TIME, STATUS, SITE_CODE, LOT_SITE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME,
+    WORKSTATION_ID, REMARK, BATCH_GROUP_ID, REQUEST_ID
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MES_PRODUCTION_RECORD
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from MES_PRODUCTION_RECORD
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.jcd.model.ProductionRecord">
+    insert into MES_PRODUCTION_RECORD (ID, RECORD_TYPE, EMPLOYEE_ID, 
+      EQUIPMENT_ID, LOT_CODE, PNL_QTY, 
+      PCS_QTY, START_TIME, END_TIME, 
+      STATUS, SITE_CODE, LOT_SITE, 
+      CREATE_BY, CREATE_TIME, UPDATE_BY, 
+      UPDATE_TIME,workstation_id,REMARK,REQUEST_ID)
+    values (#{id,jdbcType=VARCHAR}, #{recordType,jdbcType=VARCHAR}, #{employeeId,jdbcType=VARCHAR}, 
+      #{equipmentId,jdbcType=VARCHAR}, #{lotCode,jdbcType=VARCHAR}, #{pnlQty,jdbcType=NUMERIC}, 
+      #{pcsQty,jdbcType=NUMERIC}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{siteCode,jdbcType=VARCHAR}, #{lotSite,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP},#{workstationId,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},
+      #{requestId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.ProductionRecord">
+    insert into MES_PRODUCTION_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="recordType != null">
+        RECORD_TYPE,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="equipmentId != null">
+        EQUIPMENT_ID,
+      </if>
+      <if test="lotCode != null">
+        LOT_CODE,
+      </if>
+      <if test="pnlQty != null">
+        PNL_QTY,
+      </if>
+      <if test="pcsQty != null">
+        PCS_QTY,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="siteCode != null">
+        SITE_CODE,
+      </if>
+      <if test="lotSite != null">
+        LOT_SITE,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null">
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentId != null">
+        #{equipmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="lotCode != null">
+        #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pnlQty != null">
+        #{pnlQty,jdbcType=NUMERIC},
+      </if>
+      <if test="pcsQty != null">
+        #{pcsQty,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null">
+        #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lotSite != null">
+        #{lotSite,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ProductionRecord">
+    update MES_PRODUCTION_RECORD
+    <set>
+      <if test="recordType != null">
+        RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentId != null">
+        EQUIPMENT_ID = #{equipmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="lotCode != null">
+        LOT_CODE = #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pnlQty != null">
+        PNL_QTY = #{pnlQty,jdbcType=NUMERIC},
+      </if>
+      <if test="pcsQty != null">
+        PCS_QTY = #{pcsQty,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null">
+        SITE_CODE = #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lotSite != null">
+        LOT_SITE = #{lotSite,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.ProductionRecord">
+    update MES_PRODUCTION_RECORD
+    set RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=VARCHAR},
+      EQUIPMENT_ID = #{equipmentId,jdbcType=VARCHAR},
+      LOT_CODE = #{lotCode,jdbcType=VARCHAR},
+      PNL_QTY = #{pnlQty,jdbcType=NUMERIC},
+      PCS_QTY = #{pcsQty,jdbcType=NUMERIC},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SITE_CODE = #{siteCode,jdbcType=VARCHAR},
+      LOT_SITE = #{lotSite,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+    <insert id="insertProductionRecord" parameterType="com.jcd.model.ProductionRecord">
+        INSERT INTO MES_PRODUCTION_RECORD (
+            id, record_type, employee_id, equipment_id, lot_code, pnl_qty, pcs_qty,
+            start_time, status, site_code, lot_site, create_by, create_time, remark,
+            batch_group_id, workstation_id, request_id
+        ) VALUES (
+                     #{id,jdbcType=VARCHAR},
+                     #{recordType,jdbcType=VARCHAR},
+                     #{employeeId,jdbcType=VARCHAR},
+                     #{equipmentId,jdbcType=VARCHAR},
+                     #{lotCode,jdbcType=VARCHAR},
+                     #{pnlQty,jdbcType=NUMERIC},
+                     #{pcsQty,jdbcType=NUMERIC},
+                     #{startTime,jdbcType=TIMESTAMP},
+                     #{status,jdbcType=VARCHAR},
+                     #{siteCode,jdbcType=VARCHAR},
+                     #{lotSite,jdbcType=VARCHAR},
+                     #{createBy,jdbcType=VARCHAR},
+                     #{createTime,jdbcType=TIMESTAMP},
+                     #{remark,jdbcType=VARCHAR},
+                     #{batchGroupId,jdbcType=VARCHAR},
+                     #{workstationId,jdbcType=VARCHAR},
+                     #{requestId,jdbcType=VARCHAR}
+                 )
+    </insert>
+
+    <select id="lockProductionLot" resultType="java.lang.String">
+        SELECT LOTNAME
+        FROM PRP_LOT
+        WHERE LOTNAME = #{lotCode}
+        FOR UPDATE
+    </select>
+
+    <select id="sumAllocatedQty" resultType="com.jcd.dto.ProductionAllocatedQtyDto">
+        SELECT NVL(SUM(mpr.PNL_QTY), 0) AS "allocatedPnl",
+               NVL(SUM(mpr.PCS_QTY), 0) AS "allocatedPcs"
+        FROM MES_PRODUCTION_RECORD mpr
+        WHERE mpr.LOT_CODE = #{lotCode}
+          <choose>
+            <when test="equipmentId != null and equipmentId != ''">
+              AND mpr.RECORD_TYPE = 'EQUIPMENT'
+              AND mpr.EQUIPMENT_ID = #{equipmentId}
+            </when>
+            <otherwise>
+              AND mpr.RECORD_TYPE = 'MANUAL'
+            </otherwise>
+          </choose>
+          AND mpr.STATUS IN ('INPROGRESS', 'COMPLETED')
+          <if test="excludeRecordId != null and excludeRecordId != ''">
+            AND mpr.ID &lt;&gt; #{excludeRecordId}
+          </if>
+          AND (
+            (#{stationId} IS NOT NULL AND (
+                mpr.WORKSTATION_ID = #{stationId}
+                OR (mpr.WORKSTATION_ID IS NULL
+                    AND UPPER(TRIM(mpr.LOT_SITE)) = UPPER(TRIM(#{lotSite})))
+            ))
+            OR
+            (#{stationId} IS NULL
+                AND UPPER(TRIM(mpr.LOT_SITE)) = UPPER(TRIM(#{lotSite})))
+          )
+    </select>
+
+    <select id="findRecordsByRequestId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM MES_PRODUCTION_RECORD
+        WHERE REQUEST_ID = #{requestId}
+        ORDER BY CREATE_TIME, ID
+    </select>
+
+    <select id="findProductionRecords" resultType="com.jcd.model.ProductionRecord">
+        SELECT
+            mpr.id,
+            mpr.lot_code LotCode,
+            pl.PRODUCTPN AS productCode, --从 prp_lot 表获取产品编码
+            mpr.equipment_id equipmentId,
+            mpr.workstation_id workstationId,
+            mpr.start_time startTime,
+            mpr.end_time endTime,
+            mpr.status,
+            mpr.pnl_qty pnlQty,
+            mpr.pcs_qty pcsQty,
+            mpr.batch_group_id batchGroupId
+        FROM
+            MES_PRODUCTION_RECORD mpr
+                LEFT JOIN
+            prp_lot pl ON mpr.lot_code = pl.lotname
+        WHERE
+            mpr.employee_id = #{employeeId}
+          AND mpr.record_type = UPPER(#{recordType})
+          AND mpr.start_time >= #{startTimeFrom}
+          AND mpr.start_time &lt; #{startTimeTo} -- 使用 &lt; 表示小于，避免边界问题
+        ORDER BY
+            mpr.start_time DESC
+    </select>
+
+    <select id="findRecordDetailById" resultMap="ProductionRecordDetailResultMap">
+        SELECT
+            mpr.*, -- 查询主表所有字段
+            pl.PRODUCTPN AS productCode -- 关联查询产品编码
+        FROM
+            MES_PRODUCTION_RECORD mpr
+                LEFT JOIN
+            prp_lot pl ON mpr.lot_code = pl.lotname
+        WHERE
+            mpr.id = #{recordId}
+    </select>
+
+    <!-- 【新增】查询关联物料的SQL -->
+    <select id="findMaterialsByRecordId" resultMap="RecordMaterialResultMap">
+        SELECT * FROM MES_RECORD_MATERIAL WHERE record_id = #{recordId}
+    </select>
+
+    <!-- 【新增】查询关联参数的SQL -->
+    <select id="findParametersByRecordId" resultMap="RecordParameterResultMap">
+        SELECT * FROM MES_RECORD_PARAMETER WHERE record_id = #{recordId}
+    </select>
+
+    <!-- 【新增】查询PanelPcs的SQL -->
+    <select id="findPanelPcsByLotCode" resultType="java.lang.Integer">
+        SELECT PANELPCS FROM prp_lot WHERE lotname = #{lotCode}
+    </select>
+
+    <select id="findInprogressTaskByEmployee" resultMap="BaseResultMap">
+        SELECT *
+        FROM MES_PRODUCTION_RECORD
+        WHERE employee_id = #{employeeId}
+          AND record_type = #{recordType}
+          AND status = 'INPROGRESS'
+          AND ROWNUM = 1
+    </select>
+
+    <!-- 【新增】按 batch_group_id 查询同组所有记录（含 productCode） -->
+    <select id="findRecordsByBatchGroupId" resultMap="ProductionRecordDetailResultMap">
+        SELECT mpr.*, pl.PRODUCTPN AS productCode
+        FROM MES_PRODUCTION_RECORD mpr
+        LEFT JOIN prp_lot pl ON mpr.lot_code = pl.lotname
+        WHERE mpr.batch_group_id = #{batchGroupId}
+        ORDER BY mpr.start_time, mpr.id
+    </select>
+    <!-- 【新增】根据 recordId 删除物料 -->
+
+    <!-- 查询当班最近一条该设备+料号的生产记录的参数值 -->
+    <select id="getLatestShiftParamValues" resultType="java.util.Map">
+        SELECT prp.PARAM_KEY as "paramKey", prp.PARAM_VALUE as "paramValue"
+        FROM MES_RECORD_PARAMETER prp
+        JOIN MES_PRODUCTION_RECORD mpr ON prp.RECORD_ID = mpr.ID
+        WHERE mpr.EQUIPMENT_ID = #{equipmentId}
+          AND mpr.LOT_CODE IN (
+              SELECT LOTNAME FROM PRP_LOT WHERE PRODUCTPN = #{productCode}
+          )
+          AND mpr.START_TIME &gt;= #{shiftStart}
+          AND mpr.START_TIME &lt; #{shiftEnd}
+          AND mpr.ID = (
+              SELECT ID FROM (
+                  SELECT ID FROM MES_PRODUCTION_RECORD
+                  WHERE EQUIPMENT_ID = #{equipmentId}
+                    AND LOT_CODE IN (
+                        SELECT LOTNAME FROM PRP_LOT WHERE PRODUCTPN = #{productCode}
+                    )
+                    AND START_TIME &gt;= #{shiftStart}
+                    AND START_TIME &lt; #{shiftEnd}
+                  ORDER BY START_TIME DESC
+              ) WHERE ROWNUM = 1
+          )
+    </select>
+
+    <select id="searchLotInfo" resultMap="RepairResultMap">
+        SELECT
+            t.LOT_CODE,
+            SUM(t.PNL_QTY) AS PNL_QTY,
+            SUM(t.PCS_QTY) AS PCS_QTY,
+            NVL(c.cnt,0) AS countQty,
+            lot.TOTALQTY,
+            lot.PANELPCS
+        FROM MES_PRODUCTION_RECORD t
+                 LEFT JOIN (
+            SELECT LOT_CODE,COUNT(LOT_CODE) cnt
+            FROM MES_PRODUCTION_RECORD
+            WHERE RECORD_TYPE='REPAIR'
+            GROUP BY LOT_CODE
+        ) c ON t.LOT_CODE = c.LOT_CODE
+                 LEFT JOIN PRP_LOT lot ON t.LOT_CODE=lot.LOTNAME
+        WHERE t.LOT_CODE =#{lotCode}
+          AND t.RECORD_TYPE='REPAIR'
+        GROUP BY t.LOT_CODE,c.cnt,lot.TOTALQTY,lot.PANELPCS
+    </select>
+
+</mapper>

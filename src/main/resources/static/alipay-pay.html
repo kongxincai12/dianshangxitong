@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付宝扫码支付</title>
+    <!-- 使用多个CDN源确保Vue.js能加载 -->
+    <script src="https://unpkg.com/vue@2.7.14/dist/vue.min.js"></script>
+    <script>
+        // 如果unpkg失败，尝试cdn.jsdelivr.net
+        if (typeof Vue === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"><\/script>');
+        }
+        // 如果都失败，提示用户
+        setTimeout(function() {
+            if (typeof Vue === 'undefined') {
+                alert('Vue.js加载失败，请检查网络连接后刷新页面重试');
+            }
+        }, 3000);
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            padding: 40px;
+            width: 480px;
+            max-width: 95%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .header .alipay-logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #999;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: #1677ff;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1677ff 0%, #0958d9 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(22,119,255,0.35);
+        }
+        .btn-pay:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .order-info {
+            background: #f5f7fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .order-info .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        .order-info .row .label {
+            color: #888;
+        }
+        .order-info .row .value {
+            color: #333;
+            font-weight: 500;
+        }
+        .order-info .row .value.amount {
+            color: #ff4d4f;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-wait { background: #fff7e6; color: #fa8c16; }
+        .status-paid { background: #f6ffed; color: #52c41a; }
+        .status-closed { background: #fff1f0; color: #ff4d4f; }
+        .pay-area {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pay-area iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+        }
+        .error-msg {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ff4d4f;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #1677ff;
+            font-size: 16px;
+        }
+        .loading .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #e8e8e8;
+            border-top: 3px solid #1677ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .btn-query {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            color: #1677ff;
+            border: 2px solid #1677ff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        .btn-query:hover {
+            background: #1677ff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <!-- 支付表单 -->
+        <div v-if="step === 'form'">
+            <div class="header">
+                <div class="alipay-logo">&#x1F4B3;</div>
+                <h1>支付宝扫码支付</h1>
+                <p>请填写订单信息</p>
+            </div>
+
+            <div class="form-group">
+                <label>订单标题</label>
+                <input v-model="form.subject" placeholder="请输入订单标题" />
+            </div>
+
+            <div class="form-group">
+                <label>订单描述</label>
+                <input v-model="form.body" placeholder="请输入订单描述（可选）" />
+            </div>
+
+            <div class="form-group">
+                <label>支付金额（元）</label>
+                <input v-model="form.totalAmount" type="number" step="0.01" min="0.01" placeholder="请输入支付金额" />
+            </div>
+
+            <button class="btn-pay" @click="createOrder" :disabled="loading">
+                {{ loading ? '创建订单中...' : '立即支付' }}
+            </button>
+
+            <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
+        </div>
+
+        <!-- 订单信息 + 支付区域 -->
+        <div v-if="step === 'pay'">
+            <div class="header">
+                <div class="alipay-logo">&#x1F4B3;</div>
+                <h1>订单支付</h1>
+            </div>
+
+            <div class="order-info">
+                <div class="row">
+                    <span class="label">商户订单号</span>
+                    <span class="value">{{ orderData.outTradeNo }}</span>
+                </div>
+                <div class="row">
+                    <span class="label">订单标题</span>
+                    <span class="value">{{ orderData.subject }}</span>
+                </div>
+                <div class="row">
+                    <span class="label">支付金额</span>
+                    <span class="value amount">&yen;{{ orderData.totalAmount }}</span>
+                </div>
+                <div class="row">
+                    <span class="label">订单状态</span>
+                    <span class="value">
+                        <span class="status-badge" :class="statusClass">{{ statusText }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- 支付宝支付区域 -->
+            <div class="pay-area" v-if="orderData.payUrl">
+                <!-- 二维码模式（PC端） -->
+                <div v-if="orderData.payType === 'QR'" style="text-align:center; padding:20px;">
+                    <p style="margin-bottom:15px; color:#666;">请使用支付宝APP扫描二维码支付</p>
+                    <img :src="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(orderData.payUrl)"
+                         alt="支付宝支付二维码"
+                         style="width:200px; height:200px; border:2px solid #e8e8e8; border-radius:8px;" />
+                    <p style="margin-top:15px; font-size:12px; color:#999;">订单号: {{ orderData.outTradeNo }}</p>
+                    <p style="margin-top:8px; font-size:12px; color:#fa8c16;">⚠ 请使用沙箱版支付宝APP扫码</p>
+                </div>
+                <!-- WAP支付模式（手机端） -->
+                <div v-else-if="orderData.payType === 'WAP'" style="text-align:center; padding:20px;">
+                    <p style="margin-bottom:15px; color:#666;">点击下方按钮完成支付</p>
+                    <button onclick="openPayWindow()" style="padding:14px 40px; background:linear-gradient(135deg,#1677ff,#0958d9); color:#fff; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 15px rgba(22,119,255,0.3);">
+                        💳 打开支付宝支付
+                    </button>
+                    <p style="margin-top:15px; font-size:12px; color:#999;">订单号: {{ orderData.outTradeNo }}</p>
+                    <p style="margin-top:8px; font-size:12px; color:#fa8c16;">⚠ 支付完成后请返回此页面查看结果</p>
+                </div>
+            </div>
+
+            <div v-if="loading" class="loading">
+                <div class="spinner"></div>
+                <div>正在跳转到支付宝...</div>
+            </div>
+
+            <button class="btn-query" @click="queryOrder">刷新订单状态</button>
+            <button class="btn-pay" @click="resetForm" style="background:#f5f5f5;color:#333;margin-top:10px;">返回重新下单</button>
+
+            <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var payWindowUrl = '';
+    function openPayWindow() {
+        if (payWindowUrl) {
+            // 直接在当前窗口打开，避免弹窗被拦截
+            document.open();
+            document.write(payWindowUrl);
+            document.close();
+        }
+    }
+</script>
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        step: 'form',
+        loading: false,
+        errorMsg: '',
+        form: {
+            subject: 'MES PDA测试订单',
+            body: '支付宝沙箱环境测试支付',
+            totalAmount: 0.01
+        },
+        orderData: {
+            outTradeNo: '',
+            subject: '',
+            totalAmount: 0,
+            orderStatus: 'WAIT_PAY',
+            form: '',
+            payUrl: '',
+            payType: ''
+        },
+        queryTimer: null
+    },
+    computed: {
+        statusText() {
+            var map = { 'WAIT_PAY': '待支付', 'PAID': '已支付', 'CLOSED': '已关闭', 'REFUNDED': '已退款' };
+            return map[this.orderData.orderStatus] || this.orderData.orderStatus;
+        },
+        statusClass() {
+            var map = { 'WAIT_PAY': 'status-wait', 'PAID': 'status-paid', 'CLOSED': 'status-closed', 'REFUNDED': 'status-closed' };
+            return map[this.orderData.orderStatus] || 'status-wait';
+        }
+    },
+    methods: {
+        createOrder: function() {
+            var self = this;
+            if (!self.form.subject) { self.errorMsg = '请输入订单标题'; return; }
+            if (!self.form.totalAmount || self.form.totalAmount <= 0) { self.errorMsg = '请输入有效的支付金额'; return; }
+
+            self.loading = true;
+            self.errorMsg = '';
+
+            var payload = JSON.stringify(self.form);
+            console.log('请求URL:', window.location.origin + '/api/alipay/pay');
+            console.log('请求体:', payload);
+
+            fetch('/api/alipay/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: payload
+            })
+            .then(function(resp) {
+                console.log('HTTP状态码:', resp.status);
+                if (!resp.ok) {
+                    throw new Error('HTTP ' + resp.status);
+                }
+                return resp.json();
+            })
+            .then(function(res) {
+                self.loading = false;
+                console.log('收到响应:', res);
+
+                if (res.code === 200 && res.data) {
+                    self.orderData = res.data;
+                    self.step = 'pay';
+
+                    if (res.data.payType === 'QR') {
+                        console.log('二维码链接:', res.data.payUrl);
+                    } else if (res.data.payType === 'WAP') {
+                        console.log('WAP支付页面, 自动跳转...');
+                        payWindowUrl = res.data.payUrl;
+                        setTimeout(function() {
+                            openPayWindow();
+                        }, 500);
+                    }
+
+                    self.startQueryTimer(res.data.outTradeNo);
+                } else {
+                    self.errorMsg = res.message || '创建订单失败';
+                }
+            })
+            .catch(function(err) {
+                self.loading = false;
+                console.error('请求失败:', err);
+                var msg = '请求失败: ' + err.message;
+                if (err.message.indexOf('Failed to fetch') >= 0 || err.message.indexOf('NetworkError') >= 0) {
+                    msg = '网络连接失败，请检查：\n1. 手机网络是否正常\n2. 内网穿透隧道是否在线\n3. 尝试刷新页面后重试';
+                }
+                self.errorMsg = msg;
+            });
+        },
+
+        renderPayForm: function(formHtml) {
+            console.log('renderPayForm被调用, formHtml长度:', formHtml ? formHtml.length : 0);
+            var container = this.$refs.payFormContainer;
+            console.log('容器元素:', container);
+            
+            if (container && formHtml) {
+                console.log('开始设置innerHTML...');
+                container.innerHTML = formHtml;
+                console.log('innerHTML设置完成');
+                
+                // 检查是否生成了iframe
+                setTimeout(function() {
+                    var iframe = container.querySelector('iframe');
+                    console.log('是否找到iframe:', !!iframe);
+                    if (iframe) {
+                        console.log('iframe src:', iframe.src);
+                    }
+                }, 500);
+            } else {
+                console.error('容器或formHtml为空', { container: !!container, formHtml: !!formHtml });
+            }
+        },
+
+        queryOrder: function() {
+            var self = this;
+            if (!self.orderData.outTradeNo) return;
+
+            self.errorMsg = '';
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/alipay/query/' + self.orderData.outTradeNo, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var res = JSON.parse(xhr.responseText);
+                    if (res.code === 200 && res.data) {
+                        self.orderData.orderStatus = res.data.orderStatus;
+                        if (res.data.orderStatus === 'PAID') {
+                            self.stopQueryTimer();
+                            alert('🎉 支付成功！');
+                        } else if (res.data.orderStatus === 'CLOSED') {
+                            self.stopQueryTimer();
+                            self.errorMsg = '订单已关闭';
+                        }
+                    }
+                }
+            };
+            xhr.onerror = function() {
+                console.warn('查询订单状态网络错误');
+            };
+            xhr.send();
+        },
+
+        startQueryTimer: function(outTradeNo) {
+            var self = this;
+            self.queryTimer = setInterval(function() {
+                if (self.orderData.orderStatus === 'PAID' || self.orderData.orderStatus === 'CLOSED') {
+                    self.stopQueryTimer();
+                    return;
+                }
+                self.queryOrder();
+            }, 8000);
+        },
+
+        stopQueryTimer: function() {
+            if (this.queryTimer) {
+                clearInterval(this.queryTimer);
+                this.queryTimer = null;
+            }
+        },
+
+        resetForm: function() {
+            this.stopQueryTimer();
+            this.step = 'form';
+            this.orderData = { outTradeNo: '', subject: '', totalAmount: 0, orderStatus: 'WAIT_PAY', form: '' };
+            this.errorMsg = '';
+        }
+    },
+    beforeDestroy: function() {
+        this.stopQueryTimer();
+    }
+});
+</script>
+</body>
+</html>

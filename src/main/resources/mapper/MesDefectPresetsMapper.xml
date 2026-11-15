@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.MesDefectPresetsMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.MesDefectPresets" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR" />
+    <result column="DEFECT_NAME" property="defectName" jdbcType="VARCHAR" />
+    <result column="DISPLAY_ORDER" property="displayOrder" jdbcType="NUMERIC" />
+    <result column="IS_ENABLED" property="isEnabled" jdbcType="NUMERIC" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ATTRIBUTE1" property="attribute1" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE2" property="attribute2" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE3" property="attribute3" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE_NUM1" property="attributeNum1" jdbcType="NUMERIC" />
+    <result column="ATTRIBUTE_NUM2" property="attributeNum2" jdbcType="NUMERIC" />
+    <result column="ATTRIBUTE_DATE1" property="attributeDate1" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SITE_NAME, DEFECT_NAME, DISPLAY_ORDER, IS_ENABLED, CREATE_TIME, UPDATE_TIME, 
+    ATTRIBUTE1, ATTRIBUTE2, ATTRIBUTE3, ATTRIBUTE_NUM1, ATTRIBUTE_NUM2, ATTRIBUTE_DATE1
+  </sql>
+  <select id="findEnabledBySiteName" resultMap="BaseResultMap">
+    SELECT
+      id, site_name, defect_name, display_order, is_enabled, create_time, update_time
+    FROM
+      mes_defect_presets
+    WHERE
+      site_name = #{siteName,jdbcType=VARCHAR}
+      AND is_enabled = 1
+    ORDER BY
+      display_order ASC, id ASC
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Mes_defect_presetsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from MES_DEFECT_PRESETS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MES_DEFECT_PRESETS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MES_DEFECT_PRESETS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.MesDefectPresets" >
+    insert into MES_DEFECT_PRESETS (ID, SITE_NAME, DEFECT_NAME, 
+      DISPLAY_ORDER, IS_ENABLED, CREATE_TIME, 
+      UPDATE_TIME, ATTRIBUTE1, ATTRIBUTE2, 
+      ATTRIBUTE3, ATTRIBUTE_NUM1, ATTRIBUTE_NUM2, 
+      ATTRIBUTE_DATE1)
+    values (#{id,jdbcType=VARCHAR}, #{siteName,jdbcType=VARCHAR}, #{defectName,jdbcType=VARCHAR}, 
+      #{displayOrder,jdbcType=NUMERIC}, #{isEnabled,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{attribute1,jdbcType=VARCHAR}, #{attribute2,jdbcType=VARCHAR}, 
+      #{attribute3,jdbcType=VARCHAR}, #{attributeNum1,jdbcType=NUMERIC}, #{attributeNum2,jdbcType=NUMERIC}, 
+      #{attributeDate1,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.MesDefectPresets" >
+    insert into MES_DEFECT_PRESETS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME,
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME,
+      </if>
+      <if test="displayOrder != null" >
+        DISPLAY_ORDER,
+      </if>
+      <if test="isEnabled != null" >
+        IS_ENABLED,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1,
+      </if>
+      <if test="attribute2 != null" >
+        ATTRIBUTE2,
+      </if>
+      <if test="attribute3 != null" >
+        ATTRIBUTE3,
+      </if>
+      <if test="attributeNum1 != null" >
+        ATTRIBUTE_NUM1,
+      </if>
+      <if test="attributeNum2 != null" >
+        ATTRIBUTE_NUM2,
+      </if>
+      <if test="attributeDate1 != null" >
+        ATTRIBUTE_DATE1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="isEnabled != null" >
+        #{isEnabled,jdbcType=NUMERIC},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attribute1 != null" >
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNum1 != null" >
+        #{attributeNum1,jdbcType=NUMERIC},
+      </if>
+      <if test="attributeNum2 != null" >
+        #{attributeNum2,jdbcType=NUMERIC},
+      </if>
+      <if test="attributeDate1 != null" >
+        #{attributeDate1,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_DEFECT_PRESETS
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteName != null" >
+        SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectName != null" >
+        DEFECT_NAME = #{record.defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayOrder != null" >
+        DISPLAY_ORDER = #{record.displayOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="record.isEnabled != null" >
+        IS_ENABLED = #{record.isEnabled,jdbcType=NUMERIC},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.attribute1 != null" >
+        ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute2 != null" >
+        ATTRIBUTE2 = #{record.attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute3 != null" >
+        ATTRIBUTE3 = #{record.attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeNum1 != null" >
+        ATTRIBUTE_NUM1 = #{record.attributeNum1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.attributeNum2 != null" >
+        ATTRIBUTE_NUM2 = #{record.attributeNum2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.attributeDate1 != null" >
+        ATTRIBUTE_DATE1 = #{record.attributeDate1,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_DEFECT_PRESETS
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      DEFECT_NAME = #{record.defectName,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{record.displayOrder,jdbcType=NUMERIC},
+      IS_ENABLED = #{record.isEnabled,jdbcType=NUMERIC},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE2 = #{record.attribute2,jdbcType=VARCHAR},
+      ATTRIBUTE3 = #{record.attribute3,jdbcType=VARCHAR},
+      ATTRIBUTE_NUM1 = #{record.attributeNum1,jdbcType=NUMERIC},
+      ATTRIBUTE_NUM2 = #{record.attributeNum2,jdbcType=NUMERIC},
+      ATTRIBUTE_DATE1 = #{record.attributeDate1,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.MesDefectPresets" >
+    update MES_DEFECT_PRESETS
+    <set >
+      <if test="siteName != null" >
+        SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME = #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        DISPLAY_ORDER = #{displayOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="isEnabled != null" >
+        IS_ENABLED = #{isEnabled,jdbcType=NUMERIC},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNum1 != null" >
+        ATTRIBUTE_NUM1 = #{attributeNum1,jdbcType=NUMERIC},
+      </if>
+      <if test="attributeNum2 != null" >
+        ATTRIBUTE_NUM2 = #{attributeNum2,jdbcType=NUMERIC},
+      </if>
+      <if test="attributeDate1 != null" >
+        ATTRIBUTE_DATE1 = #{attributeDate1,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.MesDefectPresets" >
+    update MES_DEFECT_PRESETS
+    set SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      DEFECT_NAME = #{defectName,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=NUMERIC},
+      IS_ENABLED = #{isEnabled,jdbcType=NUMERIC},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      ATTRIBUTE_NUM1 = #{attributeNum1,jdbcType=NUMERIC},
+      ATTRIBUTE_NUM2 = #{attributeNum2,jdbcType=NUMERIC},
+      ATTRIBUTE_DATE1 = #{attributeDate1,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

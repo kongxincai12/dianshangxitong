@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.WipupnMapper">
+    <resultMap id="BaseResultMap" type="com.jcd.model.Wipupn">
+        <id column="WIPUPNID" property="wipupnid" jdbcType="VARCHAR"/>
+        <result column="UPNID" property="upnid" jdbcType="VARCHAR"/>
+        <result column="STATIONID" property="stationid" jdbcType="VARCHAR"/>
+        <result column="FROMLOCATION" property="fromlocation" jdbcType="VARCHAR"/>
+        <result column="TOLOCATION" property="tolocation" jdbcType="VARCHAR"/>
+        <result column="QTY" property="qty" jdbcType="DECIMAL"/>
+        <result column="TRANSCATIONTYPE" property="transcationtype" jdbcType="VARCHAR"/>
+        <result column="LOCATIONNAME" property="locationname" jdbcType="VARCHAR"/>
+        <result column="USERNAME" property="username" jdbcType="VARCHAR"/>
+        <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP"/>
+        <result column="MOID" property="moid" jdbcType="VARCHAR"/>
+        <result column="LOTID" property="lotid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        WIPUPNID, UPNID, STATIONID, FROMLOCATION, TOLOCATION, QTY, TRANSCATIONTYPE,
+        LOCATIONNAME, USERNAME, DATETIME, MOID, LOTID
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from WIPUPN
+        where WIPUPNID = #{wipupnid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUpnid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from WIPUPN
+        where UPNID = #{upnid,jdbcType=VARCHAR}
+        order by DATETIME desc
+    </select>
+
+    <insert id="insert" parameterType="com.jcd.model.Wipupn">
+        insert into WIPUPN (WIPUPNID, UPNID, STATIONID, FROMLOCATION, TOLOCATION,
+                            QTY, TRANSCATIONTYPE, LOCATIONNAME, USERNAME,
+                            DATETIME, MOID, LOTID)
+        values (#{wipupnid,jdbcType=VARCHAR}, #{upnid,jdbcType=VARCHAR}, #{stationid,jdbcType=VARCHAR},
+                #{fromlocation,jdbcType=VARCHAR}, #{tolocation,jdbcType=VARCHAR},
+                #{qty,jdbcType=DECIMAL}, #{transcationtype,jdbcType=VARCHAR},
+                #{locationname,jdbcType=VARCHAR},
+                #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP},
+                #{moid,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.jcd.model.Wipupn">
+        insert into WIPUPN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wipupnid != null">WIPUPNID,</if>
+            <if test="upnid != null">UPNID,</if>
+            <if test="stationid != null">STATIONID,</if>
+            <if test="fromlocation != null">FROMLOCATION,</if>
+            <if test="tolocation != null">TOLOCATION,</if>
+            <if test="qty != null">QTY,</if>
+            <if test="transcationtype != null">TRANSCATIONTYPE,</if>
+            <if test="locationname != null">LOCATIONNAME,</if>
+            <if test="username != null">USERNAME,</if>
+            <if test="datetime != null">DATETIME,</if>
+            <if test="moid != null">MOID,</if>
+            <if test="lotid != null">LOTID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wipupnid != null">#{wipupnid,jdbcType=VARCHAR},</if>
+            <if test="upnid != null">#{upnid,jdbcType=VARCHAR},</if>
+            <if test="stationid != null">#{stationid,jdbcType=VARCHAR},</if>
+            <if test="fromlocation != null">#{fromlocation,jdbcType=VARCHAR},</if>
+            <if test="tolocation != null">#{tolocation,jdbcType=VARCHAR},</if>
+            <if test="qty != null">#{qty,jdbcType=DECIMAL},</if>
+            <if test="transcationtype != null">#{transcationtype,jdbcType=VARCHAR},</if>
+            <if test="locationname != null">#{locationname,jdbcType=VARCHAR},</if>
+            <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+            <if test="datetime != null">#{datetime,jdbcType=TIMESTAMP},</if>
+            <if test="moid != null">#{moid,jdbcType=VARCHAR},</if>
+            <if test="lotid != null">#{lotid,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Wipupn">
+        update WIPUPN
+        <set>
+            <if test="upnid != null">UPNID = #{upnid,jdbcType=VARCHAR},</if>
+            <if test="stationid != null">STATIONID = #{stationid,jdbcType=VARCHAR},</if>
+            <if test="fromlocation != null">FROMLOCATION = #{fromlocation,jdbcType=VARCHAR},</if>
+            <if test="tolocation != null">TOLOCATION = #{tolocation,jdbcType=VARCHAR},</if>
+            <if test="qty != null">QTY = #{qty,jdbcType=DECIMAL},</if>
+            <if test="transcationtype != null">TRANSCATIONTYPE = #{transcationtype,jdbcType=VARCHAR},</if>
+            <if test="locationname != null">LOCATIONNAME = #{locationname,jdbcType=VARCHAR},</if>
+            <if test="username != null">USERNAME = #{username,jdbcType=VARCHAR},</if>
+            <if test="datetime != null">DATETIME = #{datetime,jdbcType=TIMESTAMP},</if>
+            <if test="moid != null">MOID = #{moid,jdbcType=VARCHAR},</if>
+            <if test="lotid != null">LOTID = #{lotid,jdbcType=VARCHAR},</if>
+        </set>
+        where WIPUPNID = #{wipupnid,jdbcType=VARCHAR}
+    </update>
+</mapper>

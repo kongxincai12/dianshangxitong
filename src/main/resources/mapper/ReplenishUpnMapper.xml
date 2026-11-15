@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ReplenishUpnMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.ReplenishUpn" >
+    <id column="REPLENISHUPNID" property="replenishupnid" jdbcType="VARCHAR" />
+    <result column="REPLENISHGROUPID" property="replenishgroupid" jdbcType="VARCHAR" />
+    <result column="SLOT" property="slot" jdbcType="VARCHAR" />
+    <result column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="UPNID" property="upnid" jdbcType="VARCHAR" />
+    <result column="CURRENTFLAG" property="currentflag" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="OBJ1" property="obj1" jdbcType="VARCHAR" />
+    <result column="OBJ2" property="obj2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    REPLENISHUPNID, REPLENISHGROUPID, SLOT, MOID, UPNID, CURRENTFLAG, USERNAME, DATETIME, 
+    OBJ1, OBJ2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from REPLENISHUPN
+    where REPLENISHUPNID = #{replenishupnid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from REPLENISHUPN
+    where REPLENISHUPNID = #{replenishupnid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.ReplenishUpn" >
+    insert into REPLENISHUPN (REPLENISHUPNID, REPLENISHGROUPID, 
+      SLOT, MOID, UPNID, 
+      CURRENTFLAG, USERNAME, DATETIME, 
+      OBJ1, OBJ2)
+    values (#{replenishupnid,jdbcType=VARCHAR}, #{replenishgroupid,jdbcType=VARCHAR}, 
+      #{slot,jdbcType=VARCHAR}, #{moid,jdbcType=VARCHAR}, #{upnid,jdbcType=VARCHAR}, 
+      #{currentflag,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{obj1,jdbcType=VARCHAR}, #{obj2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.ReplenishUpn" >
+    insert into REPLENISHUPN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="replenishupnid != null" >
+        REPLENISHUPNID,
+      </if>
+      <if test="replenishgroupid != null" >
+        REPLENISHGROUPID,
+      </if>
+      <if test="slot != null" >
+        SLOT,
+      </if>
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="upnid != null" >
+        UPNID,
+      </if>
+      <if test="currentflag != null" >
+        CURRENTFLAG,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="obj1 != null" >
+        OBJ1,
+      </if>
+      <if test="obj2 != null" >
+        OBJ2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="replenishupnid != null" >
+        #{replenishupnid,jdbcType=VARCHAR},
+      </if>
+      <if test="replenishgroupid != null" >
+        #{replenishgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentflag != null" >
+        #{currentflag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="obj1 != null" >
+        #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        #{obj2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ReplenishUpn" >
+    update REPLENISHUPN
+    <set >
+      <if test="replenishgroupid != null" >
+        REPLENISHGROUPID = #{replenishgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        SLOT = #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="moid != null" >
+        MOID = #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        UPNID = #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentflag != null" >
+        CURRENTFLAG = #{currentflag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="obj1 != null" >
+        OBJ1 = #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        OBJ2 = #{obj2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REPLENISHUPNID = #{replenishupnid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.ReplenishUpn" >
+    update REPLENISHUPN
+    set REPLENISHGROUPID = #{replenishgroupid,jdbcType=VARCHAR},
+      SLOT = #{slot,jdbcType=VARCHAR},
+      MOID = #{moid,jdbcType=VARCHAR},
+      UPNID = #{upnid,jdbcType=VARCHAR},
+      CURRENTFLAG = #{currentflag,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      OBJ1 = #{obj1,jdbcType=VARCHAR},
+      OBJ2 = #{obj2,jdbcType=VARCHAR}
+    where REPLENISHUPNID = #{replenishupnid,jdbcType=VARCHAR}
+  </update>
+</mapper>

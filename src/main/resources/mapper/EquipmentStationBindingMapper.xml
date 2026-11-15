@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.EquipmentStationBindingMapper">
+    <resultMap id="BindingResultMap" type="com.jcd.model.EquipmentStationBinding">
+        <id column="ID" property="id" jdbcType="NUMERIC"/>
+        <result column="EQP_CODE" property="eqpCode" jdbcType="VARCHAR"/>
+        <result column="EQP_NAME" property="eqpName" jdbcType="VARCHAR"/>
+        <result column="STATION_ID" property="stationId" jdbcType="VARCHAR"/>
+        <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR"/>
+        <result column="STATION_DESC" property="stationDesc" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="OPERATE_USER" property="operateUser" jdbcType="VARCHAR"/>
+        <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="listByEqpCode" resultMap="BindingResultMap">
+        SELECT
+            rel.ID,
+            rel.EQP_CODE,
+            eqp.EQP_NAME,
+            rel.STATION_ID,
+            st.STATIONNAME AS STATION_NAME,
+            st.DESCRIPTION AS STATION_DESC,
+            rel.STATUS,
+            rel.REMARK,
+            rel.OPERATE_USER,
+            rel.OPERATE_TIME
+        FROM PDA_EQP_STATION_REL rel
+        LEFT JOIN EPM_EQP eqp ON rel.EQP_CODE = eqp.EQP_CODE
+        LEFT JOIN STATION st ON rel.STATION_ID = st.STATIONID
+        WHERE rel.EQP_CODE = #{eqpCode}
+          AND NVL(rel.STATUS, 'Y') = 'Y'
+        ORDER BY rel.OPERATE_TIME DESC
+    </select>
+</mapper>

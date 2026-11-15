@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.LoadinglistcontentMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Loadinglistcontent" >
+    <id column="LLCID" property="llcid" jdbcType="VARCHAR" />
+    <result column="LLID" property="llid" jdbcType="VARCHAR" />
+    <result column="EQPNAME" property="eqpname" jdbcType="VARCHAR" />
+    <result column="BOARDNUM" property="boardnum" jdbcType="VARCHAR" />
+    <result column="STAGE" property="stage" jdbcType="VARCHAR" />
+    <result column="SLOT" property="slot" jdbcType="VARCHAR" />
+    <result column="PN" property="pn" jdbcType="VARCHAR" />
+    <result column="ALTERNATEPN" property="alternatepn" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="NUMERIC" />
+    <result column="BOARDSIDE" property="boardside" jdbcType="VARCHAR" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="ORIGNALSLOT" property="orignalslot" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LLCID, LLID, EQPNAME, BOARDNUM, STAGE, SLOT, PN, ALTERNATEPN, QTY, BOARDSIDE, LOCATION, 
+    ORIGNALSLOT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  select
+  <include refid="Base_Column_List" />
+  from LOADINGLISTCONTENT
+  where LLCID = #{llcid,jdbcType=VARCHAR}
+</select>
+  <select id="selectByPrimaryKeyLlid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from LOADINGLISTCONTENT
+    where LLID = #{llid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LOADINGLISTCONTENT
+    where LLCID = #{llcid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Loadinglistcontent" >
+    insert into LOADINGLISTCONTENT (LLCID, LLID, EQPNAME, 
+      BOARDNUM, STAGE, SLOT, 
+      PN, ALTERNATEPN, QTY, 
+      BOARDSIDE, LOCATION, ORIGNALSLOT
+      )
+    values (#{llcid,jdbcType=VARCHAR}, #{llid,jdbcType=VARCHAR}, #{eqpname,jdbcType=VARCHAR}, 
+      #{boardnum,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, #{slot,jdbcType=VARCHAR}, 
+      #{pn,jdbcType=VARCHAR}, #{alternatepn,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, 
+      #{boardside,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{orignalslot,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Loadinglistcontent" >
+    insert into LOADINGLISTCONTENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="llcid != null" >
+        LLCID,
+      </if>
+      <if test="llid != null" >
+        LLID,
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME,
+      </if>
+      <if test="boardnum != null" >
+        BOARDNUM,
+      </if>
+      <if test="stage != null" >
+        STAGE,
+      </if>
+      <if test="slot != null" >
+        SLOT,
+      </if>
+      <if test="pn != null" >
+        PN,
+      </if>
+      <if test="alternatepn != null" >
+        ALTERNATEPN,
+      </if>
+      <if test="qty != null" >
+        QTY,
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE,
+      </if>
+      <if test="location != null" >
+        LOCATION,
+      </if>
+      <if test="orignalslot != null" >
+        ORIGNALSLOT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="llcid != null" >
+        #{llcid,jdbcType=VARCHAR},
+      </if>
+      <if test="llid != null" >
+        #{llid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="boardnum != null" >
+        #{boardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="alternatepn != null" >
+        #{alternatepn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="orignalslot != null" >
+        #{orignalslot,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Loadinglistcontent" >
+    update LOADINGLISTCONTENT
+    <set >
+      <if test="llid != null" >
+        LLID = #{llid,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpname != null" >
+        EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      </if>
+      <if test="boardnum != null" >
+        BOARDNUM = #{boardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        STAGE = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="slot != null" >
+        SLOT = #{slot,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="alternatepn != null" >
+        ALTERNATEPN = #{alternatepn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="orignalslot != null" >
+        ORIGNALSLOT = #{orignalslot,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LLCID = #{llcid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Loadinglistcontent" >
+    update LOADINGLISTCONTENT
+    set LLID = #{llid,jdbcType=VARCHAR},
+      EQPNAME = #{eqpname,jdbcType=VARCHAR},
+      BOARDNUM = #{boardnum,jdbcType=VARCHAR},
+      STAGE = #{stage,jdbcType=VARCHAR},
+      SLOT = #{slot,jdbcType=VARCHAR},
+      PN = #{pn,jdbcType=VARCHAR},
+      ALTERNATEPN = #{alternatepn,jdbcType=VARCHAR},
+      QTY = #{qty,jdbcType=NUMERIC},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      ORIGNALSLOT = #{orignalslot,jdbcType=VARCHAR}
+    where LLCID = #{llcid,jdbcType=VARCHAR}
+  </update>
+</mapper>

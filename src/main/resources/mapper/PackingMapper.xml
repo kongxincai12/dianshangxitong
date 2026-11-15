@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.PackingMapper">
+    <resultMap id="BaseResultMap" type="com.jcd.model.Equipment">
+        <id property="id" column="id"/>
+        <result property="eqpTypeId" column="eqp_type_id"/>
+        <result property="eqpCode" column="eqp_code"/>
+        <result property="eqpName" column="eqp_name"/>
+        <result property="enableFlag" column="enable_flag"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+    <resultMap id="LotInfoResultMap" type="com.jcd.dto.AddPackingRecordDto">
+        <result property="sumPackQty" column="PACKQTY"/>
+        <result property="sumPnl" column="PNL"/>
+        <result property="sumPcs" column="PCS"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.jcd.model.RecordPacking">
+        INSERT INTO PACK_DATA_RECORD(ID,EMPLOYEE_ID,LOT_CODE,MATERIALS,PNL,PCS,XQTY,PACK_COMPLETE_QTY,DATECODE,CREATE_DATE,LAST_UPDATE_DATE,STANDARD_CAPACITY,OUTPUT_HOURS,REMARK)
+        VALUES (#{ID},#{EMPLOYEEID},#{LOTCODE},#{MATERIALS},#{PNL},#{PCS},#{XQTY},#{sumPackQty},#{DATECODE},SYSDATE,SYSDATE,#{STANDARDCAPACITY},#{OUTPUTHOURS},#{REMARK})
+    </insert>
+
+    <select id="findProductionPackingRecords" resultType="com.jcd.model.RecordPacking">
+        select ID,EMPLOYEE_ID,LOT_CODE,MATERIALS,PNL,PCS,XQTY,DATECODE,CREATE_DATE,STANDARD_CAPACITY,OUTPUT_HOURS,REMARK
+        from PACK_DATA_RECORD
+        where
+        employee_id = #{employeeId}
+        AND create_date >= #{startTimeFrom}
+        AND create_date &lt; #{startTimeTo}
+        order by create_date desc
+    </select>
+
+    <delete id="deletePackingRecord" parameterType="java.lang.String" >
+        delete from PACK_DATA_RECORD
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="updatePackingRecord" parameterType="com.jcd.model.RecordPacking" >
+        update PACK_DATA_RECORD
+        set EMPLOYEE_ID = #{EMPLOYEEID,jdbcType=VARCHAR},
+            LOT_CODE = #{LOTCODE,jdbcType=VARCHAR},
+            MATERIALS = #{MATERIALS,jdbcType=VARCHAR},
+            PNL = #{PNL,jdbcType=NUMERIC},
+            PCS = #{PCS,jdbcType=NUMERIC},
+            XQTY = #{XQTY,jdbcType=NUMERIC},
+            DATECODE = #{DATECODE,jdbcType=VARCHAR},
+            LAST_UPDATE_DATE =SYSDATE,
+            STANDARD_CAPACITY = #{STANDARDCAPACITY,jdbcType=NUMERIC},
+            OUTPUT_HOURS = #{OUTPUTHOURS,jdbcType=NUMERIC},
+            REMARK = #{REMARK,jdbcType=VARCHAR}
+        where ID = #{ID,jdbcType=VARCHAR}
+    </update>
+
+<select id="findAddQtyByLot" resultMap="LotInfoResultMap">
+        with temp as
+         (
+             select LOT.LOTNAME,SUM(PG.GIFTQTY) PACKQTY
+             from PACKGIFT PG
+                      left join PRP_LOT LOT on LOT.LOTID=PG.LOTID
+             WHERE PG.DELETEFLAG = 'N'
+               AND pg.giftqty>0
+               AND LOT.LOTNAME=#{LOTNAME}
+             group by LOT.LOTNAME
+         )
+        select recordPack.LOT_CODE,NVL(SUM(recordPack.PCS),0) PCS,NVL(SUM(recordPack.PNL),0) PNL,NVL(MIN(temp.PACKQTY),0) PACKQTY
+        from PACK_DATA_RECORD recordPack
+        left join temp on recordPack.LOT_CODE=temp.LOTNAME
+        where temp.LOTNAME=#{LOTNAME}
+        group by recordPack.LOT_CODE
+    </select>
+
+    <select id="selectStandardCapacity" parameterType="java.lang.String" resultType="java.lang.Integer">
+        --select ROUND(3600/(3600*A.RATE),0) standardCapacity
+        select NVL(ROUND(3600/(3600*NULLIF(RATE,0))),0)
+        from CUX_OP_HR_V@ERPLINK
+        where  OPERATION_CODE='BZHU'
+        and RESOURCE_CODE='S-HR-FQ-F'
+        and ITEM_NO=REGEXP_SUBSTR(#{modelName,jdbcType=VARCHAR},'[^-]+')
+        and rownum=1
+    </select>
+
+    <select id="selectStandardCapacitySMT" parameterType="java.lang.String" resultType="java.lang.Integer">
+        --select ROUND(3600/(3600*A.RATE),0) standardCapacity
+        select NVL(ROUND(3600/(3600*NULLIF(RATE,0))),0)
+        from CUX_OP_HR_V@ERPLINK
+        where  OPERATION_CODE='BZS'
+        and RESOURCE_CODE='T-HR-SBZ_M'
+        and ITEM_NO=REGEXP_SUBSTR(#{modelName,jdbcType=VARCHAR},'[^-]+')
+        and rownum=1
+    </select>
+
+</mapper>

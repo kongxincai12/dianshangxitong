@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Prp_lotrectimeMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Prp_lotrectime" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LOTNAME" property="lotname" jdbcType="VARCHAR" />
+    <result column="PRODUCTPN" property="productpn" jdbcType="VARCHAR" />
+    <result column="STEPID" property="stepid" jdbcType="VARCHAR" />
+    <result column="STEPNAME" property="stepname" jdbcType="VARCHAR" />
+    <result column="STEPINTIME" property="stepintime" jdbcType="TIMESTAMP" />
+    <result column="STEPPASSTIME" property="steppasstime" jdbcType="TIMESTAMP" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="OBJ1" property="obj1" jdbcType="VARCHAR" />
+    <result column="OBJ2" property="obj2" jdbcType="VARCHAR" />
+    <result column="OBJ3" property="obj3" jdbcType="VARCHAR" />
+    <result column="OBJ4" property="obj4" jdbcType="VARCHAR" />
+    <result column="OBJ5" property="obj5" jdbcType="VARCHAR" />
+    <result column="OBJ6" property="obj6" jdbcType="VARCHAR" />
+    <result column="OBJ7" property="obj7" jdbcType="VARCHAR" />
+    <result column="OBJ8" property="obj8" jdbcType="VARCHAR" />
+    <result column="OBJ9" property="obj9" jdbcType="VARCHAR" />
+    <result column="OBJ10" property="obj10" jdbcType="VARCHAR" />
+    <result column="OBJ11" property="obj11" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, LOTID, LOTNAME, PRODUCTPN, STEPID, STEPNAME, STEPINTIME, STEPPASSTIME, USERNAME, 
+    OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6, OBJ7, OBJ8, OBJ9, OBJ10, OBJ11,STEPPASSID,STEPPASSNAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Prp_lotrectimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PRP_LOTRECTIME
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRP_LOTRECTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLotnameAndStepame" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from PRP_LOTRECTIME
+    where lotname = #{lotname,jdbcType=VARCHAR}
+    and stepname = #{stepname,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="selectByLotnameAndSteppassname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from PRP_LOTRECTIME
+    where lotname = #{lotname,jdbcType=VARCHAR}
+    and steppassname = #{stepname,jdbcType=VARCHAR}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PRP_LOTRECTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Prp_lotrectime" >
+    insert into PRP_LOTRECTIME (ID, LOTID, LOTNAME, 
+      PRODUCTPN, STEPID, STEPNAME, 
+      STEPINTIME, STEPPASSTIME, USERNAME, 
+      OBJ1, OBJ2, OBJ3, OBJ4, 
+      OBJ5, OBJ6, OBJ7, OBJ8, 
+      OBJ9, OBJ10, OBJ11)
+    values (#{id,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{lotname,jdbcType=VARCHAR}, 
+      #{productpn,jdbcType=VARCHAR}, #{stepid,jdbcType=VARCHAR}, #{stepname,jdbcType=VARCHAR}, 
+      #{stepintime,jdbcType=TIMESTAMP}, #{steppasstime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, 
+      #{obj1,jdbcType=VARCHAR}, #{obj2,jdbcType=VARCHAR}, #{obj3,jdbcType=VARCHAR}, #{obj4,jdbcType=VARCHAR}, 
+      #{obj5,jdbcType=VARCHAR}, #{obj6,jdbcType=VARCHAR}, #{obj7,jdbcType=VARCHAR}, #{obj8,jdbcType=VARCHAR}, 
+      #{obj9,jdbcType=VARCHAR}, #{obj10,jdbcType=VARCHAR}, #{obj11,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Prp_lotrectime" >
+    insert into PRP_LOTRECTIME
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lotname != null" >
+        LOTNAME,
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN,
+      </if>
+      <if test="stepid != null" >
+        STEPID,
+      </if>
+      <if test="stepname != null" >
+        STEPNAME,
+      </if>
+      <if test="stepintime != null" >
+        STEPINTIME,
+      </if>
+      <if test="steppasstime != null" >
+        STEPPASSTIME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="obj1 != null" >
+        OBJ1,
+      </if>
+      <if test="obj2 != null" >
+        OBJ2,
+      </if>
+      <if test="obj3 != null" >
+        OBJ3,
+      </if>
+      <if test="obj4 != null" >
+        OBJ4,
+      </if>
+      <if test="obj5 != null" >
+        OBJ5,
+      </if>
+      <if test="obj6 != null" >
+        OBJ6,
+      </if>
+      <if test="obj7 != null" >
+        OBJ7,
+      </if>
+      <if test="obj8 != null" >
+        OBJ8,
+      </if>
+      <if test="obj9 != null" >
+        OBJ9,
+      </if>
+      <if test="obj10 != null" >
+        OBJ10,
+      </if>
+      <if test="obj11 != null" >
+        OBJ11,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotname != null" >
+        #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="stepid != null" >
+        #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stepname != null" >
+        #{stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="stepintime != null" >
+        #{stepintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="steppasstime != null" >
+        #{steppasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="obj1 != null" >
+        #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        #{obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="obj3 != null" >
+        #{obj3,jdbcType=VARCHAR},
+      </if>
+      <if test="obj4 != null" >
+        #{obj4,jdbcType=VARCHAR},
+      </if>
+      <if test="obj5 != null" >
+        #{obj5,jdbcType=VARCHAR},
+      </if>
+      <if test="obj6 != null" >
+        #{obj6,jdbcType=VARCHAR},
+      </if>
+      <if test="obj7 != null" >
+        #{obj7,jdbcType=VARCHAR},
+      </if>
+      <if test="obj8 != null" >
+        #{obj8,jdbcType=VARCHAR},
+      </if>
+      <if test="obj9 != null" >
+        #{obj9,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        #{obj10,jdbcType=VARCHAR},
+      </if>
+      <if test="obj11 != null" >
+        #{obj11,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PRP_LOTRECTIME
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotid != null" >
+        LOTID = #{record.lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotname != null" >
+        LOTNAME = #{record.lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productpn != null" >
+        PRODUCTPN = #{record.productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepid != null" >
+        STEPID = #{record.stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepname != null" >
+        STEPNAME = #{record.stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepintime != null" >
+        STEPINTIME = #{record.stepintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.steppasstime != null" >
+        STEPPASSTIME = #{record.steppasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj1 != null" >
+        OBJ1 = #{record.obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj2 != null" >
+        OBJ2 = #{record.obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj3 != null" >
+        OBJ3 = #{record.obj3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj4 != null" >
+        OBJ4 = #{record.obj4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj5 != null" >
+        OBJ5 = #{record.obj5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj6 != null" >
+        OBJ6 = #{record.obj6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj7 != null" >
+        OBJ7 = #{record.obj7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj8 != null" >
+        OBJ8 = #{record.obj8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj9 != null" >
+        OBJ9 = #{record.obj9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj10 != null" >
+        OBJ10 = #{record.obj10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj11 != null" >
+        OBJ11 = #{record.obj11,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PRP_LOTRECTIME
+    set ID = #{record.id,jdbcType=VARCHAR},
+      LOTID = #{record.lotid,jdbcType=VARCHAR},
+      LOTNAME = #{record.lotname,jdbcType=VARCHAR},
+      PRODUCTPN = #{record.productpn,jdbcType=VARCHAR},
+      STEPID = #{record.stepid,jdbcType=VARCHAR},
+      STEPNAME = #{record.stepname,jdbcType=VARCHAR},
+      STEPINTIME = #{record.stepintime,jdbcType=TIMESTAMP},
+      STEPPASSTIME = #{record.steppasstime,jdbcType=TIMESTAMP},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      OBJ1 = #{record.obj1,jdbcType=VARCHAR},
+      OBJ2 = #{record.obj2,jdbcType=VARCHAR},
+      OBJ3 = #{record.obj3,jdbcType=VARCHAR},
+      OBJ4 = #{record.obj4,jdbcType=VARCHAR},
+      OBJ5 = #{record.obj5,jdbcType=VARCHAR},
+      OBJ6 = #{record.obj6,jdbcType=VARCHAR},
+      OBJ7 = #{record.obj7,jdbcType=VARCHAR},
+      OBJ8 = #{record.obj8,jdbcType=VARCHAR},
+      OBJ9 = #{record.obj9,jdbcType=VARCHAR},
+      OBJ10 = #{record.obj10,jdbcType=VARCHAR},
+      OBJ11 = #{record.obj11,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Prp_lotrectime" >
+    update PRP_LOTRECTIME
+    <set >
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotname != null" >
+        LOTNAME = #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="stepid != null" >
+        STEPID = #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stepname != null" >
+        STEPNAME = #{stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="stepintime != null" >
+        STEPINTIME = #{stepintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="steppasstime != null" >
+        STEPPASSTIME = #{steppasstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="obj1 != null" >
+        OBJ1 = #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        OBJ2 = #{obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="obj3 != null" >
+        OBJ3 = #{obj3,jdbcType=VARCHAR},
+      </if>
+      <if test="obj4 != null" >
+        OBJ4 = #{obj4,jdbcType=VARCHAR},
+      </if>
+      <if test="obj5 != null" >
+        OBJ5 = #{obj5,jdbcType=VARCHAR},
+      </if>
+      <if test="obj6 != null" >
+        OBJ6 = #{obj6,jdbcType=VARCHAR},
+      </if>
+      <if test="obj7 != null" >
+        OBJ7 = #{obj7,jdbcType=VARCHAR},
+      </if>
+      <if test="obj8 != null" >
+        OBJ8 = #{obj8,jdbcType=VARCHAR},
+      </if>
+      <if test="obj9 != null" >
+        OBJ9 = #{obj9,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        OBJ10 = #{obj10,jdbcType=VARCHAR},
+      </if>
+      <if test="obj11 != null" >
+        OBJ11 = #{obj11,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Prp_lotrectime" >
+    update PRP_LOTRECTIME
+    set LOTID = #{lotid,jdbcType=VARCHAR},
+      LOTNAME = #{lotname,jdbcType=VARCHAR},
+      PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      STEPID = #{stepid,jdbcType=VARCHAR},
+      STEPNAME = #{stepname,jdbcType=VARCHAR},
+      STEPINTIME = #{stepintime,jdbcType=TIMESTAMP},
+      STEPPASSTIME = #{steppasstime,jdbcType=TIMESTAMP},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      OBJ1 = #{obj1,jdbcType=VARCHAR},
+      OBJ2 = #{obj2,jdbcType=VARCHAR},
+      OBJ3 = #{obj3,jdbcType=VARCHAR},
+      OBJ4 = #{obj4,jdbcType=VARCHAR},
+      OBJ5 = #{obj5,jdbcType=VARCHAR},
+      OBJ6 = #{obj6,jdbcType=VARCHAR},
+      OBJ7 = #{obj7,jdbcType=VARCHAR},
+      OBJ8 = #{obj8,jdbcType=VARCHAR},
+      OBJ9 = #{obj9,jdbcType=VARCHAR},
+      OBJ10 = #{obj10,jdbcType=VARCHAR},
+      OBJ11 = #{obj11,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

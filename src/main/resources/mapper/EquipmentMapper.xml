@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.EquipmentMapper">
+    <resultMap id="BaseResultMap" type="com.jcd.model.Equipment">
+        <id property="id" column="id"/>
+        <result property="eqpTypeId" column="eqp_type_id"/>
+        <result property="eqpCode" column="eqp_code"/>
+        <result property="eqpName" column="eqp_name"/>
+        <result property="enableFlag" column="enable_flag"/>
+        <result property="location" column="location"/>
+
+    </resultMap>
+    <select id="findByCodeOrAssetsCode" resultType="com.jcd.model.Equipment">
+        SELECT
+            id,
+            eqp_code eqpCode,
+            eqp_name eqpName,
+            assets_code assetsCode,
+            eqp_type_id eqpTypeId,
+            enable_flag enableFlag
+
+        FROM
+            EPM_EQP
+        WHERE
+            eqp_code = #{identifier} OR assets_code = #{identifier}
+    </select>
+
+    <select id="findByKeyword" resultMap="BaseResultMap">
+        <![CDATA[
+        SELECT t.id, eqp_code , eqp_name ,
+        eqp_type_id,
+               CASE t.LOCATION_TYPE
+                   WHEN 'LINE' THEN
+                       CASE WHEN area.AREA_NAME IS NULL THEN
+                                CONCAT(CONCAT(fab.FAB_NAME,'-'),line.LINE_NAME)
+                            ELSE
+                                CONCAT(CONCAT(CONCAT(CONCAT(fab.FAB_NAME,'-'),area.AREA_NAME),'-'),line.LINE_NAME)
+                           END
+
+                   ELSE
+                       ''
+                   END AS location
+        FROM EPM_EQP t
+                 left join epm_eqp_type e on t.EQP_TYPE_ID = e.ID
+                 left join mdm_fac_fab fab on t.LOCATION_FIRST_ID = fab.ID
+                 left join mdm_fac_area area on t.LOCATION_SECOND_ID = area.ID
+                 left join mdm_fac_line line on t.LOCATION_THIRD_ID = line.ID
+        WHERE (eqp_code LIKE '%' || #{keyword} || '%') OR (eqp_name LIKE '%' || #{keyword} || '%')
+
+        ]]>
+    </select>
+
+    <select id="findById" resultType="com.jcd.model.Equipment">
+        <![CDATA[
+        SELECT
+            t.id,
+            t.eqp_code,
+            t.eqp_name,
+            t.assets_code,
+            t.eqp_type_id,
+            t.enable_flag
+
+        FROM
+            EPM_EQP t
+
+
+        WHERE
+            t.id = #{id}
+        ]]>
+    </select>
+
+
+</mapper>

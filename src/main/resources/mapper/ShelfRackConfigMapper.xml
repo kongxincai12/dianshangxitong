@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ShelfRackConfigMapper">
+    <resultMap id="BaseResultMap" type="com.jcd.model.ShelfRackConfig">
+        <id column="CONFIG_ID" property="configId" jdbcType="VARCHAR"/>
+        <result column="RACK_CODE" property="rackCode" jdbcType="VARCHAR"/>
+        <result column="SHELF_IP" property="shelfIp" jdbcType="VARCHAR"/>
+        <result column="SHELF_PORT" property="shelfPort" jdbcType="NUMERIC"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        CONFIG_ID, RACK_CODE, SHELF_IP, SHELF_PORT, STATUS, REMARK, CREATE_TIME, UPDATE_TIME
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from SHELF_RACK_CONFIG
+        where CONFIG_ID = #{configId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByRackCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from SHELF_RACK_CONFIG
+        where RACK_CODE = #{rackCode,jdbcType=VARCHAR}
+        and STATUS = 'ACTIVE'
+    </select>
+
+    <select id="selectAllActive" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SHELF_RACK_CONFIG
+        where STATUS = 'ACTIVE'
+        order by RACK_CODE
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SHELF_RACK_CONFIG
+        order by RACK_CODE
+    </select>
+
+    <insert id="insert" parameterType="com.jcd.model.ShelfRackConfig">
+        insert into SHELF_RACK_CONFIG (CONFIG_ID, RACK_CODE, SHELF_IP, SHELF_PORT,
+                                        STATUS, REMARK, CREATE_TIME, UPDATE_TIME)
+        values (#{configId,jdbcType=VARCHAR}, #{rackCode,jdbcType=VARCHAR},
+                #{shelfIp,jdbcType=VARCHAR}, #{shelfPort,jdbcType=NUMERIC},
+                #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.jcd.model.ShelfRackConfig">
+        insert into SHELF_RACK_CONFIG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configId != null">CONFIG_ID,</if>
+            <if test="rackCode != null">RACK_CODE,</if>
+            <if test="shelfIp != null">SHELF_IP,</if>
+            <if test="shelfPort != null">SHELF_PORT,</if>
+            <if test="status != null">STATUS,</if>
+            <if test="remark != null">REMARK,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configId != null">#{configId,jdbcType=VARCHAR},</if>
+            <if test="rackCode != null">#{rackCode,jdbcType=VARCHAR},</if>
+            <if test="shelfIp != null">#{shelfIp,jdbcType=VARCHAR},</if>
+            <if test="shelfPort != null">#{shelfPort,jdbcType=NUMERIC},</if>
+            <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+            <if test="remark != null">#{remark,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ShelfRackConfig">
+        update SHELF_RACK_CONFIG
+        <set>
+            <if test="rackCode != null">RACK_CODE = #{rackCode,jdbcType=VARCHAR},</if>
+            <if test="shelfIp != null">SHELF_IP = #{shelfIp,jdbcType=VARCHAR},</if>
+            <if test="shelfPort != null">SHELF_PORT = #{shelfPort,jdbcType=NUMERIC},</if>
+            <if test="status != null">STATUS = #{status,jdbcType=VARCHAR},</if>
+            <if test="remark != null">REMARK = #{remark,jdbcType=VARCHAR},</if>
+            UPDATE_TIME = SYSDATE,
+        </set>
+        where CONFIG_ID = #{configId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from SHELF_RACK_CONFIG
+        where CONFIG_ID = #{configId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

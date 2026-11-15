@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.V_location_allMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.V_location_all" >
+    <result column="LOC_ID" property="locId" jdbcType="VARCHAR" />
+    <result column="LOC_NAME" property="locName" jdbcType="VARCHAR" />
+    <result column="LOC_TYPE" property="locType" jdbcType="VARCHAR" />
+    <result column="LOC_STATUS" property="locStatus" jdbcType="VARCHAR" />
+    <result column="WAREHOUSE" property="warehouse" jdbcType="VARCHAR" />
+    <result column="WHAREA" property="wharea" jdbcType="VARCHAR" />
+    <result column="RACK" property="rack" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOC_ID, LOC_NAME, LOC_TYPE, LOC_STATUS, WAREHOUSE, WHAREA, RACK
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.V_location_allExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from V_LOCATION_ALL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.jcd.model.V_location_all" >
+    insert into V_LOCATION_ALL (LOC_ID, LOC_NAME, LOC_TYPE, 
+      LOC_STATUS, WAREHOUSE, WHAREA, 
+      RACK)
+    values (#{locId,jdbcType=VARCHAR}, #{locName,jdbcType=VARCHAR}, #{locType,jdbcType=VARCHAR}, 
+      #{locStatus,jdbcType=VARCHAR}, #{warehouse,jdbcType=VARCHAR}, #{wharea,jdbcType=VARCHAR}, 
+      #{rack,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.V_location_all" >
+    insert into V_LOCATION_ALL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="locId != null" >
+        LOC_ID,
+      </if>
+      <if test="locName != null" >
+        LOC_NAME,
+      </if>
+      <if test="locType != null" >
+        LOC_TYPE,
+      </if>
+      <if test="locStatus != null" >
+        LOC_STATUS,
+      </if>
+      <if test="warehouse != null" >
+        WAREHOUSE,
+      </if>
+      <if test="wharea != null" >
+        WHAREA,
+      </if>
+      <if test="rack != null" >
+        RACK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="locId != null" >
+        #{locId,jdbcType=VARCHAR},
+      </if>
+      <if test="locName != null" >
+        #{locName,jdbcType=VARCHAR},
+      </if>
+      <if test="locType != null" >
+        #{locType,jdbcType=VARCHAR},
+      </if>
+      <if test="locStatus != null" >
+        #{locStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=VARCHAR},
+      </if>
+      <if test="wharea != null" >
+        #{wharea,jdbcType=VARCHAR},
+      </if>
+      <if test="rack != null" >
+        #{rack,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="V_location_allGetByLoc_name" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from V_LOCATION_ALL
+    where LOC_NAME = #{loc_name,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据货架编号(RACKNAME)查询该货架下所有储位 — 使用物理表避免视图过滤问题 -->
+  <select id="selectByRack" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+      L.LOCATIONID AS LOC_ID,
+      L.LOCATIONNAME AS LOC_NAME,
+      WH.WAREHOUSETYPE AS LOC_TYPE,
+      L.STATUS AS LOC_STATUS,
+      WH.WAREHOUSENAME AS WAREHOUSE,
+      WHA.AREANAME AS WHAREA,
+      R.RACKNAME AS RACK
+    FROM LOCATION L
+    JOIN RACK R ON L.RACKID = R.RACKID
+    JOIN WAREHOUSEAREA WHA ON R.AREAID = WHA.AREAID
+    JOIN WAREHOUSE WH ON WHA.WAREHOUSEID = WH.WAREHOUSEID
+    WHERE R.RACKNAME = #{rack,jdbcType=VARCHAR}
+    ORDER BY L.LOCATIONNAME
+  </select>
+
+  <!-- 根据储位编码和类型查询 -->
+  <select id="selectByLocNameAndType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from V_LOCATION_ALL
+    where LOC_NAME = #{locName,jdbcType=VARCHAR}
+    and LOC_TYPE = #{locType,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据储位ID查询 -->
+  <select id="selectByLocId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from V_LOCATION_ALL
+    where LOC_ID = #{locId,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 查询某料架下所有空储位（没有UPN物料的储位）-->
+  <!-- 储位与物料1:1关系，UPN.LOCATIONID = V_LOCATION_ALL.LOC_ID -->
+  <select id="selectEmptyLocationsByRack" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from (
+    SELECT
+    L.LOCATIONID AS LOC_ID,
+    L.LOCATIONNAME AS LOC_NAME,
+    WH.WAREHOUSETYPE AS LOC_TYPE,
+    L.STATUS AS LOC_STATUS,
+    WH.WAREHOUSENAME AS WAREHOUSE,
+    WHA.AREANAME AS WHAREA,
+    R.RACKNAME AS RACK
+    FROM LOCATION L
+    JOIN RACK R ON L.RACKID = R.RACKID
+    JOIN WAREHOUSEAREA WHA ON R.AREAID = WHA.AREAID
+    JOIN WAREHOUSE WH ON WHA.WAREHOUSEID = WH.WAREHOUSEID
+    WHERE R.RACKNAME = #{rack,jdbcType=VARCHAR}
+      AND NOT EXISTS (
+          select 1 from UPN U
+          LEFT JOIN STEP S ON U.CURRENTSTEPID = S.STEPID
+          where U.LOCATIONID = L.LOCATIONID
+            and U.REMAININGQTY > 0
+            and U.STATE IN ('ACTIVE', 'HOLD', 'NG')
+            and S.DESCRIPTION IN ('SMT线边仓站')
+      )
+    ORDER BY L.LOCATIONNAME
+    ) where ROWNUM &lt;= 50
+  </select>
+</mapper>

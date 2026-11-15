@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ElectricalTestRecordDefectMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.ElectricalTestRecordDefect" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="DEFECT_CODE_ID" property="defectCodeId" jdbcType="VARCHAR" />
+    <result column="DEFECT_NAME" property="defectName" jdbcType="VARCHAR" />
+    <result column="DEFECT_QTY" property="defectQty" jdbcType="NUMERIC" />
+    <result column="IS_CUSTOM" property="isCustom" jdbcType="NUMERIC" />
+    <result column="DISPLAY_ORDER" property="displayOrder" jdbcType="NUMERIC" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, RECORD_ID, DEFECT_CODE_ID, DEFECT_NAME, DEFECT_QTY, IS_CUSTOM, DISPLAY_ORDER,
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+
+  <select id="selectByRecordId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ELECTRICALTEST_RECORD_DEFECTS
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+    order by DISPLAY_ORDER
+  </select>
+
+  <select id="sumDefectQtyByRecordId" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select NVL(SUM(DEFECT_QTY), 0) from ELECTRICALTEST_RECORD_DEFECTS
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByRecordId" parameterType="java.lang.String" >
+    delete from ELECTRICALTEST_RECORD_DEFECTS
+    where RECORD_ID = #{recordId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.jcd.model.ElectricalTestRecordDefect" >
+    insert into ELECTRICALTEST_RECORD_DEFECTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="defectCodeId != null" >
+        DEFECT_CODE_ID,
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME,
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY,
+      </if>
+      <if test="isCustom != null" >
+        IS_CUSTOM,
+      </if>
+      <if test="displayOrder != null" >
+        DISPLAY_ORDER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectCodeId != null" >
+        #{defectCodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectQty != null" >
+        #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="isCustom != null" >
+        #{isCustom,jdbcType=NUMERIC},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ElectricalTestRecordDefect" >
+    update ELECTRICALTEST_RECORD_DEFECTS
+    <set >
+      <if test="recordId != null" >
+        RECORD_ID = #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectCodeId != null" >
+        DEFECT_CODE_ID = #{defectCodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME = #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY = #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="isCustom != null" >
+        IS_CUSTOM = #{isCustom,jdbcType=NUMERIC},
+      </if>
+      <if test="displayOrder != null" >
+        DISPLAY_ORDER = #{displayOrder,jdbcType=NUMERIC},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

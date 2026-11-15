@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaUserPrefMapper">
+
+  <resultMap id="PrefMap" type="com.jcd.model.qafa.QaFaUserPref">
+    <id     column="ID"          property="id"/>
+    <result column="USER_ID"     property="userId"/>
+    <result column="PREF_KEY"    property="prefKey"/>
+    <result column="PREF_VALUE"  property="prefValue"/>
+    <result column="UPDATE_TIME" property="updateTime"/>
+  </resultMap>
+
+  <select id="selectByUserKey" resultMap="PrefMap">
+    select * from QA_FA_USER_PREF
+    where USER_ID = #{userId} and PREF_KEY = #{prefKey}
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.qafa.QaFaUserPref">
+    insert into QA_FA_USER_PREF (ID, USER_ID, PREF_KEY, PREF_VALUE, UPDATE_TIME)
+    values (#{id}, #{userId}, #{prefKey}, #{prefValue}, #{updateTime})
+  </insert>
+
+  <update id="updateValue">
+    update QA_FA_USER_PREF
+    set PREF_VALUE = #{prefValue}, UPDATE_TIME = SYSDATE
+    where USER_ID = #{userId} and PREF_KEY = #{prefKey}
+  </update>
+
+</mapper>

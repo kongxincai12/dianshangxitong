@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.WorkstationMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Workstation" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="WORKSTATION_CODE" property="workstationCode" jdbcType="VARCHAR" />
+    <result column="WORKSTATION_NAME" property="workstationName" jdbcType="VARCHAR" />
+    <result column="SITE_CODE" property="siteCode" jdbcType="VARCHAR" />
+    <result column="ENABLE_FLAG" property="enableFlag" jdbcType="CHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, WORKSTATION_CODE, WORKSTATION_NAME, SITE_CODE, ENABLE_FLAG, CREATE_BY, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.WorkstationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EPM_WORKSTATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from EPM_WORKSTATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from EPM_WORKSTATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcd.model.WorkstationExample" >
+    delete from EPM_WORKSTATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Workstation" >
+    insert into EPM_WORKSTATION (ID, WORKSTATION_CODE, WORKSTATION_NAME, 
+      SITE_CODE, ENABLE_FLAG, CREATE_BY, 
+      CREATE_TIME, UPDATE_BY, UPDATE_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{workstationCode,jdbcType=VARCHAR}, #{workstationName,jdbcType=VARCHAR}, 
+      #{siteCode,jdbcType=VARCHAR}, #{enableFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Workstation" >
+    insert into EPM_WORKSTATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="workstationCode != null" >
+        WORKSTATION_CODE,
+      </if>
+      <if test="workstationName != null" >
+        WORKSTATION_NAME,
+      </if>
+      <if test="siteCode != null" >
+        SITE_CODE,
+      </if>
+      <if test="enableFlag != null" >
+        ENABLE_FLAG,
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="workstationCode != null" >
+        #{workstationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workstationName != null" >
+        #{workstationName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null" >
+        #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcd.model.WorkstationExample" resultType="java.lang.Integer" >
+    select count(*) from EPM_WORKSTATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="findByCode" resultMap="BaseResultMap">
+        SELECT *
+        FROM EPM_WORKSTATION
+        WHERE workstation_code = #{workstationCode}
+    </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update EPM_WORKSTATION
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workstationCode != null" >
+        WORKSTATION_CODE = #{record.workstationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workstationName != null" >
+        WORKSTATION_NAME = #{record.workstationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteCode != null" >
+        SITE_CODE = #{record.siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enableFlag != null" >
+        ENABLE_FLAG = #{record.enableFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.createBy != null" >
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null" >
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update EPM_WORKSTATION
+    set ID = #{record.id,jdbcType=VARCHAR},
+      WORKSTATION_CODE = #{record.workstationCode,jdbcType=VARCHAR},
+      WORKSTATION_NAME = #{record.workstationName,jdbcType=VARCHAR},
+      SITE_CODE = #{record.siteCode,jdbcType=VARCHAR},
+      ENABLE_FLAG = #{record.enableFlag,jdbcType=CHAR},
+      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Workstation" >
+    update EPM_WORKSTATION
+    <set >
+      <if test="workstationCode != null" >
+        WORKSTATION_CODE = #{workstationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workstationName != null" >
+        WORKSTATION_NAME = #{workstationName,jdbcType=VARCHAR},
+      </if>
+      <if test="siteCode != null" >
+        SITE_CODE = #{siteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        ENABLE_FLAG = #{enableFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Workstation" >
+    update EPM_WORKSTATION
+    set WORKSTATION_CODE = #{workstationCode,jdbcType=VARCHAR},
+      WORKSTATION_NAME = #{workstationName,jdbcType=VARCHAR},
+      SITE_CODE = #{siteCode,jdbcType=VARCHAR},
+      ENABLE_FLAG = #{enableFlag,jdbcType=CHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

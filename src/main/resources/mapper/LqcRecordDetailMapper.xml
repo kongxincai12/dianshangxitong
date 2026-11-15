@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.LqcRecordDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.LqcRecordDetail" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="DEFECT_NAME" property="defectName" jdbcType="VARCHAR" />
+    <result column="DEFECT_QTY" property="defectQty" jdbcType="NUMERIC" />
+    <result column="ATTRIBUTE1" property="attribute1" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE_NUM1" property="attributeNum1" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, RECORD_ID, DEFECT_NAME, DEFECT_QTY, ATTRIBUTE1, ATTRIBUTE_NUM1
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.LqcRecordDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from LQC_RECORD_DETAILS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from LQC_RECORD_DETAILS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByRecordId" resultType="com.jcd.model.LqcRecordDetail" resultMap="BaseResultMap">
+    SELECT * FROM lqc_record_details WHERE record_id = #{recordId, jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByRecordId">
+    DELETE FROM lqc_record_details WHERE record_id = #{recordId, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LQC_RECORD_DETAILS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.LqcRecordDetail">
+    INSERT INTO lqc_record_details (
+      id, record_id, defect_name, defect_qty
+    ) VALUES (
+               #{id,jdbcType=VARCHAR}, #{recordId,jdbcType=VARCHAR},
+               #{defectName,jdbcType=VARCHAR}, #{defectQty,jdbcType=NUMERIC}
+             )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.LqcRecordDetail" >
+    insert into LQC_RECORD_DETAILS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME,
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY,
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1,
+      </if>
+      <if test="attributeNum1 != null" >
+        ATTRIBUTE_NUM1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectQty != null" >
+        #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="attribute1 != null" >
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNum1 != null" >
+        #{attributeNum1,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LQC_RECORD_DETAILS
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordId != null" >
+        RECORD_ID = #{record.recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectName != null" >
+        DEFECT_NAME = #{record.defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defectQty != null" >
+        DEFECT_QTY = #{record.defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.attribute1 != null" >
+        ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeNum1 != null" >
+        ATTRIBUTE_NUM1 = #{record.attributeNum1,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LQC_RECORD_DETAILS
+    set ID = #{record.id,jdbcType=VARCHAR},
+      RECORD_ID = #{record.recordId,jdbcType=VARCHAR},
+      DEFECT_NAME = #{record.defectName,jdbcType=VARCHAR},
+      DEFECT_QTY = #{record.defectQty,jdbcType=NUMERIC},
+      ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE_NUM1 = #{record.attributeNum1,jdbcType=NUMERIC}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.LqcRecordDetail" >
+    update LQC_RECORD_DETAILS
+    <set >
+      <if test="recordId != null" >
+        RECORD_ID = #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="defectName != null" >
+        DEFECT_NAME = #{defectName,jdbcType=VARCHAR},
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY = #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNum1 != null" >
+        ATTRIBUTE_NUM1 = #{attributeNum1,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.LqcRecordDetail" >
+    update LQC_RECORD_DETAILS
+    set RECORD_ID = #{recordId,jdbcType=VARCHAR},
+      DEFECT_NAME = #{defectName,jdbcType=VARCHAR},
+      DEFECT_QTY = #{defectQty,jdbcType=NUMERIC},
+      ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE_NUM1 = #{attributeNum1,jdbcType=NUMERIC}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

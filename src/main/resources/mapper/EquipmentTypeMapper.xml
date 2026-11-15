@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.EquipmentTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.EquipmentType" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EQP_TYPE_CODE" property="eqpTypeCode" jdbcType="VARCHAR" />
+    <result column="EQP_TYPE_NAME" property="eqpTypeName" jdbcType="VARCHAR" />
+    <result column="IMG_URL" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="EQP_CATEGORY" property="eqpCategory" jdbcType="VARCHAR" />
+    <result column="OWNER" property="owner" jdbcType="VARCHAR" />
+    <result column="SITE_CODE" property="siteCode" jdbcType="VARCHAR" />
+    <result column="ENABLE_FLAG" property="enableFlag" jdbcType="CHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="REVISION" property="revision" jdbcType="NUMERIC" />
+  </resultMap>
+    <select id="findAll" resultType="com.jcd.model.EquipmentType">
+        SELECT
+            id,
+            eqp_type_code  eqpTypeCode,
+            eqp_type_name eqpTypeName
+        FROM
+            EPM_EQP_TYPE
+        WHERE
+            enable_flag = 'Y'
+            AND SITE_CODE='TS-01'
+        ORDER BY
+            eqp_type_code ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.PdaMoldStockMapper" >
+
+<select id="searchStock" resultType="com.jcd.model.PdaMoldStock">
+    select * from PDA_MOLD_STOCK
+    <where>
+
+        <if test="moldCode != null and moldCode != ''">
+            mold_code LIKE '%' || #{moldCode} || '%'
+        </if>
+
+        <if test="locationCode != null and locationCode != ''">
+            and location_code LIKE '%' || #{locationCode} || '%'
+        </if>
+
+    </where>
+
+
+</select>
+
+
+    <select id="getMoldsByLocationCode" resultType="java.lang.String">
+
+       select MOLD_CODE from PDA_MOLD_STOCK where LOCATION_CODE = #{locationCode}
+
+    </select>
+
+
+</mapper>

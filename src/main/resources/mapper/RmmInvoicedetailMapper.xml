@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.RmmInvoicedetailMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.RmmInvoicedetail" >
+    <id column="INVOICEDETAILID" property="invoicedetailid" jdbcType="VARCHAR" />
+    <result column="INVOICEID" property="invoiceid" jdbcType="VARCHAR" />
+    <result column="INVOICENUMBER" property="invoicenumber" jdbcType="VARCHAR" />
+    <result column="SUBMITNUMBER" property="submitnumber" jdbcType="VARCHAR" />
+    <result column="MATERIALTYPE" property="materialtype" jdbcType="VARCHAR" />
+    <result column="DELIVERNUMBER" property="delivernumber" jdbcType="VARCHAR" />
+    <result column="PO" property="po" jdbcType="VARCHAR" />
+    <result column="PN" property="pn" jdbcType="VARCHAR" />
+    <result column="VENDORCODE" property="vendorcode" jdbcType="VARCHAR" />
+    <result column="VENDORNAME" property="vendorname" jdbcType="VARCHAR" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="REMAININGQTY" property="remainingqty" jdbcType="NUMERIC" />
+    <result column="CHECKSTATUS" property="checkstatus" jdbcType="VARCHAR" />
+    <result column="VENDORLOTNO" property="vendorlotno" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="CHECKRESULT" property="checkresult" jdbcType="VARCHAR" />
+    <result column="POLINENUM" property="polinenum" jdbcType="NUMERIC" />
+    <result column="HEADERID" property="headerid" jdbcType="NUMERIC" />
+    <result column="TRANSACTIONID" property="transactionid" jdbcType="VARCHAR" />
+    <result column="LINEID" property="lineid" jdbcType="NUMERIC" />
+    <result column="SONUMBER" property="sonumber" jdbcType="VARCHAR" />
+    <result column="SOLINENUM" property="solinenum" jdbcType="VARCHAR" />
+    <result column="RMAPO" property="rmapo" jdbcType="VARCHAR" />
+    <result column="MO" property="mo" jdbcType="VARCHAR" />
+    <result column="ORGANIZATIONCODE" property="organizationcode" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="VERDORSITEID" property="verdorsiteid" jdbcType="NUMERIC" />
+    <result column="VMI" property="vmi" jdbcType="VARCHAR" />
+    <result column="OBJ01" property="obj01" jdbcType="VARCHAR" />
+    <result column="OBJ02" property="obj02" jdbcType="VARCHAR" />
+    <result column="LIMITEDDAY" property="limitedday" jdbcType="TIMESTAMP" />
+    <result column="PACKSTYLE" property="packstyle" jdbcType="VARCHAR" />
+    <result column="VENDORWEEKCODE" property="vendorweekcode" jdbcType="VARCHAR" />
+    <result column="MATERIALSTORAGE" property="materialstorage" jdbcType="VARCHAR" />
+    <result column="MSD" property="msd" jdbcType="VARCHAR" />
+    <result column="ESD" property="esd" jdbcType="VARCHAR" />
+    <result column="VENDORSN" property="vendorsn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INVOICEDETAILID, INVOICEID, INVOICENUMBER, SUBMITNUMBER, MATERIALTYPE, DELIVERNUMBER, 
+    PO, PN, VENDORCODE, VENDORNAME, TOTALQTY, REMAININGQTY, CHECKSTATUS, VENDORLOTNO, 
+    DESCRIPTION, DATETIME, CHECKRESULT, POLINENUM, HEADERID, TRANSACTIONID, LINEID, SONUMBER, 
+    SOLINENUM, RMAPO, MO, ORGANIZATIONCODE, USERNAME, UNIT, VERDORSITEID, VMI, OBJ01, 
+    OBJ02, LIMITEDDAY, PACKSTYLE, VENDORWEEKCODE, MATERIALSTORAGE, MSD, ESD, VENDORSN
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.RmmInvoicedetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RMM_INVOICEDETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RMM_INVOICEDETAIL
+    where INVOICEDETAILID = #{invoicedetailid,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByInvoiceId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from RMM_INVOICEDETAIL
+        where INVOICEID = #{invoiceid,jdbcType=VARCHAR}
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RMM_INVOICEDETAIL
+    where INVOICEDETAILID = #{invoicedetailid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcd.model.RmmInvoicedetailExample" >
+    delete from RMM_INVOICEDETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.RmmInvoicedetail" >
+    insert into RMM_INVOICEDETAIL (INVOICEDETAILID, INVOICEID, INVOICENUMBER, 
+      SUBMITNUMBER, MATERIALTYPE, DELIVERNUMBER, 
+      PO, PN, VENDORCODE, 
+      VENDORNAME, TOTALQTY, REMAININGQTY, 
+      CHECKSTATUS, VENDORLOTNO, DESCRIPTION, 
+      DATETIME, CHECKRESULT, POLINENUM, 
+      HEADERID, TRANSACTIONID, LINEID, 
+      SONUMBER, SOLINENUM, RMAPO, 
+      MO, ORGANIZATIONCODE, USERNAME, 
+      UNIT, VERDORSITEID, VMI, 
+      OBJ01, OBJ02, LIMITEDDAY, 
+      PACKSTYLE, VENDORWEEKCODE, MATERIALSTORAGE, 
+      MSD, ESD, VENDORSN)
+    values (#{invoicedetailid,jdbcType=VARCHAR}, #{invoiceid,jdbcType=VARCHAR}, #{invoicenumber,jdbcType=VARCHAR}, 
+      #{submitnumber,jdbcType=VARCHAR}, #{materialtype,jdbcType=VARCHAR}, #{delivernumber,jdbcType=VARCHAR}, 
+      #{po,jdbcType=VARCHAR}, #{pn,jdbcType=VARCHAR}, #{vendorcode,jdbcType=VARCHAR}, 
+      #{vendorname,jdbcType=VARCHAR}, #{totalqty,jdbcType=NUMERIC}, #{remainingqty,jdbcType=NUMERIC}, 
+      #{checkstatus,jdbcType=VARCHAR}, #{vendorlotno,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{checkresult,jdbcType=VARCHAR}, #{polinenum,jdbcType=NUMERIC}, 
+      #{headerid,jdbcType=NUMERIC}, #{transactionid,jdbcType=VARCHAR}, #{lineid,jdbcType=NUMERIC}, 
+      #{sonumber,jdbcType=VARCHAR}, #{solinenum,jdbcType=VARCHAR}, #{rmapo,jdbcType=VARCHAR}, 
+      #{mo,jdbcType=VARCHAR}, #{organizationcode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{verdorsiteid,jdbcType=NUMERIC}, #{vmi,jdbcType=VARCHAR}, 
+      #{obj01,jdbcType=VARCHAR}, #{obj02,jdbcType=VARCHAR}, #{limitedday,jdbcType=TIMESTAMP}, 
+      #{packstyle,jdbcType=VARCHAR}, #{vendorweekcode,jdbcType=VARCHAR}, #{materialstorage,jdbcType=VARCHAR}, 
+      #{msd,jdbcType=VARCHAR}, #{esd,jdbcType=VARCHAR}, #{vendorsn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.RmmInvoicedetail" >
+    insert into RMM_INVOICEDETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoicedetailid != null" >
+        INVOICEDETAILID,
+      </if>
+      <if test="invoiceid != null" >
+        INVOICEID,
+      </if>
+      <if test="invoicenumber != null" >
+        INVOICENUMBER,
+      </if>
+      <if test="submitnumber != null" >
+        SUBMITNUMBER,
+      </if>
+      <if test="materialtype != null" >
+        MATERIALTYPE,
+      </if>
+      <if test="delivernumber != null" >
+        DELIVERNUMBER,
+      </if>
+      <if test="po != null" >
+        PO,
+      </if>
+      <if test="pn != null" >
+        PN,
+      </if>
+      <if test="vendorcode != null" >
+        VENDORCODE,
+      </if>
+      <if test="vendorname != null" >
+        VENDORNAME,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="remainingqty != null" >
+        REMAININGQTY,
+      </if>
+      <if test="checkstatus != null" >
+        CHECKSTATUS,
+      </if>
+      <if test="vendorlotno != null" >
+        VENDORLOTNO,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="checkresult != null" >
+        CHECKRESULT,
+      </if>
+      <if test="polinenum != null" >
+        POLINENUM,
+      </if>
+      <if test="headerid != null" >
+        HEADERID,
+      </if>
+      <if test="transactionid != null" >
+        TRANSACTIONID,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="sonumber != null" >
+        SONUMBER,
+      </if>
+      <if test="solinenum != null" >
+        SOLINENUM,
+      </if>
+      <if test="rmapo != null" >
+        RMAPO,
+      </if>
+      <if test="mo != null" >
+        MO,
+      </if>
+      <if test="organizationcode != null" >
+        ORGANIZATIONCODE,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+      <if test="verdorsiteid != null" >
+        VERDORSITEID,
+      </if>
+      <if test="vmi != null" >
+        VMI,
+      </if>
+      <if test="obj01 != null" >
+        OBJ01,
+      </if>
+      <if test="obj02 != null" >
+        OBJ02,
+      </if>
+      <if test="limitedday != null" >
+        LIMITEDDAY,
+      </if>
+      <if test="packstyle != null" >
+        PACKSTYLE,
+      </if>
+      <if test="vendorweekcode != null" >
+        VENDORWEEKCODE,
+      </if>
+      <if test="materialstorage != null" >
+        MATERIALSTORAGE,
+      </if>
+      <if test="msd != null" >
+        MSD,
+      </if>
+      <if test="esd != null" >
+        ESD,
+      </if>
+      <if test="vendorsn != null" >
+        VENDORSN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoicedetailid != null" >
+        #{invoicedetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceid != null" >
+        #{invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicenumber != null" >
+        #{invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="submitnumber != null" >
+        #{submitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="materialtype != null" >
+        #{materialtype,jdbcType=VARCHAR},
+      </if>
+      <if test="delivernumber != null" >
+        #{delivernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="po != null" >
+        #{po,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null" >
+        #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorname != null" >
+        #{vendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainingqty != null" >
+        #{remainingqty,jdbcType=NUMERIC},
+      </if>
+      <if test="checkstatus != null" >
+        #{checkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorlotno != null" >
+        #{vendorlotno,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkresult != null" >
+        #{checkresult,jdbcType=VARCHAR},
+      </if>
+      <if test="polinenum != null" >
+        #{polinenum,jdbcType=NUMERIC},
+      </if>
+      <if test="headerid != null" >
+        #{headerid,jdbcType=NUMERIC},
+      </if>
+      <if test="transactionid != null" >
+        #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=NUMERIC},
+      </if>
+      <if test="sonumber != null" >
+        #{sonumber,jdbcType=VARCHAR},
+      </if>
+      <if test="solinenum != null" >
+        #{solinenum,jdbcType=VARCHAR},
+      </if>
+      <if test="rmapo != null" >
+        #{rmapo,jdbcType=VARCHAR},
+      </if>
+      <if test="mo != null" >
+        #{mo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationcode != null" >
+        #{organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="verdorsiteid != null" >
+        #{verdorsiteid,jdbcType=NUMERIC},
+      </if>
+      <if test="vmi != null" >
+        #{vmi,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="limitedday != null" >
+        #{limitedday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="packstyle != null" >
+        #{packstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorweekcode != null" >
+        #{vendorweekcode,jdbcType=VARCHAR},
+      </if>
+      <if test="materialstorage != null" >
+        #{materialstorage,jdbcType=VARCHAR},
+      </if>
+      <if test="msd != null" >
+        #{msd,jdbcType=VARCHAR},
+      </if>
+      <if test="esd != null" >
+        #{esd,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorsn != null" >
+        #{vendorsn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcd.model.RmmInvoicedetailExample" resultType="java.lang.Integer" >
+    select count(*) from RMM_INVOICEDETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update RMM_INVOICEDETAIL
+    <set >
+      <if test="record.invoicedetailid != null" >
+        INVOICEDETAILID = #{record.invoicedetailid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceid != null" >
+        INVOICEID = #{record.invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoicenumber != null" >
+        INVOICENUMBER = #{record.invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitnumber != null" >
+        SUBMITNUMBER = #{record.submitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialtype != null" >
+        MATERIALTYPE = #{record.materialtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delivernumber != null" >
+        DELIVERNUMBER = #{record.delivernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.po != null" >
+        PO = #{record.po,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pn != null" >
+        PN = #{record.pn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorcode != null" >
+        VENDORCODE = #{record.vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorname != null" >
+        VENDORNAME = #{record.vendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalqty != null" >
+        TOTALQTY = #{record.totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.remainingqty != null" >
+        REMAININGQTY = #{record.remainingqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.checkstatus != null" >
+        CHECKSTATUS = #{record.checkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorlotno != null" >
+        VENDORLOTNO = #{record.vendorlotno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkresult != null" >
+        CHECKRESULT = #{record.checkresult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.polinenum != null" >
+        POLINENUM = #{record.polinenum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.headerid != null" >
+        HEADERID = #{record.headerid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.transactionid != null" >
+        TRANSACTIONID = #{record.transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lineid != null" >
+        LINEID = #{record.lineid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sonumber != null" >
+        SONUMBER = #{record.sonumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.solinenum != null" >
+        SOLINENUM = #{record.solinenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmapo != null" >
+        RMAPO = #{record.rmapo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mo != null" >
+        MO = #{record.mo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizationcode != null" >
+        ORGANIZATIONCODE = #{record.organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verdorsiteid != null" >
+        VERDORSITEID = #{record.verdorsiteid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.vmi != null" >
+        VMI = #{record.vmi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj01 != null" >
+        OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj02 != null" >
+        OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitedday != null" >
+        LIMITEDDAY = #{record.limitedday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.packstyle != null" >
+        PACKSTYLE = #{record.packstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorweekcode != null" >
+        VENDORWEEKCODE = #{record.vendorweekcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialstorage != null" >
+        MATERIALSTORAGE = #{record.materialstorage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msd != null" >
+        MSD = #{record.msd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esd != null" >
+        ESD = #{record.esd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorsn != null" >
+        VENDORSN = #{record.vendorsn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update RMM_INVOICEDETAIL
+    set INVOICEDETAILID = #{record.invoicedetailid,jdbcType=VARCHAR},
+      INVOICEID = #{record.invoiceid,jdbcType=VARCHAR},
+      INVOICENUMBER = #{record.invoicenumber,jdbcType=VARCHAR},
+      SUBMITNUMBER = #{record.submitnumber,jdbcType=VARCHAR},
+      MATERIALTYPE = #{record.materialtype,jdbcType=VARCHAR},
+      DELIVERNUMBER = #{record.delivernumber,jdbcType=VARCHAR},
+      PO = #{record.po,jdbcType=VARCHAR},
+      PN = #{record.pn,jdbcType=VARCHAR},
+      VENDORCODE = #{record.vendorcode,jdbcType=VARCHAR},
+      VENDORNAME = #{record.vendorname,jdbcType=VARCHAR},
+      TOTALQTY = #{record.totalqty,jdbcType=NUMERIC},
+      REMAININGQTY = #{record.remainingqty,jdbcType=NUMERIC},
+      CHECKSTATUS = #{record.checkstatus,jdbcType=VARCHAR},
+      VENDORLOTNO = #{record.vendorlotno,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      CHECKRESULT = #{record.checkresult,jdbcType=VARCHAR},
+      POLINENUM = #{record.polinenum,jdbcType=NUMERIC},
+      HEADERID = #{record.headerid,jdbcType=NUMERIC},
+      TRANSACTIONID = #{record.transactionid,jdbcType=VARCHAR},
+      LINEID = #{record.lineid,jdbcType=NUMERIC},
+      SONUMBER = #{record.sonumber,jdbcType=VARCHAR},
+      SOLINENUM = #{record.solinenum,jdbcType=VARCHAR},
+      RMAPO = #{record.rmapo,jdbcType=VARCHAR},
+      MO = #{record.mo,jdbcType=VARCHAR},
+      ORGANIZATIONCODE = #{record.organizationcode,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      VERDORSITEID = #{record.verdorsiteid,jdbcType=NUMERIC},
+      VMI = #{record.vmi,jdbcType=VARCHAR},
+      OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      LIMITEDDAY = #{record.limitedday,jdbcType=TIMESTAMP},
+      PACKSTYLE = #{record.packstyle,jdbcType=VARCHAR},
+      VENDORWEEKCODE = #{record.vendorweekcode,jdbcType=VARCHAR},
+      MATERIALSTORAGE = #{record.materialstorage,jdbcType=VARCHAR},
+      MSD = #{record.msd,jdbcType=VARCHAR},
+      ESD = #{record.esd,jdbcType=VARCHAR},
+      VENDORSN = #{record.vendorsn,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.RmmInvoicedetail" >
+    update RMM_INVOICEDETAIL
+    <set >
+      <if test="invoiceid != null" >
+        INVOICEID = #{invoiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicenumber != null" >
+        INVOICENUMBER = #{invoicenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="submitnumber != null" >
+        SUBMITNUMBER = #{submitnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="materialtype != null" >
+        MATERIALTYPE = #{materialtype,jdbcType=VARCHAR},
+      </if>
+      <if test="delivernumber != null" >
+        DELIVERNUMBER = #{delivernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="po != null" >
+        PO = #{po,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null" >
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null" >
+        VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorname != null" >
+        VENDORNAME = #{vendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainingqty != null" >
+        REMAININGQTY = #{remainingqty,jdbcType=NUMERIC},
+      </if>
+      <if test="checkstatus != null" >
+        CHECKSTATUS = #{checkstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorlotno != null" >
+        VENDORLOTNO = #{vendorlotno,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkresult != null" >
+        CHECKRESULT = #{checkresult,jdbcType=VARCHAR},
+      </if>
+      <if test="polinenum != null" >
+        POLINENUM = #{polinenum,jdbcType=NUMERIC},
+      </if>
+      <if test="headerid != null" >
+        HEADERID = #{headerid,jdbcType=NUMERIC},
+      </if>
+      <if test="transactionid != null" >
+        TRANSACTIONID = #{transactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        LINEID = #{lineid,jdbcType=NUMERIC},
+      </if>
+      <if test="sonumber != null" >
+        SONUMBER = #{sonumber,jdbcType=VARCHAR},
+      </if>
+      <if test="solinenum != null" >
+        SOLINENUM = #{solinenum,jdbcType=VARCHAR},
+      </if>
+      <if test="rmapo != null" >
+        RMAPO = #{rmapo,jdbcType=VARCHAR},
+      </if>
+      <if test="mo != null" >
+        MO = #{mo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationcode != null" >
+        ORGANIZATIONCODE = #{organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="verdorsiteid != null" >
+        VERDORSITEID = #{verdorsiteid,jdbcType=NUMERIC},
+      </if>
+      <if test="vmi != null" >
+        VMI = #{vmi,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="limitedday != null" >
+        LIMITEDDAY = #{limitedday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="packstyle != null" >
+        PACKSTYLE = #{packstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorweekcode != null" >
+        VENDORWEEKCODE = #{vendorweekcode,jdbcType=VARCHAR},
+      </if>
+      <if test="materialstorage != null" >
+        MATERIALSTORAGE = #{materialstorage,jdbcType=VARCHAR},
+      </if>
+      <if test="msd != null" >
+        MSD = #{msd,jdbcType=VARCHAR},
+      </if>
+      <if test="esd != null" >
+        ESD = #{esd,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorsn != null" >
+        VENDORSN = #{vendorsn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INVOICEDETAILID = #{invoicedetailid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.RmmInvoicedetail" >
+    update RMM_INVOICEDETAIL
+    set INVOICEID = #{invoiceid,jdbcType=VARCHAR},
+      INVOICENUMBER = #{invoicenumber,jdbcType=VARCHAR},
+      SUBMITNUMBER = #{submitnumber,jdbcType=VARCHAR},
+      MATERIALTYPE = #{materialtype,jdbcType=VARCHAR},
+      DELIVERNUMBER = #{delivernumber,jdbcType=VARCHAR},
+      PO = #{po,jdbcType=VARCHAR},
+      PN = #{pn,jdbcType=VARCHAR},
+      VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      VENDORNAME = #{vendorname,jdbcType=VARCHAR},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      REMAININGQTY = #{remainingqty,jdbcType=NUMERIC},
+      CHECKSTATUS = #{checkstatus,jdbcType=VARCHAR},
+      VENDORLOTNO = #{vendorlotno,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      CHECKRESULT = #{checkresult,jdbcType=VARCHAR},
+      POLINENUM = #{polinenum,jdbcType=NUMERIC},
+      HEADERID = #{headerid,jdbcType=NUMERIC},
+      TRANSACTIONID = #{transactionid,jdbcType=VARCHAR},
+      LINEID = #{lineid,jdbcType=NUMERIC},
+      SONUMBER = #{sonumber,jdbcType=VARCHAR},
+      SOLINENUM = #{solinenum,jdbcType=VARCHAR},
+      RMAPO = #{rmapo,jdbcType=VARCHAR},
+      MO = #{mo,jdbcType=VARCHAR},
+      ORGANIZATIONCODE = #{organizationcode,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      VERDORSITEID = #{verdorsiteid,jdbcType=NUMERIC},
+      VMI = #{vmi,jdbcType=VARCHAR},
+      OBJ01 = #{obj01,jdbcType=VARCHAR},
+      OBJ02 = #{obj02,jdbcType=VARCHAR},
+      LIMITEDDAY = #{limitedday,jdbcType=TIMESTAMP},
+      PACKSTYLE = #{packstyle,jdbcType=VARCHAR},
+      VENDORWEEKCODE = #{vendorweekcode,jdbcType=VARCHAR},
+      MATERIALSTORAGE = #{materialstorage,jdbcType=VARCHAR},
+      MSD = #{msd,jdbcType=VARCHAR},
+      ESD = #{esd,jdbcType=VARCHAR},
+      VENDORSN = #{vendorsn,jdbcType=VARCHAR}
+    where INVOICEDETAILID = #{invoicedetailid,jdbcType=VARCHAR}
+  </update>
+</mapper>

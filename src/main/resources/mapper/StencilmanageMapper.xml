@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.StencilmanageMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Stencilmanage" >
+    <id column="STENCILMANAGEID" property="stencilmanageid" jdbcType="VARCHAR" />
+    <result column="PRODUCTPN" property="productpn" jdbcType="VARCHAR" />
+    <result column="ERPPN" property="erppn" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="UPNID" property="upnid" jdbcType="VARCHAR" />
+    <result column="STDFREQUENCY" property="stdfrequency" jdbcType="NUMERIC" />
+    <result column="MAXFREQUENCY" property="maxfrequency" jdbcType="NUMERIC" />
+    <result column="LINEID" property="lineid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="UPDATEUSERNAME" property="updateusername" jdbcType="VARCHAR" />
+    <result column="UPATEDATETIME" property="upatedatetime" jdbcType="TIMESTAMP" />
+    <result column="CURRENTFREQUENCY" property="currentfrequency" jdbcType="NUMERIC" />
+    <result column="BOARDSIDE" property="boardside" jdbcType="VARCHAR" />
+    <result column="VENDORCODE" property="vendorcode" jdbcType="VARCHAR" />
+    <result column="MONAME" property="moname" jdbcType="VARCHAR" />
+    <result column="LOCATIONID" property="locationid" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PNTYPE" property="pntype" jdbcType="VARCHAR" />
+    <result column="PNOUTDATE" property="pnoutdate" jdbcType="TIMESTAMP" />
+    <result column="PNOUTCODE" property="pnoutcode" jdbcType="VARCHAR" />
+    <result column="PNPCSQTY" property="pnpcsqty" jdbcType="NUMERIC" />
+    <result column="PRODUCTPN2S" property="productpn2s" jdbcType="VARCHAR" />
+    <result column="TOTALFREQUENCY" property="totalfrequency" jdbcType="NUMERIC" />
+    <result column="PNKAIKOU" property="pnkaikou" jdbcType="VARCHAR" />
+    <result column="PNSIZE" property="pnsize" jdbcType="VARCHAR" />
+    <result column="PNTHICKNESS" property="pnthickness" jdbcType="VARCHAR" />
+    <result column="USEDSTATUS" property="usedstatus" jdbcType="VARCHAR" />
+    <result column="PNTHICKDESC" property="pnthickdesc" jdbcType="VARCHAR" />
+    <result column="PNAPPLYPRODUCTPN" property="pnapplyproductpn" jdbcType="VARCHAR" />
+    <result column="PNAPPLYPRODUCTPNS" property="pnapplyproductpns" jdbcType="VARCHAR" />
+    <result column="PNSTENCILPN" property="pnstencilpn" jdbcType="VARCHAR" />
+    <result column="STENCILTYPE" property="stenciltype" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LASTUSEDTIME" property="lastusedtime" jdbcType="TIMESTAMP" />
+    <result column="STENCILUSEDHISTID" property="stencilusedhistid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STENCILMANAGEID, PRODUCTPN, ERPPN, DESCRIPTION, UPNID, STDFREQUENCY, MAXFREQUENCY, 
+    LINEID, USERNAME, DATETIME, UPDATEUSERNAME, UPATEDATETIME, CURRENTFREQUENCY, BOARDSIDE, 
+    VENDORCODE, MONAME, LOCATIONID, STATE, REMARK, PNTYPE, PNOUTDATE, PNOUTCODE, PNPCSQTY, 
+    PRODUCTPN2S, TOTALFREQUENCY, PNKAIKOU, PNSIZE, PNTHICKNESS, USEDSTATUS, PNTHICKDESC, 
+    PNAPPLYPRODUCTPN, PNAPPLYPRODUCTPNS, PNSTENCILPN, STENCILTYPE, LOTID, LASTUSEDTIME, 
+    STENCILUSEDHISTID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.StencilmanageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from STENCILMANAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from STENCILMANAGE
+    where STENCILMANAGEID = #{stencilmanageid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUpnid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from STENCILMANAGE
+    where UPNID = #{upnid,jdbcType=VARCHAR}
+    and rownum=1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from STENCILMANAGE
+    where STENCILMANAGEID = #{stencilmanageid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Stencilmanage" >
+    insert into STENCILMANAGE (STENCILMANAGEID, PRODUCTPN, ERPPN, 
+      DESCRIPTION, UPNID, STDFREQUENCY, 
+      MAXFREQUENCY, LINEID, USERNAME, 
+      DATETIME, UPDATEUSERNAME, UPATEDATETIME, 
+      CURRENTFREQUENCY, BOARDSIDE, VENDORCODE, 
+      MONAME, LOCATIONID, STATE, 
+      REMARK, PNTYPE, PNOUTDATE, 
+      PNOUTCODE, PNPCSQTY, PRODUCTPN2S, 
+      TOTALFREQUENCY, PNKAIKOU, PNSIZE, 
+      PNTHICKNESS, USEDSTATUS, PNTHICKDESC, 
+      PNAPPLYPRODUCTPN, PNAPPLYPRODUCTPNS, PNSTENCILPN, 
+      STENCILTYPE, LOTID, LASTUSEDTIME, 
+      STENCILUSEDHISTID)
+    values (#{stencilmanageid,jdbcType=VARCHAR}, #{productpn,jdbcType=VARCHAR}, #{erppn,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{upnid,jdbcType=VARCHAR}, #{stdfrequency,jdbcType=NUMERIC}, 
+      #{maxfrequency,jdbcType=NUMERIC}, #{lineid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{updateusername,jdbcType=VARCHAR}, #{upatedatetime,jdbcType=TIMESTAMP}, 
+      #{currentfrequency,jdbcType=NUMERIC}, #{boardside,jdbcType=VARCHAR}, #{vendorcode,jdbcType=VARCHAR}, 
+      #{moname,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{pntype,jdbcType=VARCHAR}, #{pnoutdate,jdbcType=TIMESTAMP}, 
+      #{pnoutcode,jdbcType=VARCHAR}, #{pnpcsqty,jdbcType=NUMERIC}, #{productpn2s,jdbcType=VARCHAR}, 
+      #{totalfrequency,jdbcType=NUMERIC}, #{pnkaikou,jdbcType=VARCHAR}, #{pnsize,jdbcType=VARCHAR}, 
+      #{pnthickness,jdbcType=VARCHAR}, #{usedstatus,jdbcType=VARCHAR}, #{pnthickdesc,jdbcType=VARCHAR}, 
+      #{pnapplyproductpn,jdbcType=VARCHAR}, #{pnapplyproductpns,jdbcType=VARCHAR}, #{pnstencilpn,jdbcType=VARCHAR}, 
+      #{stenciltype,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{lastusedtime,jdbcType=TIMESTAMP}, 
+      #{stencilusedhistid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Stencilmanage" >
+    insert into STENCILMANAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stencilmanageid != null" >
+        STENCILMANAGEID,
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN,
+      </if>
+      <if test="erppn != null" >
+        ERPPN,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="upnid != null" >
+        UPNID,
+      </if>
+      <if test="stdfrequency != null" >
+        STDFREQUENCY,
+      </if>
+      <if test="maxfrequency != null" >
+        MAXFREQUENCY,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="updateusername != null" >
+        UPDATEUSERNAME,
+      </if>
+      <if test="upatedatetime != null" >
+        UPATEDATETIME,
+      </if>
+      <if test="currentfrequency != null" >
+        CURRENTFREQUENCY,
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE,
+      </if>
+      <if test="vendorcode != null" >
+        VENDORCODE,
+      </if>
+      <if test="moname != null" >
+        MONAME,
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="pntype != null" >
+        PNTYPE,
+      </if>
+      <if test="pnoutdate != null" >
+        PNOUTDATE,
+      </if>
+      <if test="pnoutcode != null" >
+        PNOUTCODE,
+      </if>
+      <if test="pnpcsqty != null" >
+        PNPCSQTY,
+      </if>
+      <if test="productpn2s != null" >
+        PRODUCTPN2S,
+      </if>
+      <if test="totalfrequency != null" >
+        TOTALFREQUENCY,
+      </if>
+      <if test="pnkaikou != null" >
+        PNKAIKOU,
+      </if>
+      <if test="pnsize != null" >
+        PNSIZE,
+      </if>
+      <if test="pnthickness != null" >
+        PNTHICKNESS,
+      </if>
+      <if test="usedstatus != null" >
+        USEDSTATUS,
+      </if>
+      <if test="pnthickdesc != null" >
+        PNTHICKDESC,
+      </if>
+      <if test="pnapplyproductpn != null" >
+        PNAPPLYPRODUCTPN,
+      </if>
+      <if test="pnapplyproductpns != null" >
+        PNAPPLYPRODUCTPNS,
+      </if>
+      <if test="pnstencilpn != null" >
+        PNSTENCILPN,
+      </if>
+      <if test="stenciltype != null" >
+        STENCILTYPE,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lastusedtime != null" >
+        LASTUSEDTIME,
+      </if>
+      <if test="stencilusedhistid != null" >
+        STENCILUSEDHISTID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stencilmanageid != null" >
+        #{stencilmanageid,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="erppn != null" >
+        #{erppn,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdfrequency != null" >
+        #{stdfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="maxfrequency != null" >
+        #{maxfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateusername != null" >
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="upatedatetime != null" >
+        #{upatedatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentfrequency != null" >
+        #{currentfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null" >
+        #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="moname != null" >
+        #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pntype != null" >
+        #{pntype,jdbcType=VARCHAR},
+      </if>
+      <if test="pnoutdate != null" >
+        #{pnoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pnoutcode != null" >
+        #{pnoutcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pnpcsqty != null" >
+        #{pnpcsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="productpn2s != null" >
+        #{productpn2s,jdbcType=VARCHAR},
+      </if>
+      <if test="totalfrequency != null" >
+        #{totalfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="pnkaikou != null" >
+        #{pnkaikou,jdbcType=VARCHAR},
+      </if>
+      <if test="pnsize != null" >
+        #{pnsize,jdbcType=VARCHAR},
+      </if>
+      <if test="pnthickness != null" >
+        #{pnthickness,jdbcType=VARCHAR},
+      </if>
+      <if test="usedstatus != null" >
+        #{usedstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pnthickdesc != null" >
+        #{pnthickdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pnapplyproductpn != null" >
+        #{pnapplyproductpn,jdbcType=VARCHAR},
+      </if>
+      <if test="pnapplyproductpns != null" >
+        #{pnapplyproductpns,jdbcType=VARCHAR},
+      </if>
+      <if test="pnstencilpn != null" >
+        #{pnstencilpn,jdbcType=VARCHAR},
+      </if>
+      <if test="stenciltype != null" >
+        #{stenciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastusedtime != null" >
+        #{lastusedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stencilusedhistid != null" >
+        #{stencilusedhistid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update STENCILMANAGE
+    <set >
+      <if test="record.stencilmanageid != null" >
+        STENCILMANAGEID = #{record.stencilmanageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productpn != null" >
+        PRODUCTPN = #{record.productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.erppn != null" >
+        ERPPN = #{record.erppn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upnid != null" >
+        UPNID = #{record.upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stdfrequency != null" >
+        STDFREQUENCY = #{record.stdfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="record.maxfrequency != null" >
+        MAXFREQUENCY = #{record.maxfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="record.lineid != null" >
+        LINEID = #{record.lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateusername != null" >
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upatedatetime != null" >
+        UPATEDATETIME = #{record.upatedatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.currentfrequency != null" >
+        CURRENTFREQUENCY = #{record.currentfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="record.boardside != null" >
+        BOARDSIDE = #{record.boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vendorcode != null" >
+        VENDORCODE = #{record.vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moname != null" >
+        MONAME = #{record.moname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        LOCATIONID = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        STATE = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pntype != null" >
+        PNTYPE = #{record.pntype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnoutdate != null" >
+        PNOUTDATE = #{record.pnoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pnoutcode != null" >
+        PNOUTCODE = #{record.pnoutcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnpcsqty != null" >
+        PNPCSQTY = #{record.pnpcsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.productpn2s != null" >
+        PRODUCTPN2S = #{record.productpn2s,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalfrequency != null" >
+        TOTALFREQUENCY = #{record.totalfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="record.pnkaikou != null" >
+        PNKAIKOU = #{record.pnkaikou,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnsize != null" >
+        PNSIZE = #{record.pnsize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnthickness != null" >
+        PNTHICKNESS = #{record.pnthickness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usedstatus != null" >
+        USEDSTATUS = #{record.usedstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnthickdesc != null" >
+        PNTHICKDESC = #{record.pnthickdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnapplyproductpn != null" >
+        PNAPPLYPRODUCTPN = #{record.pnapplyproductpn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnapplyproductpns != null" >
+        PNAPPLYPRODUCTPNS = #{record.pnapplyproductpns,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pnstencilpn != null" >
+        PNSTENCILPN = #{record.pnstencilpn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stenciltype != null" >
+        STENCILTYPE = #{record.stenciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotid != null" >
+        LOTID = #{record.lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastusedtime != null" >
+        LASTUSEDTIME = #{record.lastusedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stencilusedhistid != null" >
+        STENCILUSEDHISTID = #{record.stencilusedhistid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update STENCILMANAGE
+    set STENCILMANAGEID = #{record.stencilmanageid,jdbcType=VARCHAR},
+      PRODUCTPN = #{record.productpn,jdbcType=VARCHAR},
+      ERPPN = #{record.erppn,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      UPNID = #{record.upnid,jdbcType=VARCHAR},
+      STDFREQUENCY = #{record.stdfrequency,jdbcType=NUMERIC},
+      MAXFREQUENCY = #{record.maxfrequency,jdbcType=NUMERIC},
+      LINEID = #{record.lineid,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      UPATEDATETIME = #{record.upatedatetime,jdbcType=TIMESTAMP},
+      CURRENTFREQUENCY = #{record.currentfrequency,jdbcType=NUMERIC},
+      BOARDSIDE = #{record.boardside,jdbcType=VARCHAR},
+      VENDORCODE = #{record.vendorcode,jdbcType=VARCHAR},
+      MONAME = #{record.moname,jdbcType=VARCHAR},
+      LOCATIONID = #{record.locationid,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      PNTYPE = #{record.pntype,jdbcType=VARCHAR},
+      PNOUTDATE = #{record.pnoutdate,jdbcType=TIMESTAMP},
+      PNOUTCODE = #{record.pnoutcode,jdbcType=VARCHAR},
+      PNPCSQTY = #{record.pnpcsqty,jdbcType=NUMERIC},
+      PRODUCTPN2S = #{record.productpn2s,jdbcType=VARCHAR},
+      TOTALFREQUENCY = #{record.totalfrequency,jdbcType=NUMERIC},
+      PNKAIKOU = #{record.pnkaikou,jdbcType=VARCHAR},
+      PNSIZE = #{record.pnsize,jdbcType=VARCHAR},
+      PNTHICKNESS = #{record.pnthickness,jdbcType=VARCHAR},
+      USEDSTATUS = #{record.usedstatus,jdbcType=VARCHAR},
+      PNTHICKDESC = #{record.pnthickdesc,jdbcType=VARCHAR},
+      PNAPPLYPRODUCTPN = #{record.pnapplyproductpn,jdbcType=VARCHAR},
+      PNAPPLYPRODUCTPNS = #{record.pnapplyproductpns,jdbcType=VARCHAR},
+      PNSTENCILPN = #{record.pnstencilpn,jdbcType=VARCHAR},
+      STENCILTYPE = #{record.stenciltype,jdbcType=VARCHAR},
+      LOTID = #{record.lotid,jdbcType=VARCHAR},
+      LASTUSEDTIME = #{record.lastusedtime,jdbcType=TIMESTAMP},
+      STENCILUSEDHISTID = #{record.stencilusedhistid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Stencilmanage" >
+    update STENCILMANAGE
+    <set >
+      <if test="productpn != null" >
+        PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="erppn != null" >
+        ERPPN = #{erppn,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="upnid != null" >
+        UPNID = #{upnid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdfrequency != null" >
+        STDFREQUENCY = #{stdfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="maxfrequency != null" >
+        MAXFREQUENCY = #{maxfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="lineid != null" >
+        LINEID = #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateusername != null" >
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="upatedatetime != null" >
+        UPATEDATETIME = #{upatedatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentfrequency != null" >
+        CURRENTFREQUENCY = #{currentfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null" >
+        VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="moname != null" >
+        MONAME = #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pntype != null" >
+        PNTYPE = #{pntype,jdbcType=VARCHAR},
+      </if>
+      <if test="pnoutdate != null" >
+        PNOUTDATE = #{pnoutdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pnoutcode != null" >
+        PNOUTCODE = #{pnoutcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pnpcsqty != null" >
+        PNPCSQTY = #{pnpcsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="productpn2s != null" >
+        PRODUCTPN2S = #{productpn2s,jdbcType=VARCHAR},
+      </if>
+      <if test="totalfrequency != null" >
+        TOTALFREQUENCY = #{totalfrequency,jdbcType=NUMERIC},
+      </if>
+      <if test="pnkaikou != null" >
+        PNKAIKOU = #{pnkaikou,jdbcType=VARCHAR},
+      </if>
+      <if test="pnsize != null" >
+        PNSIZE = #{pnsize,jdbcType=VARCHAR},
+      </if>
+      <if test="pnthickness != null" >
+        PNTHICKNESS = #{pnthickness,jdbcType=VARCHAR},
+      </if>
+      <if test="usedstatus != null" >
+        USEDSTATUS = #{usedstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pnthickdesc != null" >
+        PNTHICKDESC = #{pnthickdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pnapplyproductpn != null" >
+        PNAPPLYPRODUCTPN = #{pnapplyproductpn,jdbcType=VARCHAR},
+      </if>
+      <if test="pnapplyproductpns != null" >
+        PNAPPLYPRODUCTPNS = #{pnapplyproductpns,jdbcType=VARCHAR},
+      </if>
+      <if test="pnstencilpn != null" >
+        PNSTENCILPN = #{pnstencilpn,jdbcType=VARCHAR},
+      </if>
+      <if test="stenciltype != null" >
+        STENCILTYPE = #{stenciltype,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lastusedtime != null" >
+        LASTUSEDTIME = #{lastusedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stencilusedhistid != null" >
+        STENCILUSEDHISTID = #{stencilusedhistid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STENCILMANAGEID = #{stencilmanageid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Stencilmanage" >
+    update STENCILMANAGE
+    set PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      ERPPN = #{erppn,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      UPNID = #{upnid,jdbcType=VARCHAR},
+      STDFREQUENCY = #{stdfrequency,jdbcType=NUMERIC},
+      MAXFREQUENCY = #{maxfrequency,jdbcType=NUMERIC},
+      LINEID = #{lineid,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      UPATEDATETIME = #{upatedatetime,jdbcType=TIMESTAMP},
+      CURRENTFREQUENCY = #{currentfrequency,jdbcType=NUMERIC},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      MONAME = #{moname,jdbcType=VARCHAR},
+      LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PNTYPE = #{pntype,jdbcType=VARCHAR},
+      PNOUTDATE = #{pnoutdate,jdbcType=TIMESTAMP},
+      PNOUTCODE = #{pnoutcode,jdbcType=VARCHAR},
+      PNPCSQTY = #{pnpcsqty,jdbcType=NUMERIC},
+      PRODUCTPN2S = #{productpn2s,jdbcType=VARCHAR},
+      TOTALFREQUENCY = #{totalfrequency,jdbcType=NUMERIC},
+      PNKAIKOU = #{pnkaikou,jdbcType=VARCHAR},
+      PNSIZE = #{pnsize,jdbcType=VARCHAR},
+      PNTHICKNESS = #{pnthickness,jdbcType=VARCHAR},
+      USEDSTATUS = #{usedstatus,jdbcType=VARCHAR},
+      PNTHICKDESC = #{pnthickdesc,jdbcType=VARCHAR},
+      PNAPPLYPRODUCTPN = #{pnapplyproductpn,jdbcType=VARCHAR},
+      PNAPPLYPRODUCTPNS = #{pnapplyproductpns,jdbcType=VARCHAR},
+      PNSTENCILPN = #{pnstencilpn,jdbcType=VARCHAR},
+      STENCILTYPE = #{stenciltype,jdbcType=VARCHAR},
+      LOTID = #{lotid,jdbcType=VARCHAR},
+      LASTUSEDTIME = #{lastusedtime,jdbcType=TIMESTAMP},
+      STENCILUSEDHISTID = #{stencilusedhistid,jdbcType=VARCHAR}
+    where STENCILMANAGEID = #{stencilmanageid,jdbcType=VARCHAR}
+  </update>
+</mapper>

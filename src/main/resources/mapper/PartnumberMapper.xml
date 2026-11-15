@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.PartnumberMapper">
+  <resultMap id="BaseResultMap" type="com.jcd.model.Partnumber">
+    <id column="PNID" jdbcType="VARCHAR" property="pnid" />
+    <result column="PN" jdbcType="VARCHAR" property="pn" />
+    <result column="VPN" jdbcType="VARCHAR" property="vpn" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="LEADFREE" jdbcType="VARCHAR" property="leadfree" />
+    <result column="MSDLEVEL" jdbcType="VARCHAR" property="msdlevel" />
+    <result column="FEEDERTYPE" jdbcType="VARCHAR" property="feedertype" />
+    <result column="VENDORNAME" jdbcType="VARCHAR" property="vendorname" />
+    <result column="VENDORCODE" jdbcType="VARCHAR" property="vendorcode" />
+    <result column="PARTNAME" jdbcType="VARCHAR" property="partname" />
+    <result column="PARTSPEC" jdbcType="VARCHAR" property="partspec" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="KEYPART" jdbcType="VARCHAR" property="keypart" />
+    <result column="PARTTYPE" jdbcType="VARCHAR" property="parttype" />
+    <result column="ISPRODUCT" jdbcType="VARCHAR" property="isproduct" />
+    <result column="ESDLEVEL" jdbcType="VARCHAR" property="esdlevel" />
+    <result column="LARGECATEGORY" jdbcType="VARCHAR" property="largecategory" />
+    <result column="SUBCATEGORY" jdbcType="VARCHAR" property="subcategory" />
+    <result column="UNITQTY" jdbcType="NUMERIC" property="unitqty" />
+    <result column="EFFECTIVEFLAG" jdbcType="VARCHAR" property="effectiveflag" />
+    <result column="FIXTUREFLAG" jdbcType="VARCHAR" property="fixtureflag" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="DATETIME" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="ORGANIZATION_CODE" jdbcType="VARCHAR" property="organizationCode" />
+    <result column="CONTROL_FLAG" jdbcType="VARCHAR" property="controlFlag" />
+    <result column="SPECIALTYPE" jdbcType="VARCHAR" property="specialtype" />
+    <result column="ERPPN" jdbcType="VARCHAR" property="erppn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PNID, PN, VPN, UNIT, DESCRIPTION, LEADFREE, MSDLEVEL, FEEDERTYPE, VENDORNAME, VENDORCODE, 
+    PARTNAME, PARTSPEC, STATE, KEYPART, PARTTYPE, ISPRODUCT, ESDLEVEL, LARGECATEGORY, 
+    SUBCATEGORY, UNITQTY, EFFECTIVEFLAG, FIXTUREFLAG, USERNAME, DATETIME, ORGANIZATION_CODE, 
+    CONTROL_FLAG, SPECIALTYPE, ERPPN
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PARTNUMBER
+    where PNID = #{pnid,jdbcType=VARCHAR}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PARTNUMBER
+    where PNID = #{pnid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Partnumber">
+    insert into PARTNUMBER (PNID, PN, VPN, 
+      UNIT, DESCRIPTION, LEADFREE, 
+      MSDLEVEL, FEEDERTYPE, VENDORNAME, 
+      VENDORCODE, PARTNAME, PARTSPEC, 
+      STATE, KEYPART, PARTTYPE, 
+      ISPRODUCT, ESDLEVEL, LARGECATEGORY, 
+      SUBCATEGORY, UNITQTY, EFFECTIVEFLAG, 
+      FIXTUREFLAG, USERNAME, DATETIME, 
+      ORGANIZATION_CODE, CONTROL_FLAG, SPECIALTYPE, 
+      ERPPN)
+    values (#{pnid,jdbcType=VARCHAR}, #{pn,jdbcType=VARCHAR}, #{vpn,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{leadfree,jdbcType=VARCHAR}, 
+      #{msdlevel,jdbcType=VARCHAR}, #{feedertype,jdbcType=VARCHAR}, #{vendorname,jdbcType=VARCHAR}, 
+      #{vendorcode,jdbcType=VARCHAR}, #{partname,jdbcType=VARCHAR}, #{partspec,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{keypart,jdbcType=VARCHAR}, #{parttype,jdbcType=VARCHAR}, 
+      #{isproduct,jdbcType=VARCHAR}, #{esdlevel,jdbcType=VARCHAR}, #{largecategory,jdbcType=VARCHAR}, 
+      #{subcategory,jdbcType=VARCHAR}, #{unitqty,jdbcType=NUMERIC}, #{effectiveflag,jdbcType=VARCHAR}, 
+      #{fixtureflag,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{organizationCode,jdbcType=VARCHAR}, #{controlFlag,jdbcType=VARCHAR}, #{specialtype,jdbcType=VARCHAR}, 
+      #{erppn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Partnumber">
+    insert into PARTNUMBER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pnid != null">
+        PNID,
+      </if>
+      <if test="pn != null">
+        PN,
+      </if>
+      <if test="vpn != null">
+        VPN,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="leadfree != null">
+        LEADFREE,
+      </if>
+      <if test="msdlevel != null">
+        MSDLEVEL,
+      </if>
+      <if test="feedertype != null">
+        FEEDERTYPE,
+      </if>
+      <if test="vendorname != null">
+        VENDORNAME,
+      </if>
+      <if test="vendorcode != null">
+        VENDORCODE,
+      </if>
+      <if test="partname != null">
+        PARTNAME,
+      </if>
+      <if test="partspec != null">
+        PARTSPEC,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="keypart != null">
+        KEYPART,
+      </if>
+      <if test="parttype != null">
+        PARTTYPE,
+      </if>
+      <if test="isproduct != null">
+        ISPRODUCT,
+      </if>
+      <if test="esdlevel != null">
+        ESDLEVEL,
+      </if>
+      <if test="largecategory != null">
+        LARGECATEGORY,
+      </if>
+      <if test="subcategory != null">
+        SUBCATEGORY,
+      </if>
+      <if test="unitqty != null">
+        UNITQTY,
+      </if>
+      <if test="effectiveflag != null">
+        EFFECTIVEFLAG,
+      </if>
+      <if test="fixtureflag != null">
+        FIXTUREFLAG,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="datetime != null">
+        DATETIME,
+      </if>
+      <if test="organizationCode != null">
+        ORGANIZATION_CODE,
+      </if>
+      <if test="controlFlag != null">
+        CONTROL_FLAG,
+      </if>
+      <if test="specialtype != null">
+        SPECIALTYPE,
+      </if>
+      <if test="erppn != null">
+        ERPPN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pnid != null">
+        #{pnid,jdbcType=VARCHAR},
+      </if>
+      <if test="pn != null">
+        #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="vpn != null">
+        #{vpn,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="leadfree != null">
+        #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="msdlevel != null">
+        #{msdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="feedertype != null">
+        #{feedertype,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorname != null">
+        #{vendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null">
+        #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="partname != null">
+        #{partname,jdbcType=VARCHAR},
+      </if>
+      <if test="partspec != null">
+        #{partspec,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="keypart != null">
+        #{keypart,jdbcType=VARCHAR},
+      </if>
+      <if test="parttype != null">
+        #{parttype,jdbcType=VARCHAR},
+      </if>
+      <if test="isproduct != null">
+        #{isproduct,jdbcType=VARCHAR},
+      </if>
+      <if test="esdlevel != null">
+        #{esdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="largecategory != null">
+        #{largecategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subcategory != null">
+        #{subcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null">
+        #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="effectiveflag != null">
+        #{effectiveflag,jdbcType=VARCHAR},
+      </if>
+      <if test="fixtureflag != null">
+        #{fixtureflag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="organizationCode != null">
+        #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="controlFlag != null">
+        #{controlFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="specialtype != null">
+        #{specialtype,jdbcType=VARCHAR},
+      </if>
+      <if test="erppn != null">
+        #{erppn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Partnumber">
+    update PARTNUMBER
+    <set>
+      <if test="pn != null">
+        PN = #{pn,jdbcType=VARCHAR},
+      </if>
+      <if test="vpn != null">
+        VPN = #{vpn,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="leadfree != null">
+        LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="msdlevel != null">
+        MSDLEVEL = #{msdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="feedertype != null">
+        FEEDERTYPE = #{feedertype,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorname != null">
+        VENDORNAME = #{vendorname,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorcode != null">
+        VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      </if>
+      <if test="partname != null">
+        PARTNAME = #{partname,jdbcType=VARCHAR},
+      </if>
+      <if test="partspec != null">
+        PARTSPEC = #{partspec,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="keypart != null">
+        KEYPART = #{keypart,jdbcType=VARCHAR},
+      </if>
+      <if test="parttype != null">
+        PARTTYPE = #{parttype,jdbcType=VARCHAR},
+      </if>
+      <if test="isproduct != null">
+        ISPRODUCT = #{isproduct,jdbcType=VARCHAR},
+      </if>
+      <if test="esdlevel != null">
+        ESDLEVEL = #{esdlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="largecategory != null">
+        LARGECATEGORY = #{largecategory,jdbcType=VARCHAR},
+      </if>
+      <if test="subcategory != null">
+        SUBCATEGORY = #{subcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="unitqty != null">
+        UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      </if>
+      <if test="effectiveflag != null">
+        EFFECTIVEFLAG = #{effectiveflag,jdbcType=VARCHAR},
+      </if>
+      <if test="fixtureflag != null">
+        FIXTUREFLAG = #{fixtureflag,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="organizationCode != null">
+        ORGANIZATION_CODE = #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="controlFlag != null">
+        CONTROL_FLAG = #{controlFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="specialtype != null">
+        SPECIALTYPE = #{specialtype,jdbcType=VARCHAR},
+      </if>
+      <if test="erppn != null">
+        ERPPN = #{erppn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PNID = #{pnid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Partnumber">
+    update PARTNUMBER
+    set PN = #{pn,jdbcType=VARCHAR},
+      VPN = #{vpn,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      MSDLEVEL = #{msdlevel,jdbcType=VARCHAR},
+      FEEDERTYPE = #{feedertype,jdbcType=VARCHAR},
+      VENDORNAME = #{vendorname,jdbcType=VARCHAR},
+      VENDORCODE = #{vendorcode,jdbcType=VARCHAR},
+      PARTNAME = #{partname,jdbcType=VARCHAR},
+      PARTSPEC = #{partspec,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      KEYPART = #{keypart,jdbcType=VARCHAR},
+      PARTTYPE = #{parttype,jdbcType=VARCHAR},
+      ISPRODUCT = #{isproduct,jdbcType=VARCHAR},
+      ESDLEVEL = #{esdlevel,jdbcType=VARCHAR},
+      LARGECATEGORY = #{largecategory,jdbcType=VARCHAR},
+      SUBCATEGORY = #{subcategory,jdbcType=VARCHAR},
+      UNITQTY = #{unitqty,jdbcType=NUMERIC},
+      EFFECTIVEFLAG = #{effectiveflag,jdbcType=VARCHAR},
+      FIXTUREFLAG = #{fixtureflag,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      ORGANIZATION_CODE = #{organizationCode,jdbcType=VARCHAR},
+      CONTROL_FLAG = #{controlFlag,jdbcType=VARCHAR},
+      SPECIALTYPE = #{specialtype,jdbcType=VARCHAR},
+      ERPPN = #{erppn,jdbcType=VARCHAR}
+    where PNID = #{pnid,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+</mapper>

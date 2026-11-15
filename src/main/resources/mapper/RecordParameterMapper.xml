@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.RecordParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.RecordParameter" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="PARAM_KEY" property="paramKey" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR" />
+    <result column="PARAM_VALUE" property="paramValue" jdbcType="VARCHAR" />
+    <result column="STANDARD_DISPLAY" property="standardDisplay" jdbcType="VARCHAR" />
+    <result column="IS_VALID" property="isValid" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, RECORD_ID, PARAM_KEY, PARAM_NAME, PARAM_VALUE, STANDARD_DISPLAY, IS_VALID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.RecordParameterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MES_RECORD_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MES_RECORD_PARAMETER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MES_RECORD_PARAMETER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcd.model.RecordParameterExample" >
+    delete from MES_RECORD_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.RecordParameter" >
+    insert into MES_RECORD_PARAMETER (ID, RECORD_ID, PARAM_KEY, 
+      PARAM_NAME, PARAM_VALUE, STANDARD_DISPLAY, 
+      IS_VALID)
+    values (#{id,jdbcType=VARCHAR}, #{recordId,jdbcType=VARCHAR}, #{paramKey,jdbcType=VARCHAR}, 
+      #{paramName,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, #{standardDisplay,jdbcType=VARCHAR}, 
+      #{isValid,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.RecordParameter" >
+    insert into MES_RECORD_PARAMETER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="recordId != null" >
+        RECORD_ID,
+      </if>
+      <if test="paramKey != null" >
+        PARAM_KEY,
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME,
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE,
+      </if>
+      <if test="standardDisplay != null" >
+        STANDARD_DISPLAY,
+      </if>
+      <if test="isValid != null" >
+        IS_VALID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="paramKey != null" >
+        #{paramKey,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDisplay != null" >
+        #{standardDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcd.model.RecordParameterExample" resultType="java.lang.Integer" >
+    select count(*) from MES_RECORD_PARAMETER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_RECORD_PARAMETER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordId != null" >
+        RECORD_ID = #{record.recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramKey != null" >
+        PARAM_KEY = #{record.paramKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramName != null" >
+        PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramValue != null" >
+        PARAM_VALUE = #{record.paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDisplay != null" >
+        STANDARD_DISPLAY = #{record.standardDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isValid != null" >
+        IS_VALID = #{record.isValid,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_RECORD_PARAMETER
+    set ID = #{record.id,jdbcType=VARCHAR},
+      RECORD_ID = #{record.recordId,jdbcType=VARCHAR},
+      PARAM_KEY = #{record.paramKey,jdbcType=VARCHAR},
+      PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      PARAM_VALUE = #{record.paramValue,jdbcType=VARCHAR},
+      STANDARD_DISPLAY = #{record.standardDisplay,jdbcType=VARCHAR},
+      IS_VALID = #{record.isValid,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.RecordParameter" >
+    update MES_RECORD_PARAMETER
+    <set >
+      <if test="recordId != null" >
+        RECORD_ID = #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="paramKey != null" >
+        PARAM_KEY = #{paramKey,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDisplay != null" >
+        STANDARD_DISPLAY = #{standardDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        IS_VALID = #{isValid,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.RecordParameter" >
+    update MES_RECORD_PARAMETER
+    set RECORD_ID = #{recordId,jdbcType=VARCHAR},
+      PARAM_KEY = #{paramKey,jdbcType=VARCHAR},
+      PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      PARAM_VALUE = #{paramValue,jdbcType=VARCHAR},
+      STANDARD_DISPLAY = #{standardDisplay,jdbcType=VARCHAR},
+      IS_VALID = #{isValid,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

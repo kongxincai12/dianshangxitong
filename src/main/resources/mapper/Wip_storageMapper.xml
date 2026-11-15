@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Wip_storageMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Wip_storage" >
+    <id column="STORAGEID" property="storageid" jdbcType="VARCHAR" />
+    <result column="CARTONCODE" property="cartoncode" jdbcType="VARCHAR" />
+    <result column="LOCATIONID" property="locationid" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="SHIPID" property="shipid" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="OBJ01" property="obj01" jdbcType="VARCHAR" />
+    <result column="OBJ02" property="obj02" jdbcType="VARCHAR" />
+    <result column="OBJ03" property="obj03" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STORAGEID, CARTONCODE, LOCATIONID, STATUS, DATETIME, USERNAME, SHIPID, REMARK, OBJ01, 
+    OBJ02, OBJ03
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Wip_storageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from WIP_STORAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WIP_STORAGE
+    where STORAGEID = #{storageid,jdbcType=VARCHAR}
+  </select>
+  <select id="Wip_storageGetByCartoncode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from WIP_STORAGE
+    where CARTONCODE = #{cartoncode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WIP_STORAGE
+    where STORAGEID = #{storageid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="Wip_storageInsert" parameterType="com.jcd.model.Wip_storage" >
+    insert into WIP_STORAGE (STORAGEID, CARTONCODE, LOCATIONID, 
+      STATUS, DATETIME, USERNAME, 
+      SHIPID, REMARK, OBJ01, 
+      OBJ02, OBJ03)
+    values (#{storageid,jdbcType=VARCHAR}, #{cartoncode,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, 
+      #{shipid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{obj01,jdbcType=VARCHAR}, 
+      #{obj02,jdbcType=VARCHAR}, #{obj03,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Wip_storage" >
+    insert into WIP_STORAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="storageid != null" >
+        STORAGEID,
+      </if>
+      <if test="cartoncode != null" >
+        CARTONCODE,
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="shipid != null" >
+        SHIPID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="obj01 != null" >
+        OBJ01,
+      </if>
+      <if test="obj02 != null" >
+        OBJ02,
+      </if>
+      <if test="obj03 != null" >
+        OBJ03,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="storageid != null" >
+        #{storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="cartoncode != null" >
+        #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        #{obj03,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update WIP_STORAGE
+    <set >
+      <if test="record.storageid != null" >
+        STORAGEID = #{record.storageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cartoncode != null" >
+        CARTONCODE = #{record.cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationid != null" >
+        LOCATIONID = #{record.locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipid != null" >
+        SHIPID = #{record.shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj01 != null" >
+        OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj02 != null" >
+        OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj03 != null" >
+        OBJ03 = #{record.obj03,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update WIP_STORAGE
+    set STORAGEID = #{record.storageid,jdbcType=VARCHAR},
+      CARTONCODE = #{record.cartoncode,jdbcType=VARCHAR},
+      LOCATIONID = #{record.locationid,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      SHIPID = #{record.shipid,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      OBJ03 = #{record.obj03,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Wip_storage" >
+    update WIP_STORAGE
+    <set >
+      <if test="cartoncode != null" >
+        CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        SHIPID = #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        OBJ03 = #{obj03,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STORAGEID = #{storageid,jdbcType=VARCHAR}
+  </update>
+  <update id="Wip_storageUpdate" parameterType="com.jcd.model.Wip_storage" >
+    update WIP_STORAGE
+    <set >
+      <if test="cartoncode != null" >
+        CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        SHIPID = #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        OBJ03 = #{obj03,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STORAGEID = #{storageid,jdbcType=VARCHAR}
+  </update>
+</mapper>

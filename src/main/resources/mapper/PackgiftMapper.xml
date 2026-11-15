@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.PackgiftMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Packgift" >
+    <id column="GIFTID" property="giftid" jdbcType="VARCHAR" />
+    <result column="GIFTCODE" property="giftcode" jdbcType="VARCHAR" />
+    <result column="GIFTQTY" property="giftqty" jdbcType="NUMERIC" />
+    <result column="STEPID" property="stepid" jdbcType="VARCHAR" />
+    <result column="STATIONID" property="stationid" jdbcType="VARCHAR" />
+    <result column="PRODUCTPN" property="productpn" jdbcType="VARCHAR" />
+    <result column="SECTION" property="section" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LOTQTY" property="lotqty" jdbcType="NUMERIC" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+    <result column="DELETEFLAG" property="deleteflag" jdbcType="CHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="GIFT_OBJ01" property="giftObj01" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ02" property="giftObj02" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ03" property="giftObj03" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ04" property="giftObj04" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ05" property="giftObj05" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ06" property="giftObj06" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ07" property="giftObj07" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ08" property="giftObj08" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ09" property="giftObj09" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ10" property="giftObj10" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ11" property="giftObj11" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ12" property="giftObj12" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ13" property="giftObj13" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ14" property="giftObj14" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ15" property="giftObj15" jdbcType="VARCHAR" />
+    <result column="GIFT_OBJ16" property="giftObj16" jdbcType="VARCHAR" />
+    <result column="CONSUMEQTY" property="consumeqty" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GIFTID, GIFTCODE, GIFTQTY, STEPID, STATIONID, PRODUCTPN, SECTION, LOTID, LOTQTY, 
+    COMMENTS, DELETEFLAG, USERNAME, DATETIME, GIFT_OBJ01, GIFT_OBJ02, GIFT_OBJ03, GIFT_OBJ04, 
+    GIFT_OBJ05, GIFT_OBJ06, GIFT_OBJ07, GIFT_OBJ08, GIFT_OBJ09, GIFT_OBJ10, GIFT_OBJ11, 
+    GIFT_OBJ12, GIFT_OBJ13, GIFT_OBJ14, GIFT_OBJ15, GIFT_OBJ16, CONSUMEQTY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PACKGIFT
+    where GIFTID = #{giftid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PACKGIFT
+    where GIFTID = #{giftid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Packgift" >
+    insert into PACKGIFT (GIFTID, GIFTCODE, GIFTQTY, 
+      STEPID, STATIONID, PRODUCTPN, 
+      SECTION, LOTID, LOTQTY, 
+      COMMENTS, DELETEFLAG, USERNAME, 
+      DATETIME, GIFT_OBJ01, GIFT_OBJ02, 
+      GIFT_OBJ03, GIFT_OBJ04, GIFT_OBJ05, 
+      GIFT_OBJ06, GIFT_OBJ07, GIFT_OBJ08, 
+      GIFT_OBJ09, GIFT_OBJ10, GIFT_OBJ11, 
+      GIFT_OBJ12, GIFT_OBJ13, GIFT_OBJ14, 
+      GIFT_OBJ15, GIFT_OBJ16, CONSUMEQTY
+      )
+    values (#{giftid,jdbcType=VARCHAR}, #{giftcode,jdbcType=VARCHAR}, #{giftqty,jdbcType=NUMERIC}, 
+      #{stepid,jdbcType=VARCHAR}, #{stationid,jdbcType=VARCHAR}, #{productpn,jdbcType=VARCHAR}, 
+      #{section,jdbcType=VARCHAR}, #{lotid,jdbcType=VARCHAR}, #{lotqty,jdbcType=NUMERIC}, 
+      #{comments,jdbcType=VARCHAR}, #{deleteflag,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{giftObj01,jdbcType=VARCHAR}, #{giftObj02,jdbcType=VARCHAR}, 
+      #{giftObj03,jdbcType=VARCHAR}, #{giftObj04,jdbcType=VARCHAR}, #{giftObj05,jdbcType=VARCHAR}, 
+      #{giftObj06,jdbcType=VARCHAR}, #{giftObj07,jdbcType=VARCHAR}, #{giftObj08,jdbcType=VARCHAR}, 
+      #{giftObj09,jdbcType=VARCHAR}, #{giftObj10,jdbcType=VARCHAR}, #{giftObj11,jdbcType=VARCHAR}, 
+      #{giftObj12,jdbcType=VARCHAR}, #{giftObj13,jdbcType=VARCHAR}, #{giftObj14,jdbcType=VARCHAR}, 
+      #{giftObj15,jdbcType=VARCHAR}, #{giftObj16,jdbcType=VARCHAR}, #{consumeqty,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Packgift" >
+    insert into PACKGIFT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="giftid != null" >
+        GIFTID,
+      </if>
+      <if test="giftcode != null" >
+        GIFTCODE,
+      </if>
+      <if test="giftqty != null" >
+        GIFTQTY,
+      </if>
+      <if test="stepid != null" >
+        STEPID,
+      </if>
+      <if test="stationid != null" >
+        STATIONID,
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN,
+      </if>
+      <if test="section != null" >
+        SECTION,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lotqty != null" >
+        LOTQTY,
+      </if>
+      <if test="comments != null" >
+        COMMENTS,
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="giftObj01 != null" >
+        GIFT_OBJ01,
+      </if>
+      <if test="giftObj02 != null" >
+        GIFT_OBJ02,
+      </if>
+      <if test="giftObj03 != null" >
+        GIFT_OBJ03,
+      </if>
+      <if test="giftObj04 != null" >
+        GIFT_OBJ04,
+      </if>
+      <if test="giftObj05 != null" >
+        GIFT_OBJ05,
+      </if>
+      <if test="giftObj06 != null" >
+        GIFT_OBJ06,
+      </if>
+      <if test="giftObj07 != null" >
+        GIFT_OBJ07,
+      </if>
+      <if test="giftObj08 != null" >
+        GIFT_OBJ08,
+      </if>
+      <if test="giftObj09 != null" >
+        GIFT_OBJ09,
+      </if>
+      <if test="giftObj10 != null" >
+        GIFT_OBJ10,
+      </if>
+      <if test="giftObj11 != null" >
+        GIFT_OBJ11,
+      </if>
+      <if test="giftObj12 != null" >
+        GIFT_OBJ12,
+      </if>
+      <if test="giftObj13 != null" >
+        GIFT_OBJ13,
+      </if>
+      <if test="giftObj14 != null" >
+        GIFT_OBJ14,
+      </if>
+      <if test="giftObj15 != null" >
+        GIFT_OBJ15,
+      </if>
+      <if test="giftObj16 != null" >
+        GIFT_OBJ16,
+      </if>
+      <if test="consumeqty != null" >
+        CONSUMEQTY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="giftid != null" >
+        #{giftid,jdbcType=VARCHAR},
+      </if>
+      <if test="giftcode != null" >
+        #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giftqty != null" >
+        #{giftqty,jdbcType=NUMERIC},
+      </if>
+      <if test="stepid != null" >
+        #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        #{stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotqty != null" >
+        #{lotqty,jdbcType=NUMERIC},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="giftObj01 != null" >
+        #{giftObj01,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj02 != null" >
+        #{giftObj02,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj03 != null" >
+        #{giftObj03,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj04 != null" >
+        #{giftObj04,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj05 != null" >
+        #{giftObj05,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj06 != null" >
+        #{giftObj06,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj07 != null" >
+        #{giftObj07,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj08 != null" >
+        #{giftObj08,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj09 != null" >
+        #{giftObj09,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj10 != null" >
+        #{giftObj10,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj11 != null" >
+        #{giftObj11,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj12 != null" >
+        #{giftObj12,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj13 != null" >
+        #{giftObj13,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj14 != null" >
+        #{giftObj14,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj15 != null" >
+        #{giftObj15,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj16 != null" >
+        #{giftObj16,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeqty != null" >
+        #{consumeqty,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Packgift" >
+    update PACKGIFT
+    <set >
+      <if test="giftcode != null" >
+        GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giftqty != null" >
+        GIFTQTY = #{giftqty,jdbcType=NUMERIC},
+      </if>
+      <if test="stepid != null" >
+        STEPID = #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        STATIONID = #{stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        SECTION = #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotqty != null" >
+        LOTQTY = #{lotqty,jdbcType=NUMERIC},
+      </if>
+      <if test="comments != null" >
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG = #{deleteflag,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="giftObj01 != null" >
+        GIFT_OBJ01 = #{giftObj01,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj02 != null" >
+        GIFT_OBJ02 = #{giftObj02,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj03 != null" >
+        GIFT_OBJ03 = #{giftObj03,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj04 != null" >
+        GIFT_OBJ04 = #{giftObj04,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj05 != null" >
+        GIFT_OBJ05 = #{giftObj05,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj06 != null" >
+        GIFT_OBJ06 = #{giftObj06,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj07 != null" >
+        GIFT_OBJ07 = #{giftObj07,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj08 != null" >
+        GIFT_OBJ08 = #{giftObj08,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj09 != null" >
+        GIFT_OBJ09 = #{giftObj09,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj10 != null" >
+        GIFT_OBJ10 = #{giftObj10,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj11 != null" >
+        GIFT_OBJ11 = #{giftObj11,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj12 != null" >
+        GIFT_OBJ12 = #{giftObj12,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj13 != null" >
+        GIFT_OBJ13 = #{giftObj13,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj14 != null" >
+        GIFT_OBJ14 = #{giftObj14,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj15 != null" >
+        GIFT_OBJ15 = #{giftObj15,jdbcType=VARCHAR},
+      </if>
+      <if test="giftObj16 != null" >
+        GIFT_OBJ16 = #{giftObj16,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeqty != null" >
+        CONSUMEQTY = #{consumeqty,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where GIFTID = #{giftid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Packgift" >
+    update PACKGIFT
+    set GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      GIFTQTY = #{giftqty,jdbcType=NUMERIC},
+      STEPID = #{stepid,jdbcType=VARCHAR},
+      STATIONID = #{stationid,jdbcType=VARCHAR},
+      PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      SECTION = #{section,jdbcType=VARCHAR},
+      LOTID = #{lotid,jdbcType=VARCHAR},
+      LOTQTY = #{lotqty,jdbcType=NUMERIC},
+      COMMENTS = #{comments,jdbcType=VARCHAR},
+      DELETEFLAG = #{deleteflag,jdbcType=CHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      GIFT_OBJ01 = #{giftObj01,jdbcType=VARCHAR},
+      GIFT_OBJ02 = #{giftObj02,jdbcType=VARCHAR},
+      GIFT_OBJ03 = #{giftObj03,jdbcType=VARCHAR},
+      GIFT_OBJ04 = #{giftObj04,jdbcType=VARCHAR},
+      GIFT_OBJ05 = #{giftObj05,jdbcType=VARCHAR},
+      GIFT_OBJ06 = #{giftObj06,jdbcType=VARCHAR},
+      GIFT_OBJ07 = #{giftObj07,jdbcType=VARCHAR},
+      GIFT_OBJ08 = #{giftObj08,jdbcType=VARCHAR},
+      GIFT_OBJ09 = #{giftObj09,jdbcType=VARCHAR},
+      GIFT_OBJ10 = #{giftObj10,jdbcType=VARCHAR},
+      GIFT_OBJ11 = #{giftObj11,jdbcType=VARCHAR},
+      GIFT_OBJ12 = #{giftObj12,jdbcType=VARCHAR},
+      GIFT_OBJ13 = #{giftObj13,jdbcType=VARCHAR},
+      GIFT_OBJ14 = #{giftObj14,jdbcType=VARCHAR},
+      GIFT_OBJ15 = #{giftObj15,jdbcType=VARCHAR},
+      GIFT_OBJ16 = #{giftObj16,jdbcType=VARCHAR},
+      CONSUMEQTY = #{consumeqty,jdbcType=NUMERIC}
+    where GIFTID = #{giftid,jdbcType=VARCHAR}
+  </update>
+</mapper>

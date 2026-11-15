@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Mes_avi_lotrectimeMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Mes_avi_lotrectime" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EQP_NO" property="eqpNo" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NUMBER" property="productNumber" jdbcType="VARCHAR" />
+    <result column="LOT" property="lot" jdbcType="VARCHAR" />
+    <result column="SCAN_TOTAL" property="scanTotal" jdbcType="NUMERIC" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="TOTAL_TIME" property="totalTime" jdbcType="NUMERIC" />
+    <result column="OPERATOR_CODE" property="operatorCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EQP_NO, PRODUCT_NUMBER, LOT, SCAN_TOTAL, START_TIME, END_TIME, TOTAL_TIME, OPERATOR_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Mes_avi_lotrectimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from MES_AVI_LOTRECTIME
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MES_AVI_LOTRECTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MES_AVI_LOTRECTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Mes_avi_lotrectime" >
+    insert into MES_AVI_LOTRECTIME (ID, EQP_NO, PRODUCT_NUMBER, 
+      LOT, SCAN_TOTAL, START_TIME, 
+      END_TIME, TOTAL_TIME, OPERATOR_CODE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{eqpNo,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, 
+      #{lot,jdbcType=VARCHAR}, #{scanTotal,jdbcType=NUMERIC}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{totalTime,jdbcType=NUMERIC}, #{operatorCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Mes_avi_lotrectime" >
+    insert into MES_AVI_LOTRECTIME
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="eqpNo != null" >
+        EQP_NO,
+      </if>
+      <if test="productNumber != null" >
+        PRODUCT_NUMBER,
+      </if>
+      <if test="lot != null" >
+        LOT,
+      </if>
+      <if test="scanTotal != null" >
+        SCAN_TOTAL,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="totalTime != null" >
+        TOTAL_TIME,
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpNo != null" >
+        #{eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null" >
+        #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null" >
+        #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="scanTotal != null" >
+        #{scanTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=NUMERIC},
+      </if>
+      <if test="operatorCode != null" >
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_AVI_LOTRECTIME
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eqpNo != null" >
+        EQP_NO = #{record.eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productNumber != null" >
+        PRODUCT_NUMBER = #{record.productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lot != null" >
+        LOT = #{record.lot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scanTotal != null" >
+        SCAN_TOTAL = #{record.scanTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="record.startTime != null" >
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalTime != null" >
+        TOTAL_TIME = #{record.totalTime,jdbcType=NUMERIC},
+      </if>
+      <if test="record.operatorCode != null" >
+        OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_AVI_LOTRECTIME
+    set ID = #{record.id,jdbcType=VARCHAR},
+      EQP_NO = #{record.eqpNo,jdbcType=VARCHAR},
+      PRODUCT_NUMBER = #{record.productNumber,jdbcType=VARCHAR},
+      LOT = #{record.lot,jdbcType=VARCHAR},
+      SCAN_TOTAL = #{record.scanTotal,jdbcType=NUMERIC},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      TOTAL_TIME = #{record.totalTime,jdbcType=NUMERIC},
+      OPERATOR_CODE = #{record.operatorCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Mes_avi_lotrectime" >
+    update MES_AVI_LOTRECTIME
+    <set >
+      <if test="eqpNo != null" >
+        EQP_NO = #{eqpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productNumber != null" >
+        PRODUCT_NUMBER = #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null" >
+        LOT = #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="scanTotal != null" >
+        SCAN_TOTAL = #{scanTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalTime != null" >
+        TOTAL_TIME = #{totalTime,jdbcType=NUMERIC},
+      </if>
+      <if test="operatorCode != null" >
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Mes_avi_lotrectime" >
+    update MES_AVI_LOTRECTIME
+    set EQP_NO = #{eqpNo,jdbcType=VARCHAR},
+      PRODUCT_NUMBER = #{productNumber,jdbcType=VARCHAR},
+      LOT = #{lot,jdbcType=VARCHAR},
+      SCAN_TOTAL = #{scanTotal,jdbcType=NUMERIC},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      TOTAL_TIME = #{totalTime,jdbcType=NUMERIC},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

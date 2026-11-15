@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Mes_aviMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Mes_avi" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PRODUCTNUMBER" property="productnumber" jdbcType="VARCHAR" />
+    <result column="QRCODE" property="qrcode" jdbcType="VARCHAR" />
+    <result column="LOT" property="lot" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CREATETIMESTR" property="createtimestr" jdbcType="VARCHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SEGMENT1" property="segment1" jdbcType="VARCHAR" />
+    <result column="SEGMENT2" property="segment2" jdbcType="VARCHAR" />
+    <result column="SEGMENT3" property="segment3" jdbcType="VARCHAR" />
+    <result column="SEGMENT4" property="segment4" jdbcType="VARCHAR" />
+    <result column="SEGMENT5" property="segment5" jdbcType="VARCHAR" />
+    <result column="SCAN_TOTAL" property="scanTotal" jdbcType="NUMERIC" />
+    <result column="GOOD_COUNT" property="goodCount" jdbcType="NUMERIC" />
+    <result column="DEFECTIVE_COUNT" property="defectiveCount" jdbcType="NUMERIC" />
+    <result column="PASS_RATE" property="passRate" jdbcType="NUMERIC" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="TOTAL_TIME" property="totalTime" jdbcType="NUMERIC" />
+    <result column="AVG_TIME_PER_PIECE" property="avgTimePerPiece" jdbcType="NUMERIC" />
+    <result column="SIDE_AB_DEFECT_COUNT" property="sideAbDefectCount" jdbcType="NUMERIC" />
+    <result column="DEVICE_EXCEPTION_INFO" property="deviceExceptionInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PRODUCTNUMBER, QRCODE, LOT, CREATETIME, CREATETIMESTR, CREATER, STATUS, SEGMENT1, 
+    SEGMENT2, SEGMENT3, SEGMENT4, SEGMENT5, SCAN_TOTAL, GOOD_COUNT, DEFECTIVE_COUNT, 
+    PASS_RATE, START_TIME, END_TIME, TOTAL_TIME, AVG_TIME_PER_PIECE, SIDE_AB_DEFECT_COUNT, 
+    DEVICE_EXCEPTION_INFO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Mes_aviExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from MES_AVI
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.jcd.model.Mes_avi" >
+    insert into MES_AVI (ID, PRODUCTNUMBER, QRCODE, 
+      LOT, CREATETIME, CREATETIMESTR, 
+      CREATER, STATUS, SEGMENT1, 
+      SEGMENT2, SEGMENT3, SEGMENT4, 
+      SEGMENT5, SCAN_TOTAL, GOOD_COUNT, 
+      DEFECTIVE_COUNT, PASS_RATE, START_TIME, 
+      END_TIME, TOTAL_TIME, AVG_TIME_PER_PIECE, 
+      SIDE_AB_DEFECT_COUNT, DEVICE_EXCEPTION_INFO)
+    values (#{id,jdbcType=VARCHAR}, #{productnumber,jdbcType=VARCHAR}, #{qrcode,jdbcType=VARCHAR}, 
+      #{lot,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{createtimestr,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{segment1,jdbcType=VARCHAR}, 
+      #{segment2,jdbcType=VARCHAR}, #{segment3,jdbcType=VARCHAR}, #{segment4,jdbcType=VARCHAR}, 
+      #{segment5,jdbcType=VARCHAR}, #{scanTotal,jdbcType=NUMERIC}, #{goodCount,jdbcType=NUMERIC}, 
+      #{defectiveCount,jdbcType=NUMERIC}, #{passRate,jdbcType=NUMERIC}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{totalTime,jdbcType=NUMERIC}, #{avgTimePerPiece,jdbcType=NUMERIC}, 
+      #{sideAbDefectCount,jdbcType=NUMERIC}, #{deviceExceptionInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Mes_avi" >
+    insert into MES_AVI
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="productnumber != null" >
+        PRODUCTNUMBER,
+      </if>
+      <if test="qrcode != null" >
+        QRCODE,
+      </if>
+      <if test="lot != null" >
+        LOT,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="createtimestr != null" >
+        CREATETIMESTR,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="segment1 != null" >
+        SEGMENT1,
+      </if>
+      <if test="segment2 != null" >
+        SEGMENT2,
+      </if>
+      <if test="segment3 != null" >
+        SEGMENT3,
+      </if>
+      <if test="segment4 != null" >
+        SEGMENT4,
+      </if>
+      <if test="segment5 != null" >
+        SEGMENT5,
+      </if>
+      <if test="scanTotal != null" >
+        SCAN_TOTAL,
+      </if>
+      <if test="goodCount != null" >
+        GOOD_COUNT,
+      </if>
+      <if test="defectiveCount != null" >
+        DEFECTIVE_COUNT,
+      </if>
+      <if test="passRate != null" >
+        PASS_RATE,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="totalTime != null" >
+        TOTAL_TIME,
+      </if>
+      <if test="avgTimePerPiece != null" >
+        AVG_TIME_PER_PIECE,
+      </if>
+      <if test="sideAbDefectCount != null" >
+        SIDE_AB_DEFECT_COUNT,
+      </if>
+      <if test="deviceExceptionInfo != null" >
+        DEVICE_EXCEPTION_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="productnumber != null" >
+        #{productnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcode != null" >
+        #{qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null" >
+        #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtimestr != null" >
+        #{createtimestr,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="segment1 != null" >
+        #{segment1,jdbcType=VARCHAR},
+      </if>
+      <if test="segment2 != null" >
+        #{segment2,jdbcType=VARCHAR},
+      </if>
+      <if test="segment3 != null" >
+        #{segment3,jdbcType=VARCHAR},
+      </if>
+      <if test="segment4 != null" >
+        #{segment4,jdbcType=VARCHAR},
+      </if>
+      <if test="segment5 != null" >
+        #{segment5,jdbcType=VARCHAR},
+      </if>
+      <if test="scanTotal != null" >
+        #{scanTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="goodCount != null" >
+        #{goodCount,jdbcType=NUMERIC},
+      </if>
+      <if test="defectiveCount != null" >
+        #{defectiveCount,jdbcType=NUMERIC},
+      </if>
+      <if test="passRate != null" >
+        #{passRate,jdbcType=NUMERIC},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=NUMERIC},
+      </if>
+      <if test="avgTimePerPiece != null" >
+        #{avgTimePerPiece,jdbcType=NUMERIC},
+      </if>
+      <if test="sideAbDefectCount != null" >
+        #{sideAbDefectCount,jdbcType=NUMERIC},
+      </if>
+      <if test="deviceExceptionInfo != null" >
+        #{deviceExceptionInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_AVI
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productnumber != null" >
+        PRODUCTNUMBER = #{record.productnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrcode != null" >
+        QRCODE = #{record.qrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lot != null" >
+        LOT = #{record.lot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtimestr != null" >
+        CREATETIMESTR = #{record.createtimestr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segment1 != null" >
+        SEGMENT1 = #{record.segment1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segment2 != null" >
+        SEGMENT2 = #{record.segment2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segment3 != null" >
+        SEGMENT3 = #{record.segment3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segment4 != null" >
+        SEGMENT4 = #{record.segment4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.segment5 != null" >
+        SEGMENT5 = #{record.segment5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scanTotal != null" >
+        SCAN_TOTAL = #{record.scanTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="record.goodCount != null" >
+        GOOD_COUNT = #{record.goodCount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.defectiveCount != null" >
+        DEFECTIVE_COUNT = #{record.defectiveCount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.passRate != null" >
+        PASS_RATE = #{record.passRate,jdbcType=NUMERIC},
+      </if>
+      <if test="record.startTime != null" >
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalTime != null" >
+        TOTAL_TIME = #{record.totalTime,jdbcType=NUMERIC},
+      </if>
+      <if test="record.avgTimePerPiece != null" >
+        AVG_TIME_PER_PIECE = #{record.avgTimePerPiece,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sideAbDefectCount != null" >
+        SIDE_AB_DEFECT_COUNT = #{record.sideAbDefectCount,jdbcType=NUMERIC},
+      </if>
+      <if test="record.deviceExceptionInfo != null" >
+        DEVICE_EXCEPTION_INFO = #{record.deviceExceptionInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_AVI
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PRODUCTNUMBER = #{record.productnumber,jdbcType=VARCHAR},
+      QRCODE = #{record.qrcode,jdbcType=VARCHAR},
+      LOT = #{record.lot,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      CREATETIMESTR = #{record.createtimestr,jdbcType=VARCHAR},
+      CREATER = #{record.creater,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      SEGMENT1 = #{record.segment1,jdbcType=VARCHAR},
+      SEGMENT2 = #{record.segment2,jdbcType=VARCHAR},
+      SEGMENT3 = #{record.segment3,jdbcType=VARCHAR},
+      SEGMENT4 = #{record.segment4,jdbcType=VARCHAR},
+      SEGMENT5 = #{record.segment5,jdbcType=VARCHAR},
+      SCAN_TOTAL = #{record.scanTotal,jdbcType=NUMERIC},
+      GOOD_COUNT = #{record.goodCount,jdbcType=NUMERIC},
+      DEFECTIVE_COUNT = #{record.defectiveCount,jdbcType=NUMERIC},
+      PASS_RATE = #{record.passRate,jdbcType=NUMERIC},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      TOTAL_TIME = #{record.totalTime,jdbcType=NUMERIC},
+      AVG_TIME_PER_PIECE = #{record.avgTimePerPiece,jdbcType=NUMERIC},
+      SIDE_AB_DEFECT_COUNT = #{record.sideAbDefectCount,jdbcType=NUMERIC},
+      DEVICE_EXCEPTION_INFO = #{record.deviceExceptionInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

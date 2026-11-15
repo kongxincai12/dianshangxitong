@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Prp_lotMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Prp_lot" >
+    <id column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="LOTNAME" property="lotname" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="CATEGORY" property="category" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRODUCTPN" property="productpn" jdbcType="VARCHAR" />
+    <result column="WORKORDERID" property="workorderid" jdbcType="VARCHAR" />
+    <result column="PROCESSID" property="processid" jdbcType="VARCHAR" />
+    <result column="MBOMID" property="mbomid" jdbcType="VARCHAR" />
+    <result column="LINEID" property="lineid" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="PRODUCTIONMODE" property="productionmode" jdbcType="VARCHAR" />
+    <result column="JOINTBOARDNUM" property="jointboardnum" jdbcType="NUMERIC" />
+    <result column="FLAPPERNUM" property="flappernum" jdbcType="NUMERIC" />
+    <result column="PROJECTNUM" property="projectnum" jdbcType="VARCHAR" />
+    <result column="HARDWAREVER" property="hardwarever" jdbcType="NUMERIC" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="INPUTQTY" property="inputqty" jdbcType="NUMERIC" />
+    <result column="OUTPUTQTY" property="outputqty" jdbcType="NUMERIC" />
+    <result column="PLANSTARTDATE" property="planstartdate" jdbcType="TIMESTAMP" />
+    <result column="PLANENDDATE" property="planenddate" jdbcType="TIMESTAMP" />
+    <result column="FIRSTINPUTDATE" property="firstinputdate" jdbcType="TIMESTAMP" />
+    <result column="LASTOUTPUTDATE" property="lastoutputdate" jdbcType="TIMESTAMP" />
+    <result column="LASTACTIVITYDATE" property="lastactivitydate" jdbcType="TIMESTAMP" />
+    <result column="RELEASESTATUS" property="releasestatus" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="CREATEDATE" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="ISDUCKBOARD" property="isduckboard" jdbcType="VARCHAR" />
+    <result column="PHONETYPE" property="phonetype" jdbcType="VARCHAR" />
+    <result column="SECTION" property="section" jdbcType="VARCHAR" />
+    <result column="PRODUCTTYPE" property="producttype" jdbcType="VARCHAR" />
+    <result column="SUBSECTION" property="subsection" jdbcType="VARCHAR" />
+    <result column="HASNEWMATERIAL" property="hasnewmaterial" jdbcType="VARCHAR" />
+    <result column="STAGE" property="stage" jdbcType="VARCHAR" />
+    <result column="DEFECTQTY" property="defectqty" jdbcType="NUMERIC" />
+    <result column="WIPQTY" property="wipqty" jdbcType="NUMERIC" />
+    <result column="PANELPCS" property="panelpcs" jdbcType="NUMERIC" />
+    <result column="WORKORDERSTARTQTY" property="workorderstartqty" jdbcType="NUMERIC" />
+    <result column="WORKORDERLOTSQTY" property="workorderlotsqty" jdbcType="NUMERIC" />
+    <result column="SCRAPQTY" property="scrapqty" jdbcType="NUMERIC" />
+    <result column="DATECODE" property="datecode" jdbcType="VARCHAR" />
+    <result column="PACKAGEQTY" property="packageqty" jdbcType="NUMERIC" />
+    <result column="ISSPLITAFTERSMT" property="issplitaftersmt" jdbcType="VARCHAR" />
+    <result column="TO_LOCATION" property="toLocation" jdbcType="VARCHAR" />
+    <result column="SHIPID" property="shipid" jdbcType="VARCHAR" />
+    <result column="OSPVENDORCODE" property="ospvendorcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LOTID, LOTNAME, TYPE, CATEGORY, DESCRIPTION, PRODUCTPN, WORKORDERID, PROCESSID, MBOMID, 
+    LINEID, STATUS, PRODUCTIONMODE, JOINTBOARDNUM, FLAPPERNUM, PROJECTNUM, HARDWAREVER, 
+    TOTALQTY, INPUTQTY, OUTPUTQTY, PLANSTARTDATE, PLANENDDATE, FIRSTINPUTDATE, LASTOUTPUTDATE, 
+    LASTACTIVITYDATE, RELEASESTATUS, USERNAME, CREATEDATE, ISDUCKBOARD, PHONETYPE, SECTION, 
+    PRODUCTTYPE, SUBSECTION, HASNEWMATERIAL, STAGE, DEFECTQTY, WIPQTY, PANELPCS, WORKORDERSTARTQTY, 
+    WORKORDERLOTSQTY, SCRAPQTY, DATECODE, PACKAGEQTY, ISSPLITAFTERSMT, TO_LOCATION, SHIPID, 
+    OSPVENDORCODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRP_LOT
+    where LOTID = #{lotid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLotname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from PRP_LOT
+    where LOTNAME = #{lotname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PRP_LOT
+    where LOTID = #{lotid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Prp_lot" >
+    insert into PRP_LOT (LOTID, LOTNAME, TYPE, 
+      CATEGORY, DESCRIPTION, PRODUCTPN, 
+      WORKORDERID, PROCESSID, MBOMID, 
+      LINEID, STATUS, PRODUCTIONMODE, 
+      JOINTBOARDNUM, FLAPPERNUM, PROJECTNUM, 
+      HARDWAREVER, TOTALQTY, INPUTQTY, 
+      OUTPUTQTY, PLANSTARTDATE, PLANENDDATE, 
+      FIRSTINPUTDATE, LASTOUTPUTDATE, LASTACTIVITYDATE, 
+      RELEASESTATUS, USERNAME, CREATEDATE, 
+      ISDUCKBOARD, PHONETYPE, SECTION, 
+      PRODUCTTYPE, SUBSECTION, HASNEWMATERIAL, 
+      STAGE, DEFECTQTY, WIPQTY, 
+      PANELPCS, WORKORDERSTARTQTY, WORKORDERLOTSQTY, 
+      SCRAPQTY, DATECODE, PACKAGEQTY, 
+      ISSPLITAFTERSMT, TO_LOCATION, SHIPID, 
+      OSPVENDORCODE)
+    values (#{lotid,jdbcType=VARCHAR}, #{lotname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{category,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{productpn,jdbcType=VARCHAR}, 
+      #{workorderid,jdbcType=VARCHAR}, #{processid,jdbcType=VARCHAR}, #{mbomid,jdbcType=VARCHAR}, 
+      #{lineid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{productionmode,jdbcType=VARCHAR}, 
+      #{jointboardnum,jdbcType=NUMERIC}, #{flappernum,jdbcType=NUMERIC}, #{projectnum,jdbcType=VARCHAR}, 
+      #{hardwarever,jdbcType=NUMERIC}, #{totalqty,jdbcType=NUMERIC}, #{inputqty,jdbcType=NUMERIC}, 
+      #{outputqty,jdbcType=NUMERIC}, #{planstartdate,jdbcType=TIMESTAMP}, #{planenddate,jdbcType=TIMESTAMP}, 
+      #{firstinputdate,jdbcType=TIMESTAMP}, #{lastoutputdate,jdbcType=TIMESTAMP}, #{lastactivitydate,jdbcType=TIMESTAMP}, 
+      #{releasestatus,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{isduckboard,jdbcType=VARCHAR}, #{phonetype,jdbcType=VARCHAR}, #{section,jdbcType=VARCHAR}, 
+      #{producttype,jdbcType=VARCHAR}, #{subsection,jdbcType=VARCHAR}, #{hasnewmaterial,jdbcType=VARCHAR}, 
+      #{stage,jdbcType=VARCHAR}, #{defectqty,jdbcType=NUMERIC}, #{wipqty,jdbcType=NUMERIC}, 
+      #{panelpcs,jdbcType=NUMERIC}, #{workorderstartqty,jdbcType=NUMERIC}, #{workorderlotsqty,jdbcType=NUMERIC}, 
+      #{scrapqty,jdbcType=NUMERIC}, #{datecode,jdbcType=VARCHAR}, #{packageqty,jdbcType=NUMERIC}, 
+      #{issplitaftersmt,jdbcType=VARCHAR}, #{toLocation,jdbcType=VARCHAR}, #{shipid,jdbcType=VARCHAR}, 
+      #{ospvendorcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Prp_lot" >
+    insert into PRP_LOT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="lotname != null" >
+        LOTNAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="category != null" >
+        CATEGORY,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN,
+      </if>
+      <if test="workorderid != null" >
+        WORKORDERID,
+      </if>
+      <if test="processid != null" >
+        PROCESSID,
+      </if>
+      <if test="mbomid != null" >
+        MBOMID,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="productionmode != null" >
+        PRODUCTIONMODE,
+      </if>
+      <if test="jointboardnum != null" >
+        JOINTBOARDNUM,
+      </if>
+      <if test="flappernum != null" >
+        FLAPPERNUM,
+      </if>
+      <if test="projectnum != null" >
+        PROJECTNUM,
+      </if>
+      <if test="hardwarever != null" >
+        HARDWAREVER,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="inputqty != null" >
+        INPUTQTY,
+      </if>
+      <if test="outputqty != null" >
+        OUTPUTQTY,
+      </if>
+      <if test="planstartdate != null" >
+        PLANSTARTDATE,
+      </if>
+      <if test="planenddate != null" >
+        PLANENDDATE,
+      </if>
+      <if test="firstinputdate != null" >
+        FIRSTINPUTDATE,
+      </if>
+      <if test="lastoutputdate != null" >
+        LASTOUTPUTDATE,
+      </if>
+      <if test="lastactivitydate != null" >
+        LASTACTIVITYDATE,
+      </if>
+      <if test="releasestatus != null" >
+        RELEASESTATUS,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE,
+      </if>
+      <if test="isduckboard != null" >
+        ISDUCKBOARD,
+      </if>
+      <if test="phonetype != null" >
+        PHONETYPE,
+      </if>
+      <if test="section != null" >
+        SECTION,
+      </if>
+      <if test="producttype != null" >
+        PRODUCTTYPE,
+      </if>
+      <if test="subsection != null" >
+        SUBSECTION,
+      </if>
+      <if test="hasnewmaterial != null" >
+        HASNEWMATERIAL,
+      </if>
+      <if test="stage != null" >
+        STAGE,
+      </if>
+      <if test="defectqty != null" >
+        DEFECTQTY,
+      </if>
+      <if test="wipqty != null" >
+        WIPQTY,
+      </if>
+      <if test="panelpcs != null" >
+        PANELPCS,
+      </if>
+      <if test="workorderstartqty != null" >
+        WORKORDERSTARTQTY,
+      </if>
+      <if test="workorderlotsqty != null" >
+        WORKORDERLOTSQTY,
+      </if>
+      <if test="scrapqty != null" >
+        SCRAPQTY,
+      </if>
+      <if test="datecode != null" >
+        DATECODE,
+      </if>
+      <if test="packageqty != null" >
+        PACKAGEQTY,
+      </if>
+      <if test="issplitaftersmt != null" >
+        ISSPLITAFTERSMT,
+      </if>
+      <if test="toLocation != null" >
+        TO_LOCATION,
+      </if>
+      <if test="shipid != null" >
+        SHIPID,
+      </if>
+      <if test="ospvendorcode != null" >
+        OSPVENDORCODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotname != null" >
+        #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderid != null" >
+        #{workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="processid != null" >
+        #{processid,jdbcType=VARCHAR},
+      </if>
+      <if test="mbomid != null" >
+        #{mbomid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="productionmode != null" >
+        #{productionmode,jdbcType=VARCHAR},
+      </if>
+      <if test="jointboardnum != null" >
+        #{jointboardnum,jdbcType=NUMERIC},
+      </if>
+      <if test="flappernum != null" >
+        #{flappernum,jdbcType=NUMERIC},
+      </if>
+      <if test="projectnum != null" >
+        #{projectnum,jdbcType=VARCHAR},
+      </if>
+      <if test="hardwarever != null" >
+        #{hardwarever,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="inputqty != null" >
+        #{inputqty,jdbcType=NUMERIC},
+      </if>
+      <if test="outputqty != null" >
+        #{outputqty,jdbcType=NUMERIC},
+      </if>
+      <if test="planstartdate != null" >
+        #{planstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planenddate != null" >
+        #{planenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstinputdate != null" >
+        #{firstinputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastoutputdate != null" >
+        #{lastoutputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastactivitydate != null" >
+        #{lastactivitydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releasestatus != null" >
+        #{releasestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isduckboard != null" >
+        #{isduckboard,jdbcType=VARCHAR},
+      </if>
+      <if test="phonetype != null" >
+        #{phonetype,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="producttype != null" >
+        #{producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="subsection != null" >
+        #{subsection,jdbcType=VARCHAR},
+      </if>
+      <if test="hasnewmaterial != null" >
+        #{hasnewmaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="defectqty != null" >
+        #{defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="wipqty != null" >
+        #{wipqty,jdbcType=NUMERIC},
+      </if>
+      <if test="panelpcs != null" >
+        #{panelpcs,jdbcType=NUMERIC},
+      </if>
+      <if test="workorderstartqty != null" >
+        #{workorderstartqty,jdbcType=NUMERIC},
+      </if>
+      <if test="workorderlotsqty != null" >
+        #{workorderlotsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="scrapqty != null" >
+        #{scrapqty,jdbcType=NUMERIC},
+      </if>
+      <if test="datecode != null" >
+        #{datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="packageqty != null" >
+        #{packageqty,jdbcType=NUMERIC},
+      </if>
+      <if test="issplitaftersmt != null" >
+        #{issplitaftersmt,jdbcType=VARCHAR},
+      </if>
+      <if test="toLocation != null" >
+        #{toLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="ospvendorcode != null" >
+        #{ospvendorcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Prp_lot" >
+    update PRP_LOT
+    <set >
+      <if test="lotname != null" >
+        LOTNAME = #{lotname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        CATEGORY = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderid != null" >
+        WORKORDERID = #{workorderid,jdbcType=VARCHAR},
+      </if>
+      <if test="processid != null" >
+        PROCESSID = #{processid,jdbcType=VARCHAR},
+      </if>
+      <if test="mbomid != null" >
+        MBOMID = #{mbomid,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        LINEID = #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="productionmode != null" >
+        PRODUCTIONMODE = #{productionmode,jdbcType=VARCHAR},
+      </if>
+      <if test="jointboardnum != null" >
+        JOINTBOARDNUM = #{jointboardnum,jdbcType=NUMERIC},
+      </if>
+      <if test="flappernum != null" >
+        FLAPPERNUM = #{flappernum,jdbcType=NUMERIC},
+      </if>
+      <if test="projectnum != null" >
+        PROJECTNUM = #{projectnum,jdbcType=VARCHAR},
+      </if>
+      <if test="hardwarever != null" >
+        HARDWAREVER = #{hardwarever,jdbcType=NUMERIC},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="inputqty != null" >
+        INPUTQTY = #{inputqty,jdbcType=NUMERIC},
+      </if>
+      <if test="outputqty != null" >
+        OUTPUTQTY = #{outputqty,jdbcType=NUMERIC},
+      </if>
+      <if test="planstartdate != null" >
+        PLANSTARTDATE = #{planstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planenddate != null" >
+        PLANENDDATE = #{planenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstinputdate != null" >
+        FIRSTINPUTDATE = #{firstinputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastoutputdate != null" >
+        LASTOUTPUTDATE = #{lastoutputdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastactivitydate != null" >
+        LASTACTIVITYDATE = #{lastactivitydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releasestatus != null" >
+        RELEASESTATUS = #{releasestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isduckboard != null" >
+        ISDUCKBOARD = #{isduckboard,jdbcType=VARCHAR},
+      </if>
+      <if test="phonetype != null" >
+        PHONETYPE = #{phonetype,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        SECTION = #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="producttype != null" >
+        PRODUCTTYPE = #{producttype,jdbcType=VARCHAR},
+      </if>
+      <if test="subsection != null" >
+        SUBSECTION = #{subsection,jdbcType=VARCHAR},
+      </if>
+      <if test="hasnewmaterial != null" >
+        HASNEWMATERIAL = #{hasnewmaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        STAGE = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="defectqty != null" >
+        DEFECTQTY = #{defectqty,jdbcType=NUMERIC},
+      </if>
+      <if test="wipqty != null" >
+        WIPQTY = #{wipqty,jdbcType=NUMERIC},
+      </if>
+      <if test="panelpcs != null" >
+        PANELPCS = #{panelpcs,jdbcType=NUMERIC},
+      </if>
+      <if test="workorderstartqty != null" >
+        WORKORDERSTARTQTY = #{workorderstartqty,jdbcType=NUMERIC},
+      </if>
+      <if test="workorderlotsqty != null" >
+        WORKORDERLOTSQTY = #{workorderlotsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="scrapqty != null" >
+        SCRAPQTY = #{scrapqty,jdbcType=NUMERIC},
+      </if>
+      <if test="datecode != null" >
+        DATECODE = #{datecode,jdbcType=VARCHAR},
+      </if>
+      <if test="packageqty != null" >
+        PACKAGEQTY = #{packageqty,jdbcType=NUMERIC},
+      </if>
+      <if test="issplitaftersmt != null" >
+        ISSPLITAFTERSMT = #{issplitaftersmt,jdbcType=VARCHAR},
+      </if>
+      <if test="toLocation != null" >
+        TO_LOCATION = #{toLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="shipid != null" >
+        SHIPID = #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="ospvendorcode != null" >
+        OSPVENDORCODE = #{ospvendorcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOTID = #{lotid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Prp_lot" >
+    update PRP_LOT
+    set LOTNAME = #{lotname,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CATEGORY = #{category,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      WORKORDERID = #{workorderid,jdbcType=VARCHAR},
+      PROCESSID = #{processid,jdbcType=VARCHAR},
+      MBOMID = #{mbomid,jdbcType=VARCHAR},
+      LINEID = #{lineid,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      PRODUCTIONMODE = #{productionmode,jdbcType=VARCHAR},
+      JOINTBOARDNUM = #{jointboardnum,jdbcType=NUMERIC},
+      FLAPPERNUM = #{flappernum,jdbcType=NUMERIC},
+      PROJECTNUM = #{projectnum,jdbcType=VARCHAR},
+      HARDWAREVER = #{hardwarever,jdbcType=NUMERIC},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      INPUTQTY = #{inputqty,jdbcType=NUMERIC},
+      OUTPUTQTY = #{outputqty,jdbcType=NUMERIC},
+      PLANSTARTDATE = #{planstartdate,jdbcType=TIMESTAMP},
+      PLANENDDATE = #{planenddate,jdbcType=TIMESTAMP},
+      FIRSTINPUTDATE = #{firstinputdate,jdbcType=TIMESTAMP},
+      LASTOUTPUTDATE = #{lastoutputdate,jdbcType=TIMESTAMP},
+      LASTACTIVITYDATE = #{lastactivitydate,jdbcType=TIMESTAMP},
+      RELEASESTATUS = #{releasestatus,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      ISDUCKBOARD = #{isduckboard,jdbcType=VARCHAR},
+      PHONETYPE = #{phonetype,jdbcType=VARCHAR},
+      SECTION = #{section,jdbcType=VARCHAR},
+      PRODUCTTYPE = #{producttype,jdbcType=VARCHAR},
+      SUBSECTION = #{subsection,jdbcType=VARCHAR},
+      HASNEWMATERIAL = #{hasnewmaterial,jdbcType=VARCHAR},
+      STAGE = #{stage,jdbcType=VARCHAR},
+      DEFECTQTY = #{defectqty,jdbcType=NUMERIC},
+      WIPQTY = #{wipqty,jdbcType=NUMERIC},
+      PANELPCS = #{panelpcs,jdbcType=NUMERIC},
+      WORKORDERSTARTQTY = #{workorderstartqty,jdbcType=NUMERIC},
+      WORKORDERLOTSQTY = #{workorderlotsqty,jdbcType=NUMERIC},
+      SCRAPQTY = #{scrapqty,jdbcType=NUMERIC},
+      DATECODE = #{datecode,jdbcType=VARCHAR},
+      PACKAGEQTY = #{packageqty,jdbcType=NUMERIC},
+      ISSPLITAFTERSMT = #{issplitaftersmt,jdbcType=VARCHAR},
+      TO_LOCATION = #{toLocation,jdbcType=VARCHAR},
+      SHIPID = #{shipid,jdbcType=VARCHAR},
+      OSPVENDORCODE = #{ospvendorcode,jdbcType=VARCHAR}
+    where LOTID = #{lotid,jdbcType=VARCHAR}
+  </update>
+</mapper>

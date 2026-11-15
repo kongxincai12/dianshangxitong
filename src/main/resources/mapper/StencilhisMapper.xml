@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.StencilhisMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Stencilhis" >
+    <id column="SHID" property="shid" jdbcType="VARCHAR" />
+    <result column="USEDID" property="usedid" jdbcType="VARCHAR" />
+    <result column="UPNNAME" property="upnname" jdbcType="VARCHAR" />
+    <result column="LINE" property="line" jdbcType="VARCHAR" />
+    <result column="TASKNAME" property="taskname" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="QTY" property="qty" jdbcType="NUMERIC" />
+    <result column="OBJ01" property="obj01" jdbcType="VARCHAR" />
+    <result column="OBJ02" property="obj02" jdbcType="VARCHAR" />
+    <result column="OBJ03" property="obj03" jdbcType="VARCHAR" />
+    <result column="OBJ04" property="obj04" jdbcType="VARCHAR" />
+    <result column="OBJ05" property="obj05" jdbcType="VARCHAR" />
+    <result column="OBJ06" property="obj06" jdbcType="VARCHAR" />
+    <result column="OBJ07" property="obj07" jdbcType="VARCHAR" />
+    <result column="OBJ08" property="obj08" jdbcType="VARCHAR" />
+    <result column="OBJ09" property="obj09" jdbcType="VARCHAR" />
+    <result column="OBJ10" property="obj10" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SHID, USEDID, UPNNAME, LINE, TASKNAME, USERNAME, DATETIME, QTY, OBJ01, OBJ02, OBJ03, 
+    OBJ04, OBJ05, OBJ06, OBJ07, OBJ08, OBJ09, OBJ10
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.StencilhisExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from STENCILHIS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from STENCILHIS
+    where SHID = #{shid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUsedid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from STENCILHIS
+    where USEDID = #{usedid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from STENCILHIS
+    where SHID = #{shid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Stencilhis" >
+    insert into STENCILHIS (SHID, USEDID, UPNNAME, 
+      LINE, TASKNAME, USERNAME, 
+      DATETIME, QTY, OBJ01, 
+      OBJ02, OBJ03, OBJ04, 
+      OBJ05, OBJ06, OBJ07, 
+      OBJ08, OBJ09, OBJ10
+      )
+    values (#{shid,jdbcType=VARCHAR}, #{usedid,jdbcType=VARCHAR}, #{upnname,jdbcType=VARCHAR}, 
+      #{line,jdbcType=VARCHAR}, #{taskname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{qty,jdbcType=NUMERIC}, #{obj01,jdbcType=VARCHAR}, 
+      #{obj02,jdbcType=VARCHAR}, #{obj03,jdbcType=VARCHAR}, #{obj04,jdbcType=VARCHAR}, 
+      #{obj05,jdbcType=VARCHAR}, #{obj06,jdbcType=VARCHAR}, #{obj07,jdbcType=VARCHAR}, 
+      #{obj08,jdbcType=VARCHAR}, #{obj09,jdbcType=VARCHAR}, #{obj10,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Stencilhis" >
+    insert into STENCILHIS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shid != null" >
+        SHID,
+      </if>
+      <if test="usedid != null" >
+        USEDID,
+      </if>
+      <if test="upnname != null" >
+        UPNNAME,
+      </if>
+      <if test="line != null" >
+        LINE,
+      </if>
+      <if test="taskname != null" >
+        TASKNAME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="qty != null" >
+        QTY,
+      </if>
+      <if test="obj01 != null" >
+        OBJ01,
+      </if>
+      <if test="obj02 != null" >
+        OBJ02,
+      </if>
+      <if test="obj03 != null" >
+        OBJ03,
+      </if>
+      <if test="obj04 != null" >
+        OBJ04,
+      </if>
+      <if test="obj05 != null" >
+        OBJ05,
+      </if>
+      <if test="obj06 != null" >
+        OBJ06,
+      </if>
+      <if test="obj07 != null" >
+        OBJ07,
+      </if>
+      <if test="obj08 != null" >
+        OBJ08,
+      </if>
+      <if test="obj09 != null" >
+        OBJ09,
+      </if>
+      <if test="obj10 != null" >
+        OBJ10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shid != null" >
+        #{shid,jdbcType=VARCHAR},
+      </if>
+      <if test="usedid != null" >
+        #{usedid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="line != null" >
+        #{line,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null" >
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="obj01 != null" >
+        #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        #{obj10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update STENCILHIS
+    <set >
+      <if test="record.shid != null" >
+        SHID = #{record.shid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usedid != null" >
+        USEDID = #{record.usedid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upnname != null" >
+        UPNNAME = #{record.upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.line != null" >
+        LINE = #{record.line,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskname != null" >
+        TASKNAME = #{record.taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.qty != null" >
+        QTY = #{record.qty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.obj01 != null" >
+        OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj02 != null" >
+        OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj03 != null" >
+        OBJ03 = #{record.obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj04 != null" >
+        OBJ04 = #{record.obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj05 != null" >
+        OBJ05 = #{record.obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj06 != null" >
+        OBJ06 = #{record.obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj07 != null" >
+        OBJ07 = #{record.obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj08 != null" >
+        OBJ08 = #{record.obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj09 != null" >
+        OBJ09 = #{record.obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj10 != null" >
+        OBJ10 = #{record.obj10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update STENCILHIS
+    set SHID = #{record.shid,jdbcType=VARCHAR},
+      USEDID = #{record.usedid,jdbcType=VARCHAR},
+      UPNNAME = #{record.upnname,jdbcType=VARCHAR},
+      LINE = #{record.line,jdbcType=VARCHAR},
+      TASKNAME = #{record.taskname,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      QTY = #{record.qty,jdbcType=NUMERIC},
+      OBJ01 = #{record.obj01,jdbcType=VARCHAR},
+      OBJ02 = #{record.obj02,jdbcType=VARCHAR},
+      OBJ03 = #{record.obj03,jdbcType=VARCHAR},
+      OBJ04 = #{record.obj04,jdbcType=VARCHAR},
+      OBJ05 = #{record.obj05,jdbcType=VARCHAR},
+      OBJ06 = #{record.obj06,jdbcType=VARCHAR},
+      OBJ07 = #{record.obj07,jdbcType=VARCHAR},
+      OBJ08 = #{record.obj08,jdbcType=VARCHAR},
+      OBJ09 = #{record.obj09,jdbcType=VARCHAR},
+      OBJ10 = #{record.obj10,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Stencilhis" >
+    update STENCILHIS
+    <set >
+      <if test="usedid != null" >
+        USEDID = #{usedid,jdbcType=VARCHAR},
+      </if>
+      <if test="upnname != null" >
+        UPNNAME = #{upnname,jdbcType=VARCHAR},
+      </if>
+      <if test="line != null" >
+        LINE = #{line,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null" >
+        TASKNAME = #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        OBJ03 = #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        OBJ04 = #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        OBJ05 = #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        OBJ06 = #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        OBJ07 = #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        OBJ08 = #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        OBJ09 = #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        OBJ10 = #{obj10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SHID = #{shid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Stencilhis" >
+    update STENCILHIS
+    set USEDID = #{usedid,jdbcType=VARCHAR},
+      UPNNAME = #{upnname,jdbcType=VARCHAR},
+      LINE = #{line,jdbcType=VARCHAR},
+      TASKNAME = #{taskname,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      QTY = #{qty,jdbcType=NUMERIC},
+      OBJ01 = #{obj01,jdbcType=VARCHAR},
+      OBJ02 = #{obj02,jdbcType=VARCHAR},
+      OBJ03 = #{obj03,jdbcType=VARCHAR},
+      OBJ04 = #{obj04,jdbcType=VARCHAR},
+      OBJ05 = #{obj05,jdbcType=VARCHAR},
+      OBJ06 = #{obj06,jdbcType=VARCHAR},
+      OBJ07 = #{obj07,jdbcType=VARCHAR},
+      OBJ08 = #{obj08,jdbcType=VARCHAR},
+      OBJ09 = #{obj09,jdbcType=VARCHAR},
+      OBJ10 = #{obj10,jdbcType=VARCHAR}
+    where SHID = #{shid,jdbcType=VARCHAR}
+  </update>
+</mapper>

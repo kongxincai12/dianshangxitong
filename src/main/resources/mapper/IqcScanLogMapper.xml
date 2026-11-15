@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.IqcScanLogMapper">
+
+    <!-- 插入扫码日志 -->
+    <insert id="insert" parameterType="com.jcd.entity.IqcScanLog">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT SEQ_IQC_SCAN_LOGS.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO IQC_SCAN_LOGS (
+            ID, INVOICE_DETAIL_ID, UPN, PO_NUMBER, PART_NUMBER,
+            SCAN_QTY, VENDOR_LOT, DATE_CODE, SCAN_BY, SCAN_TIME
+        ) VALUES (
+            #{id}, #{invoiceDetailId}, #{upn}, #{poNumber}, #{partNumber},
+            #{scanQty}, #{vendorLot}, #{dateCode}, #{scanBy}, SYSDATE
+        )
+    </insert>
+
+    <!-- 检查UPN是否存在 -->
+    <select id="checkUpnExists" resultType="int">
+        SELECT COUNT(1) FROM UPN WHERE UPNNAME = #{upn}
+    </select>
+
+</mapper>

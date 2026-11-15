@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaAuditLogMapper">
+
+  <resultMap id="LogMap" type="com.jcd.model.qafa.QaFaAuditLog">
+    <id     column="ID"            property="id"/>
+    <result column="RECORD_ID"     property="recordId"/>
+    <result column="FROM_STATUS"   property="fromStatus"/>
+    <result column="TO_STATUS"     property="toStatus"/>
+    <result column="ACTION"        property="action"/>
+    <result column="OPERATOR_ID"   property="operatorId"/>
+    <result column="OPERATOR_NAME" property="operatorName"/>
+    <result column="COMMENT_TEXT"  property="commentText"/>
+    <result column="OP_TIME"       property="opTime"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jcd.model.qafa.QaFaAuditLog">
+    insert into QA_FA_AUDIT_LOG (
+      ID, RECORD_ID, FROM_STATUS, TO_STATUS, ACTION,
+      OPERATOR_ID, OPERATOR_NAME, COMMENT_TEXT, OP_TIME
+    ) values (
+      #{id}, #{recordId}, #{fromStatus}, #{toStatus}, #{action},
+      #{operatorId}, #{operatorName}, #{commentText}, #{opTime}
+    )
+  </insert>
+
+  <select id="selectByRecordId" resultMap="LogMap">
+    select L.ID, L.RECORD_ID, L.FROM_STATUS, L.TO_STATUS, L.ACTION,
+           L.OPERATOR_ID,
+           NVL(U.FULLNAME, L.OPERATOR_NAME) as OPERATOR_NAME,
+           L.COMMENT_TEXT, L.OP_TIME
+    from QA_FA_AUDIT_LOG L
+    left join USERPROFILE U on U.USERNAME = L.OPERATOR_ID
+    where L.RECORD_ID = #{recordId}
+    order by L.OP_TIME asc
+  </select>
+
+</mapper>

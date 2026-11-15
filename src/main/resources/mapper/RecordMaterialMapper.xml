@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.RecordMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.RecordMaterial" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="RECORD_ID" property="recordId" jdbcType="VARCHAR" />
+    <result column="MATERIAL_CODE" property="materialCode" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <insert id="batchInsertMaterials">
+        INSERT INTO MES_RECORD_MATERIAL (id, record_id, material_code)
+        <foreach collection="materials" item="item" separator=" UNION ALL ">
+            SELECT #{item.id}, #{item.recordId}, #{item.materialCode} FROM DUAL
+        </foreach>
+    </insert>
+
+    <insert id="batchInsertParameters">
+        INSERT INTO MES_RECORD_PARAMETER (id, record_id, param_key, param_value)
+        <foreach collection="parameters" item="item" separator=" UNION ALL ">
+            SELECT #{item.id}, #{item.recordId}, #{item.paramKey}, #{item.paramValue} FROM DUAL
+        </foreach>
+    </insert>
+
+    <select id="findById" resultType="com.jcd.model.ProductionRecord">
+        SELECT * FROM MES_PRODUCTION_RECORD WHERE id = #{id}
+    </select>
+
+    <update id="updateProductionRecord">
+        UPDATE MES_PRODUCTION_RECORD
+        SET
+            pnl_qty = #{pnlQty},
+            pcs_qty = #{pcsQty},
+            end_time = #{endTime},
+            status = #{status},
+            update_by = #{updateBy},
+            update_time = #{updateTime},
+            remark = #{remark}
+        WHERE
+            id = #{id} AND status = 'INPROGRESS'
+    </update>
+
+
+    <!-- 【新增】根据 recordId 删除物料 -->
+    <delete id="deleteByRecordId">
+        DELETE FROM MES_RECORD_MATERIAL WHERE record_id = #{recordId}
+    </delete>
+
+    <!-- 【新增】批量插入物料 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO MES_RECORD_MATERIAL (id, record_id, material_code)
+        <foreach collection="list" item="item" separator=" UNION ALL ">
+            SELECT #{item.id}, #{item.recordId}, #{item.materialCode} FROM DUAL
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="com.jcd.model.RecordMaterial">
+        INSERT INTO MES_RECORD_MATERIAL (id, record_id, material_code)
+        VALUES (#{id}, #{recordId}, #{materialCode})
+    </insert>
+
+    <!-- 新增：根据记录ID和物料编码删除特定物料 -->
+    <delete id="deleteByRecordIdAndMaterialCode">
+        DELETE FROM MES_RECORD_MATERIAL
+        WHERE record_id = #{recordId} AND material_code = #{materialCode}
+    </delete>
+</mapper>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.MesInspRecordsMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.MesInspRecords" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOT_CODE" property="lotCode" jdbcType="VARCHAR" />
+    <result column="EQUIPMENT_CODE" property="equipmentCode" jdbcType="VARCHAR" />
+    <result column="INSPECTOR_ID" property="inspectorId" jdbcType="VARCHAR" />
+    <result column="SITE" property="site" jdbcType="VARCHAR" />
+    <result column="TOTAL_QTY" property="totalQty" jdbcType="NUMERIC" />
+    <result column="SAMPLE_QTY" property="sampleQty" jdbcType="NUMERIC" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="INSPECTION_TIME" property="inspectionTime" jdbcType="TIMESTAMP" />
+    <result column="REJECTION_REASON" property="rejectionReason" jdbcType="VARCHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, LOT_CODE, EQUIPMENT_CODE, INSPECTOR_ID, SITE, TOTAL_QTY, SAMPLE_QTY, STATUS, 
+    INSPECTION_TIME, REJECTION_REASON, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.MesInspRecordsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from MES_INSP_RECORDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MES_INSP_RECORDS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MES_INSP_RECORDS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcd.model.MesInspRecordsExample" >
+    delete from MES_INSP_RECORDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.MesInspRecords" >
+    insert into MES_INSP_RECORDS (ID, LOT_CODE, EQUIPMENT_CODE, 
+      INSPECTOR_ID, SITE, TOTAL_QTY, 
+      SAMPLE_QTY, STATUS, INSPECTION_TIME, 
+      REJECTION_REASON, CREATE_BY, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{lotCode,jdbcType=VARCHAR}, #{equipmentCode,jdbcType=VARCHAR}, 
+      #{inspectorId,jdbcType=VARCHAR}, #{site,jdbcType=VARCHAR}, #{totalQty,jdbcType=NUMERIC}, 
+      #{sampleQty,jdbcType=NUMERIC}, #{status,jdbcType=VARCHAR}, #{inspectionTime,jdbcType=TIMESTAMP}, 
+      #{rejectionReason,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.MesInspRecords" >
+    insert into MES_INSP_RECORDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="lotCode != null" >
+        LOT_CODE,
+      </if>
+      <if test="equipmentCode != null" >
+        EQUIPMENT_CODE,
+      </if>
+      <if test="inspectorId != null" >
+        INSPECTOR_ID,
+      </if>
+      <if test="site != null" >
+        SITE,
+      </if>
+      <if test="totalQty != null" >
+        TOTAL_QTY,
+      </if>
+      <if test="sampleQty != null" >
+        SAMPLE_QTY,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="inspectionTime != null" >
+        INSPECTION_TIME,
+      </if>
+      <if test="rejectionReason != null" >
+        REJECTION_REASON,
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lotCode != null" >
+        #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentCode != null" >
+        #{equipmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectorId != null" >
+        #{inspectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null" >
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQty != null" >
+        #{totalQty,jdbcType=NUMERIC},
+      </if>
+      <if test="sampleQty != null" >
+        #{sampleQty,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionTime != null" >
+        #{inspectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rejectionReason != null" >
+        #{rejectionReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcd.model.MesInspRecordsExample" resultType="java.lang.Integer" >
+    select count(*) from MES_INSP_RECORDS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update MES_INSP_RECORDS
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lotCode != null" >
+        LOT_CODE = #{record.lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentCode != null" >
+        EQUIPMENT_CODE = #{record.equipmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectorId != null" >
+        INSPECTOR_ID = #{record.inspectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.site != null" >
+        SITE = #{record.site,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalQty != null" >
+        TOTAL_QTY = #{record.totalQty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sampleQty != null" >
+        SAMPLE_QTY = #{record.sampleQty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectionTime != null" >
+        INSPECTION_TIME = #{record.inspectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rejectionReason != null" >
+        REJECTION_REASON = #{record.rejectionReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null" >
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null" >
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update MES_INSP_RECORDS
+    set ID = #{record.id,jdbcType=VARCHAR},
+      LOT_CODE = #{record.lotCode,jdbcType=VARCHAR},
+      EQUIPMENT_CODE = #{record.equipmentCode,jdbcType=VARCHAR},
+      INSPECTOR_ID = #{record.inspectorId,jdbcType=VARCHAR},
+      SITE = #{record.site,jdbcType=VARCHAR},
+      TOTAL_QTY = #{record.totalQty,jdbcType=NUMERIC},
+      SAMPLE_QTY = #{record.sampleQty,jdbcType=NUMERIC},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      INSPECTION_TIME = #{record.inspectionTime,jdbcType=TIMESTAMP},
+      REJECTION_REASON = #{record.rejectionReason,jdbcType=VARCHAR},
+      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.MesInspRecords" >
+    update MES_INSP_RECORDS
+    <set >
+      <if test="lotCode != null" >
+        LOT_CODE = #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentCode != null" >
+        EQUIPMENT_CODE = #{equipmentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectorId != null" >
+        INSPECTOR_ID = #{inspectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null" >
+        SITE = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQty != null" >
+        TOTAL_QTY = #{totalQty,jdbcType=NUMERIC},
+      </if>
+      <if test="sampleQty != null" >
+        SAMPLE_QTY = #{sampleQty,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionTime != null" >
+        INSPECTION_TIME = #{inspectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rejectionReason != null" >
+        REJECTION_REASON = #{rejectionReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.MesInspRecords" >
+    update MES_INSP_RECORDS
+    set LOT_CODE = #{lotCode,jdbcType=VARCHAR},
+      EQUIPMENT_CODE = #{equipmentCode,jdbcType=VARCHAR},
+      INSPECTOR_ID = #{inspectorId,jdbcType=VARCHAR},
+      SITE = #{site,jdbcType=VARCHAR},
+      TOTAL_QTY = #{totalQty,jdbcType=NUMERIC},
+      SAMPLE_QTY = #{sampleQty,jdbcType=NUMERIC},
+      STATUS = #{status,jdbcType=VARCHAR},
+      INSPECTION_TIME = #{inspectionTime,jdbcType=TIMESTAMP},
+      REJECTION_REASON = #{rejectionReason,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

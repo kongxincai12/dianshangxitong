@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.StepMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Step" >
+    <id column="STEPID" property="stepid" jdbcType="VARCHAR" />
+    <result column="STEPNAME" property="stepname" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STEPTYPE" property="steptype" jdbcType="VARCHAR" />
+    <result column="RESOURCETYPE" property="resourcetype" jdbcType="VARCHAR" />
+    <result column="RESOURCEID" property="resourceid" jdbcType="VARCHAR" />
+    <result column="CATEGORYID" property="categoryid" jdbcType="VARCHAR" />
+    <result column="SECTIONNAME" property="sectionname" jdbcType="VARCHAR" />
+    <result column="STEPCATEGORY" property="stepcategory" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="ICONURL" property="iconurl" jdbcType="VARCHAR" />
+    <result column="EDCPLANID" property="edcplanid" jdbcType="VARCHAR" />
+    <result column="BOARDSIDE" property="boardside" jdbcType="VARCHAR" />
+    <result column="OBJ1" property="obj1" jdbcType="VARCHAR" />
+    <result column="OBJ2" property="obj2" jdbcType="VARCHAR" />
+    <result column="ISERPSTEP" property="iserpstep" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jcd.model.Step" extends="BaseResultMap" >
+    <result column="PICTURE" property="picture" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STEPID, STEPNAME, DESCRIPTION, STEPTYPE, RESOURCETYPE, RESOURCEID, CATEGORYID, SECTIONNAME, 
+    STEPCATEGORY, USERNAME, DATETIME, ICONURL, EDCPLANID, BOARDSIDE, OBJ1, OBJ2, ISERPSTEP
+  </sql>
+  <sql id="Blob_Column_List" >
+    PICTURE
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jcd.model.StepExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from STEP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.StepExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from STEP
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    where STEPID = #{stepid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStepname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  select
+  <include refid="Base_Column_List" /> from step
+  where STEPNAME = #{stepname,jdbcType=VARCHAR}
+</select>
+
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT <include refid="Base_Column_List" />
+    FROM STEP A
+ INNER JOIN UF_LOADSTEPPASSTIME B
+    ON A.STEPNAME = B.STEP
+ WHERE SECTIONNAME IN
+       (SELECT REGEXP_SUBSTR((SELECT t2.LINENAME
+                               FROM USERPROFILE t2
+                              WHERE t2.USERNAME = #{username,jdbcType=VARCHAR}),
+                             '[^,]+',
+                             1,
+                             LEVEL) LINENAME
+          FROM DUAL
+        CONNECT BY REGEXP_SUBSTR((SELECT t2.LINENAME
+                                   FROM USERPROFILE t2
+                                  WHERE t2.USERNAME = #{username,jdbcType=VARCHAR}),
+                                 '[^,]+',
+                                 1,
+                                 LEVEL) IS NOT NULL)
+
+  </select>
+  <select id="selectByUsernameAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT <include refid="Base_Column_List" />
+    FROM STEP A
+    INNER JOIN UF_LOADSTEPPASSTIME B
+    ON A.STEPNAME = B.STEP
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from STEP
+    where STEPID = #{stepid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Step" >
+    insert into STEP (STEPID, STEPNAME, DESCRIPTION, 
+      STEPTYPE, RESOURCETYPE, RESOURCEID, 
+      CATEGORYID, SECTIONNAME, STEPCATEGORY, 
+      USERNAME, DATETIME, ICONURL, 
+      EDCPLANID, BOARDSIDE, OBJ1, 
+      OBJ2, ISERPSTEP, PICTURE
+      )
+    values (#{stepid,jdbcType=VARCHAR}, #{stepname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{steptype,jdbcType=VARCHAR}, #{resourcetype,jdbcType=VARCHAR}, #{resourceid,jdbcType=VARCHAR}, 
+      #{categoryid,jdbcType=VARCHAR}, #{sectionname,jdbcType=VARCHAR}, #{stepcategory,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}, #{iconurl,jdbcType=VARCHAR}, 
+      #{edcplanid,jdbcType=VARCHAR}, #{boardside,jdbcType=VARCHAR}, #{obj1,jdbcType=VARCHAR}, 
+      #{obj2,jdbcType=VARCHAR}, #{iserpstep,jdbcType=VARCHAR}, #{picture,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Step" >
+    insert into STEP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stepid != null" >
+        STEPID,
+      </if>
+      <if test="stepname != null" >
+        STEPNAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="steptype != null" >
+        STEPTYPE,
+      </if>
+      <if test="resourcetype != null" >
+        RESOURCETYPE,
+      </if>
+      <if test="resourceid != null" >
+        RESOURCEID,
+      </if>
+      <if test="categoryid != null" >
+        CATEGORYID,
+      </if>
+      <if test="sectionname != null" >
+        SECTIONNAME,
+      </if>
+      <if test="stepcategory != null" >
+        STEPCATEGORY,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="iconurl != null" >
+        ICONURL,
+      </if>
+      <if test="edcplanid != null" >
+        EDCPLANID,
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE,
+      </if>
+      <if test="obj1 != null" >
+        OBJ1,
+      </if>
+      <if test="obj2 != null" >
+        OBJ2,
+      </if>
+      <if test="iserpstep != null" >
+        ISERPSTEP,
+      </if>
+      <if test="picture != null" >
+        PICTURE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stepid != null" >
+        #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stepname != null" >
+        #{stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="steptype != null" >
+        #{steptype,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcetype != null" >
+        #{resourcetype,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceid != null" >
+        #{resourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionname != null" >
+        #{sectionname,jdbcType=VARCHAR},
+      </if>
+      <if test="stepcategory != null" >
+        #{stepcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="iconurl != null" >
+        #{iconurl,jdbcType=VARCHAR},
+      </if>
+      <if test="edcplanid != null" >
+        #{edcplanid,jdbcType=VARCHAR},
+      </if>
+      <if test="boardside != null" >
+        #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="obj1 != null" >
+        #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        #{obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="iserpstep != null" >
+        #{iserpstep,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update STEP
+    <set >
+      <if test="record.stepid != null" >
+        STEPID = #{record.stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepname != null" >
+        STEPNAME = #{record.stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.steptype != null" >
+        STEPTYPE = #{record.steptype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourcetype != null" >
+        RESOURCETYPE = #{record.resourcetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceid != null" >
+        RESOURCEID = #{record.resourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryid != null" >
+        CATEGORYID = #{record.categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionname != null" >
+        SECTIONNAME = #{record.sectionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stepcategory != null" >
+        STEPCATEGORY = #{record.stepcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconurl != null" >
+        ICONURL = #{record.iconurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.edcplanid != null" >
+        EDCPLANID = #{record.edcplanid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boardside != null" >
+        BOARDSIDE = #{record.boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj1 != null" >
+        OBJ1 = #{record.obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obj2 != null" >
+        OBJ2 = #{record.obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iserpstep != null" >
+        ISERPSTEP = #{record.iserpstep,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picture != null" >
+        PICTURE = #{record.picture,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update STEP
+    set STEPID = #{record.stepid,jdbcType=VARCHAR},
+      STEPNAME = #{record.stepname,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STEPTYPE = #{record.steptype,jdbcType=VARCHAR},
+      RESOURCETYPE = #{record.resourcetype,jdbcType=VARCHAR},
+      RESOURCEID = #{record.resourceid,jdbcType=VARCHAR},
+      CATEGORYID = #{record.categoryid,jdbcType=VARCHAR},
+      SECTIONNAME = #{record.sectionname,jdbcType=VARCHAR},
+      STEPCATEGORY = #{record.stepcategory,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=VARCHAR},
+      ICONURL = #{record.iconurl,jdbcType=VARCHAR},
+      EDCPLANID = #{record.edcplanid,jdbcType=VARCHAR},
+      BOARDSIDE = #{record.boardside,jdbcType=VARCHAR},
+      OBJ1 = #{record.obj1,jdbcType=VARCHAR},
+      OBJ2 = #{record.obj2,jdbcType=VARCHAR},
+      ISERPSTEP = #{record.iserpstep,jdbcType=VARCHAR},
+      PICTURE = #{record.picture,jdbcType=BLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update STEP
+    set STEPID = #{record.stepid,jdbcType=VARCHAR},
+      STEPNAME = #{record.stepname,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STEPTYPE = #{record.steptype,jdbcType=VARCHAR},
+      RESOURCETYPE = #{record.resourcetype,jdbcType=VARCHAR},
+      RESOURCEID = #{record.resourceid,jdbcType=VARCHAR},
+      CATEGORYID = #{record.categoryid,jdbcType=VARCHAR},
+      SECTIONNAME = #{record.sectionname,jdbcType=VARCHAR},
+      STEPCATEGORY = #{record.stepcategory,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=VARCHAR},
+      ICONURL = #{record.iconurl,jdbcType=VARCHAR},
+      EDCPLANID = #{record.edcplanid,jdbcType=VARCHAR},
+      BOARDSIDE = #{record.boardside,jdbcType=VARCHAR},
+      OBJ1 = #{record.obj1,jdbcType=VARCHAR},
+      OBJ2 = #{record.obj2,jdbcType=VARCHAR},
+      ISERPSTEP = #{record.iserpstep,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Step" >
+    update STEP
+    <set >
+      <if test="stepname != null" >
+        STEPNAME = #{stepname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="steptype != null" >
+        STEPTYPE = #{steptype,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcetype != null" >
+        RESOURCETYPE = #{resourcetype,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceid != null" >
+        RESOURCEID = #{resourceid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        CATEGORYID = #{categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionname != null" >
+        SECTIONNAME = #{sectionname,jdbcType=VARCHAR},
+      </if>
+      <if test="stepcategory != null" >
+        STEPCATEGORY = #{stepcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="iconurl != null" >
+        ICONURL = #{iconurl,jdbcType=VARCHAR},
+      </if>
+      <if test="edcplanid != null" >
+        EDCPLANID = #{edcplanid,jdbcType=VARCHAR},
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="obj1 != null" >
+        OBJ1 = #{obj1,jdbcType=VARCHAR},
+      </if>
+      <if test="obj2 != null" >
+        OBJ2 = #{obj2,jdbcType=VARCHAR},
+      </if>
+      <if test="iserpstep != null" >
+        ISERPSTEP = #{iserpstep,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        PICTURE = #{picture,jdbcType=BLOB},
+      </if>
+    </set>
+    where STEPID = #{stepid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcd.model.Step" >
+    update STEP
+    set STEPNAME = #{stepname,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      STEPTYPE = #{steptype,jdbcType=VARCHAR},
+      RESOURCETYPE = #{resourcetype,jdbcType=VARCHAR},
+      RESOURCEID = #{resourceid,jdbcType=VARCHAR},
+      CATEGORYID = #{categoryid,jdbcType=VARCHAR},
+      SECTIONNAME = #{sectionname,jdbcType=VARCHAR},
+      STEPCATEGORY = #{stepcategory,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      ICONURL = #{iconurl,jdbcType=VARCHAR},
+      EDCPLANID = #{edcplanid,jdbcType=VARCHAR},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      OBJ1 = #{obj1,jdbcType=VARCHAR},
+      OBJ2 = #{obj2,jdbcType=VARCHAR},
+      ISERPSTEP = #{iserpstep,jdbcType=VARCHAR},
+      PICTURE = #{picture,jdbcType=BLOB}
+    where STEPID = #{stepid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Step" >
+    update STEP
+    set STEPNAME = #{stepname,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      STEPTYPE = #{steptype,jdbcType=VARCHAR},
+      RESOURCETYPE = #{resourcetype,jdbcType=VARCHAR},
+      RESOURCEID = #{resourceid,jdbcType=VARCHAR},
+      CATEGORYID = #{categoryid,jdbcType=VARCHAR},
+      SECTIONNAME = #{sectionname,jdbcType=VARCHAR},
+      STEPCATEGORY = #{stepcategory,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      ICONURL = #{iconurl,jdbcType=VARCHAR},
+      EDCPLANID = #{edcplanid,jdbcType=VARCHAR},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      OBJ1 = #{obj1,jdbcType=VARCHAR},
+      OBJ2 = #{obj2,jdbcType=VARCHAR},
+      ISERPSTEP = #{iserpstep,jdbcType=VARCHAR}
+    where STEPID = #{stepid,jdbcType=VARCHAR}
+  </update>
+</mapper>

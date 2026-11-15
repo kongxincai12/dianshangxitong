@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.MaterialorderMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Materialorder" >
+    <id column="MOID" property="moid" jdbcType="VARCHAR" />
+    <result column="MONAME" property="moname" jdbcType="VARCHAR" />
+    <result column="LINEID" property="lineid" jdbcType="VARCHAR" />
+    <result column="LOTID" property="lotid" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="ISUSING" property="isusing" jdbcType="VARCHAR" />
+    <result column="BOARDSIDE" property="boardside" jdbcType="VARCHAR" />
+    <result column="LEADFREE" property="leadfree" jdbcType="VARCHAR" />
+    <result column="LLID" property="llid" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MOID, MONAME, LINEID, LOTID, STATUS, ISUSING, BOARDSIDE, LEADFREE, LLID, DESCRIPTION, 
+    USERNAME, DATETIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from MATERIALORDER
+    where MOID = #{moid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from MATERIALORDER
+    where MOID = #{moid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Materialorder" >
+    insert into MATERIALORDER (MOID, MONAME, LINEID, 
+      LOTID, STATUS, ISUSING, 
+      BOARDSIDE, LEADFREE, LLID, 
+      DESCRIPTION, USERNAME, DATETIME
+      )
+    values (#{moid,jdbcType=VARCHAR}, #{moname,jdbcType=VARCHAR}, #{lineid,jdbcType=VARCHAR}, 
+      #{lotid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{isusing,jdbcType=VARCHAR}, 
+      #{boardside,jdbcType=VARCHAR}, #{leadfree,jdbcType=VARCHAR}, #{llid,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Materialorder" >
+    insert into MATERIALORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moid != null" >
+        MOID,
+      </if>
+      <if test="moname != null" >
+        MONAME,
+      </if>
+      <if test="lineid != null" >
+        LINEID,
+      </if>
+      <if test="lotid != null" >
+        LOTID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="isusing != null" >
+        ISUSING,
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE,
+      </if>
+      <if test="leadfree != null" >
+        LEADFREE,
+      </if>
+      <if test="llid != null" >
+        LLID,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moid != null" >
+        #{moid,jdbcType=VARCHAR},
+      </if>
+      <if test="moname != null" >
+        #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isusing != null" >
+        #{isusing,jdbcType=VARCHAR},
+      </if>
+      <if test="boardside != null" >
+        #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="leadfree != null" >
+        #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="llid != null" >
+        #{llid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Materialorder" >
+    update MATERIALORDER
+    <set >
+      <if test="moname != null" >
+        MONAME = #{moname,jdbcType=VARCHAR},
+      </if>
+      <if test="lineid != null" >
+        LINEID = #{lineid,jdbcType=VARCHAR},
+      </if>
+      <if test="lotid != null" >
+        LOTID = #{lotid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isusing != null" >
+        ISUSING = #{isusing,jdbcType=VARCHAR},
+      </if>
+      <if test="boardside != null" >
+        BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      </if>
+      <if test="leadfree != null" >
+        LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      </if>
+      <if test="llid != null" >
+        LLID = #{llid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MOID = #{moid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Materialorder" >
+    update MATERIALORDER
+    set MONAME = #{moname,jdbcType=VARCHAR},
+      LINEID = #{lineid,jdbcType=VARCHAR},
+      LOTID = #{lotid,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      ISUSING = #{isusing,jdbcType=VARCHAR},
+      BOARDSIDE = #{boardside,jdbcType=VARCHAR},
+      LEADFREE = #{leadfree,jdbcType=VARCHAR},
+      LLID = #{llid,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR}
+    where MOID = #{moid,jdbcType=VARCHAR}
+  </update>
+</mapper>

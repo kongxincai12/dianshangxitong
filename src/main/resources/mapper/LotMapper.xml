@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mes.mapper.LotMapper">
+
+    <select id="findLotInfo" resultType="com.jcd.dto.LotInfoDto">
+        SELECT
+            PR.PRODUCTPN AS product,
+            PR.PANELPCS AS panelPcs,
+            PR.WIPQTY AS wipQty,
+            pr.lotname AS lotCode,
+            pr.status AS status,
+            CASE
+                WHEN s2.stepid IS NULL OR UPPER(s2.STEPNAME) LIKE '%TRACKIN'
+                    THEN s1.description
+                ELSE s2.description
+                END AS lotSite
+        FROM
+            wip w
+                LEFT JOIN prp_lot pr ON pr.lotname = w.sn
+                LEFT JOIN step s1 ON s1.stepid = w.currentstepid
+                LEFT JOIN vprocessstep vp ON vp.PROCESSID = pr.processid AND vp.STEPID = s1.stepid AND VP.NODETYPE = 'PASS'
+                LEFT JOIN step s2 ON vp.NEXTSTEPID = s2.stepid
+        WHERE
+            W.SN = #{lotCode}
+        AND ROWNUM=1
+    </select>
+
+</mapper>

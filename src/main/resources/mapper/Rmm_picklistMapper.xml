@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Rmm_picklistMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Rmm_picklist" >
+    <id column="PICKLISTID" property="picklistid" jdbcType="VARCHAR" />
+    <result column="TRANSFERID" property="transferid" jdbcType="VARCHAR" />
+    <result column="UPN" property="upn" jdbcType="VARCHAR" />
+    <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+    <result column="RELEASEQTY" property="releaseqty" jdbcType="NUMERIC" />
+    <result column="RETRUNQTY" property="retrunqty" jdbcType="NUMERIC" />
+    <result column="RELEASETYPE" property="releasetype" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="PICKTYPE" property="picktype" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PICKLISTID, TRANSFERID, UPN, LOCATION, RELEASEQTY, RETRUNQTY, RELEASETYPE, STATUS, 
+    PICKTYPE, DATETIME, USERNAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from RMM_PICKLIST
+    where PICKLISTID = #{picklistid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUpn" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from RMM_PICKLIST
+    where UPN = #{upn,jdbcType=VARCHAR}
+    AND PICKTYPE='EDGEINVENTORY'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from RMM_PICKLIST
+    where PICKLISTID = #{picklistid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Rmm_picklist" >
+    insert into RMM_PICKLIST (PICKLISTID, TRANSFERID, UPN, 
+      LOCATION, RELEASEQTY, RETRUNQTY, 
+      RELEASETYPE, STATUS, PICKTYPE, 
+      DATETIME, USERNAME)
+    values (#{picklistid,jdbcType=VARCHAR}, #{transferid,jdbcType=VARCHAR}, #{upn,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{releaseqty,jdbcType=NUMERIC}, #{retrunqty,jdbcType=NUMERIC}, 
+      #{releasetype,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{picktype,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Rmm_picklist" >
+    insert into RMM_PICKLIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="picklistid != null" >
+        PICKLISTID,
+      </if>
+      <if test="transferid != null" >
+        TRANSFERID,
+      </if>
+      <if test="upn != null" >
+        UPN,
+      </if>
+      <if test="location != null" >
+        LOCATION,
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY,
+      </if>
+      <if test="retrunqty != null" >
+        RETRUNQTY,
+      </if>
+      <if test="releasetype != null" >
+        RELEASETYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="picktype != null" >
+        PICKTYPE,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="picklistid != null" >
+        #{picklistid,jdbcType=VARCHAR},
+      </if>
+      <if test="transferid != null" >
+        #{transferid,jdbcType=VARCHAR},
+      </if>
+      <if test="upn != null" >
+        #{upn,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseqty != null" >
+        #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="retrunqty != null" >
+        #{retrunqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releasetype != null" >
+        #{releasetype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="picktype != null" >
+        #{picktype,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Rmm_picklist" >
+    update RMM_PICKLIST
+    <set >
+      <if test="transferid != null" >
+        TRANSFERID = #{transferid,jdbcType=VARCHAR},
+      </if>
+      <if test="upn != null" >
+        UPN = #{upn,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseqty != null" >
+        RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      </if>
+      <if test="retrunqty != null" >
+        RETRUNQTY = #{retrunqty,jdbcType=NUMERIC},
+      </if>
+      <if test="releasetype != null" >
+        RELEASETYPE = #{releasetype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="picktype != null" >
+        PICKTYPE = #{picktype,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PICKLISTID = #{picklistid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Rmm_picklist" >
+    update RMM_PICKLIST
+    set TRANSFERID = #{transferid,jdbcType=VARCHAR},
+      UPN = #{upn,jdbcType=VARCHAR},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      RELEASEQTY = #{releaseqty,jdbcType=NUMERIC},
+      RETRUNQTY = #{retrunqty,jdbcType=NUMERIC},
+      RELEASETYPE = #{releasetype,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      PICKTYPE = #{picktype,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      USERNAME = #{username,jdbcType=VARCHAR}
+    where PICKLISTID = #{picklistid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.QcFirstPassYieldMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.CuxLowcodeFqcdirect" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CREATEDATE" property="CREATEDATE" jdbcType="TIMESTAMP" />
+    <result column="FQCDIRECTDATE" property="FQCDIRECTDATE" jdbcType="TIMESTAMP" />
+    <result column="USERNAME" property="USERNAME" jdbcType="VARCHAR" />
+    <result column="USERNUMBER" property="USERNUMBER" jdbcType="VARCHAR" />
+    <result column="WEEKCODE" property="WEEKCODE" jdbcType="VARCHAR" />
+    <result column="PRODUCTNUMBER" property="PRODUCTNUMBER" jdbcType="VARCHAR" />
+    <result column="LOT" property="LOT" jdbcType="VARCHAR" />
+    <result column="ALLCHECKNUMBER" property="ALLCHECKNUMBER" jdbcType="NUMERIC" />
+    <result column="OKNUMBER" property="OKNUMBER" jdbcType="NUMERIC" />
+    <result column="NGNUMBER" property="NGNUMBER" jdbcType="NUMERIC" />
+    <result column="NGRATE" property="NGRATE" jdbcType="NUMERIC" />
+    <result column="OKRATE" property="OKRATE" jdbcType="NUMERIC" />
+    <result column="SEGMENT1" property="SEGMENT1" jdbcType="VARCHAR" />
+    <result column="SEGMENT2" property="SEGMENT2" jdbcType="VARCHAR" />
+    <result column="SEGMENT3" property="SEGMENT3" jdbcType="VARCHAR" />
+    <result column="SEGMENT4" property="SEGMENT4" jdbcType="VARCHAR" />
+    <result column="SEGMENT5" property="SEGMENT5" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--<sql id="Base_Column_List" >
+    ID, CREATEDATE, FQCDIRECTDATE, USERNAME, USERNUMBER, WEEKCODE, PRODUCTNUMBER, LOT,
+    ALLCHECKNUMBER, OKNUMBER, NGNUMBER,NGRATE,OKRATE,SEGMENT1, SEGMENT2, SEGMENT3,
+    SEGMENT4, SEGMENT5
+  </sql>-->
+
+  <!--<insert id="insertSelective" parameterType="com.jcd.model.CuxLowcodeFqcdirect" >
+    insert into CUX_LOWCODE_FQCDIRECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="CREATEDATE != null" >
+        CREATEDATE,
+      </if>
+      <if test="FQCDIRECTDATE != null" >
+        FQCDIRECTDATE,
+      </if>
+      <if test="USERNAME != null" >
+        USERNAME,
+      </if>
+      <if test="USERNUMBER != null" >
+        USERNUMBER,
+      </if>
+      <if test="WEEKCODE != null" >
+        WEEKCODE,
+      </if>
+      <if test="PRODUCTNUMBER != null" >
+        PRODUCTNUMBER,
+      </if>
+      <if test="LOT != null" >
+        LOT,
+      </if>
+      <if test="ALLCHECKNUMBER != null" >
+        ALLCHECKNUMBER,
+      </if>
+      <if test="OKNUMBER != null" >
+        OKNUMBER,
+      </if>
+      <if test="NGNUMBER != null" >
+        NGNUMBER,
+      </if>
+      <if test="NGRATE != null" >
+        NGRATE,
+      </if>
+      <if test="OKRATE != null" >
+        OKRATE,
+      </if>
+      <if test="SEGMENT1 != null" >
+        SEGMENT1,
+      </if>
+      <if test="SEGMENT2 != null" >
+        SEGMENT2,
+      </if>
+      <if test="SEGMENT3 != null" >
+        SEGMENT3,
+      </if>
+      <if test="SEGMENT4 != null" >
+        SEGMENT4,
+      </if>
+      <if test="SEGMENT5 != null" >
+        SEGMENT5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATEDATE != null" >
+        #{CREATEDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="FQCDIRECTDATE != null" >
+        #{FQCDIRECTDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="USERNAME != null" >
+        #{USERNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="USERNUMBER != null" >
+        #{USERNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="WEEKCODE != null" >
+        #{WEEKCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="PRODUCTNUMBER != null" >
+        #{PRODUCTNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="LOT != null" >
+        #{LOT,jdbcType=VARCHAR},
+      </if>
+      <if test="ALLCHECKNUMBER != null" >
+        #{ALLCHECKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="OKNUMBER != null" >
+        #{OKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGNUMBER != null" >
+        #{NGNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGRATE != null" >
+        #{NGRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="OKRATE != null" >
+        #{OKRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="SEGMENT1 != null" >
+        #{SEGMENT1,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT2 != null" >
+        #{SEGMENT2,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT3 != null" >
+        #{SEGMENT3,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT4 != null" >
+        #{SEGMENT4,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT5 != null" >
+        #{SEGMENT5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>-->
+  <insert id="insertSelective" parameterType="com.jcd.model.CuxLowcodeFqcdirect">
+    insert into CUX_LOWCODE_FQCDIRECT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="CREATEDATE != null">
+        CREATEDATE,
+      </if>
+      <if test="FQCDIRECTDATE != null">
+        FQCDIRECTDATE,
+      </if>
+      <if test="USERNAME != null">
+        USERNAME,
+      </if>
+      <if test="USERNUMBER != null">
+        USERNUMBER,
+      </if>
+      <if test="WEEKCODE != null">
+        WEEKCODE,
+      </if>
+      <if test="PRODUCTNUMBER != null">
+        PRODUCTNUMBER,
+      </if>
+      <if test="LOT != null">
+        LOT,
+      </if>
+      <if test="ALLCHECKNUMBER != null">
+        ALLCHECKNUMBER,
+      </if>
+      <if test="OKNUMBER != null">
+        OKNUMBER,
+      </if>
+      <if test="NGNUMBER != null">
+        NGNUMBER,
+      </if>
+      <if test="NGRATE != null">
+        NGRATE,
+      </if>
+      <if test="OKRATE != null">
+        OKRATE,
+      </if>
+      <if test="SEGMENT1 != null">
+        SEGMENT1,
+      </if>
+      <if test="SEGMENT2 != null">
+        SEGMENT2,
+      </if>
+      <if test="SEGMENT3 != null">
+        SEGMENT3,
+      </if>
+      <if test="SEGMENT4 != null">
+        SEGMENT4,
+      </if>
+      <if test="SEGMENT5 != null">
+        SEGMENT5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATEDATE != null">
+        #{CREATEDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="FQCDIRECTDATE != null">
+        #{FQCDIRECTDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="USERNAME != null">
+        #{USERNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="USERNUMBER != null">
+        #{USERNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="WEEKCODE != null">
+        #{WEEKCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="PRODUCTNUMBER != null">
+        #{PRODUCTNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="LOT != null">
+        #{LOT,jdbcType=VARCHAR},
+      </if>
+      <if test="ALLCHECKNUMBER != null">
+        #{ALLCHECKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="OKNUMBER != null">
+        #{OKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGNUMBER != null">
+        #{NGNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGRATE != null">
+        #{NGRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="OKRATE != null">
+        #{OKRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="SEGMENT1 != null">
+        #{SEGMENT1,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT2 != null">
+        #{SEGMENT2,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT3 != null">
+        #{SEGMENT3,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT4 != null">
+        #{SEGMENT4,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT5 != null">
+        #{SEGMENT5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.CuxLowcodeFqcdirect" >
+    update CUX_LOWCODE_FQCDIRECT
+    <set >
+      <if test="CREATEDATE != null" >
+        CREATEDATE=#{CREATEDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="FQCDIRECTDATE != null" >
+        FQCDIRECTDATE=#{FQCDIRECTDATE,jdbcType=TIMESTAMP},
+      </if>
+      <if test="USERNAME != null" >
+        USERNAME=#{USERNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="USERNUMBER != null" >
+        USERNUMBER=#{USERNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="WEEKCODE != null" >
+        WEEKCODE=#{WEEKCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="PRODUCTNUMBER != null" >
+        PRODUCTNUMBER=#{PRODUCTNUMBER,jdbcType=VARCHAR},
+      </if>
+      <if test="LOT != null" >
+        LOT=#{LOT,jdbcType=VARCHAR},
+      </if>
+      <if test="ALLCHECKNUMBER != null" >
+        ALLCHECKNUMBER=#{ALLCHECKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="OKNUMBER != null" >
+        OKNUMBER=#{OKNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGNUMBER != null" >
+        NGNUMBER=#{NGNUMBER,jdbcType=NUMERIC},
+      </if>
+      <if test="NGRATE != null" >
+        NGRATE=#{NGRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="OKRATE != null" >
+        OKRATE=#{OKRATE,jdbcType=NUMERIC},
+      </if>
+      <if test="SEGMENT1 != null" >
+        SEGMENT1=#{SEGMENT1,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT2 != null" >
+        SEGMENT2=#{SEGMENT2,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT3 != null" >
+        SEGMENT3=#{SEGMENT3,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT4 != null" >
+        SEGMENT4=#{SEGMENT4,jdbcType=VARCHAR},
+      </if>
+      <if test="SEGMENT5 != null" >
+        SEGMENT5=#{SEGMENT5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPrimaryKeyA"   resultMap="BaseResultMap" parameterType="java.lang.String">
+    select ID, CREATEDATE, FQCDIRECTDATE, USERNAME, USERNUMBER, WEEKCODE, PRODUCTNUMBER, LOT,
+    ALLCHECKNUMBER, OKNUMBER, NGNUMBER,NGRATE,OKRATE,SEGMENT1, SEGMENT2, SEGMENT3,
+    SEGMENT4, SEGMENT5
+    from CUX_LOWCODE_FQCDIRECT
+    where ID= #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CUX_LOWCODE_FQCDIRECT where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

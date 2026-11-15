@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.qafa.QaFaStageResultMapper">
+
+  <resultMap id="StageResultMap" type="com.jcd.model.qafa.QaFaStageResult">
+    <id     column="ID"              property="id"/>
+    <result column="RECORD_ID"       property="recordId"/>
+    <result column="STAGE_CODE"      property="stageCode"/>
+    <result column="STAGE_NAME"      property="stageName"/>
+    <result column="SORT_NO"         property="sortNo"/>
+    <result column="STATUS"          property="status"/>
+    <result column="FINAL_REQUIRED"  property="finalRequired"/>
+    <result column="RELEASE_ON_PASS" property="releaseOnPass"/>
+    <result column="JUDGE_USER_ID"   property="judgeUserId"/>
+    <result column="JUDGE_USER_NAME" property="judgeUserName"/>
+    <result column="JUDGE_TIME"      property="judgeTime"/>
+    <result column="COMMENT_TEXT"    property="commentText"/>
+    <result column="CREATE_TIME"     property="createTime"/>
+    <result column="UPDATE_TIME"     property="updateTime"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.jcd.model.qafa.QaFaStageResult">
+    insert into QA_FA_STAGE_RESULT (
+      ID, RECORD_ID, STAGE_CODE, STAGE_NAME, SORT_NO, STATUS,
+      FINAL_REQUIRED, RELEASE_ON_PASS,
+      JUDGE_USER_ID, JUDGE_USER_NAME, JUDGE_TIME, COMMENT_TEXT,
+      CREATE_TIME, UPDATE_TIME
+    ) values (
+      #{id}, #{recordId}, #{stageCode}, #{stageName}, #{sortNo}, #{status},
+      #{finalRequired}, #{releaseOnPass},
+      #{judgeUserId}, #{judgeUserName}, #{judgeTime}, #{commentText},
+      #{createTime}, #{updateTime}
+    )
+  </insert>
+
+  <update id="updateSelective" parameterType="com.jcd.model.qafa.QaFaStageResult">
+    update QA_FA_STAGE_RESULT
+    <set>
+      <if test="stageName != null">      STAGE_NAME = #{stageName},</if>
+      <if test="sortNo != null">         SORT_NO = #{sortNo},</if>
+      <if test="status != null">         STATUS = #{status},</if>
+      <if test="finalRequired != null">  FINAL_REQUIRED = #{finalRequired},</if>
+      <if test="releaseOnPass != null">  RELEASE_ON_PASS = #{releaseOnPass},</if>
+      <if test="judgeUserId != null">    JUDGE_USER_ID = #{judgeUserId},</if>
+      <if test="judgeUserName != null">  JUDGE_USER_NAME = #{judgeUserName},</if>
+      <if test="judgeTime != null">      JUDGE_TIME = #{judgeTime},</if>
+      <if test="commentText != null">    COMMENT_TEXT = #{commentText},</if>
+      UPDATE_TIME = #{updateTime}
+    </set>
+    where ID = #{id}
+  </update>
+
+  <delete id="deleteByRecordId">
+    delete from QA_FA_STAGE_RESULT where RECORD_ID = #{recordId}
+  </delete>
+
+  <select id="selectByRecordId" resultMap="StageResultMap">
+    select S.ID, S.RECORD_ID, S.STAGE_CODE, S.STAGE_NAME, S.SORT_NO, S.STATUS,
+           S.FINAL_REQUIRED, S.RELEASE_ON_PASS,
+           S.JUDGE_USER_ID,
+           NVL(U.FULLNAME, S.JUDGE_USER_NAME) as JUDGE_USER_NAME,
+           S.JUDGE_TIME, S.COMMENT_TEXT, S.CREATE_TIME, S.UPDATE_TIME
+    from QA_FA_STAGE_RESULT S
+    left join USERPROFILE U on U.USERNAME = S.JUDGE_USER_ID
+    where S.RECORD_ID = #{recordId}
+    order by S.SORT_NO, S.STAGE_CODE
+  </select>
+
+  <select id="selectByRecordAndStage" resultMap="StageResultMap">
+    select * from QA_FA_STAGE_RESULT
+    where RECORD_ID = #{recordId}
+      and STAGE_CODE = #{stageCode}
+  </select>
+
+</mapper>

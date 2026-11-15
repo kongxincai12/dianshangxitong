@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.PdaMaterialUsageRecordMapper" >
+
+
+    <select id="getUsageRecords" resultType="com.jcd.model.PdaMaterialUsageRecord">
+
+        select *
+        from PDA_MATERIAL_USAGE_RECORD
+        <where>
+            <if test="cylinderCode != null and cylinderCode != ''">
+                CYLINDER_CODE like '%' || #{cylinderCode,jdbcType=VARCHAR} || '%'
+            </if>
+
+        </where>
+
+
+
+    </select>
+
+
+    <select id="getRelMaterials" resultType="com.jcd.model.PdaLineCylinderMatRel">
+
+        select *
+        from PDA_LINE_CYLINDER_MAT_REL
+        where LINE_CYLINDER_REL_ID = #{lineCylinderRelId}
+
+    </select>
+
+
+    <insert id="insertRecord" parameterType="com.jcd.model.UsageRecordDto">
+        INSERT INTO PDA_MATERIAL_USAGE_RECORD (
+            ID,
+            LINE_CYLINDER_MAT_REL_ID,
+            USERNUMBER,
+            USERNAME,
+            LINE_CODE,
+            CYLINDER_CODE,
+            MATERIAL_PN,
+            USAGE_AMOUNT,
+            USAGE_PURPOSE,
+            REMARK,
+            OPERATE_USER,
+            OPERATE_TIME
+        ) VALUES (
+                     SEQ_PDA_MATERIAL_USAGE_RECORD.NEXTVAL,
+                     #{lineCylinderMatRelId},
+                     #{usernumber},
+                     #{username},
+                     #{lineCode},
+                     #{cylinderCode},
+                     #{materialPn},
+                     #{usageAmount},
+                     #{usagePurpose},
+                     #{remark},
+                     #{operateUser},
+                     SYSDATE
+                 )
+    </insert>
+
+
+
+</mapper>

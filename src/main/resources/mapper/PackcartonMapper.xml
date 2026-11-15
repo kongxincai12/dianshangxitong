@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.PackcartonMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Packcarton" >
+    <id column="CARTONID" property="cartonid" jdbcType="VARCHAR" />
+    <result column="CARTONCODE" property="cartoncode" jdbcType="VARCHAR" />
+    <result column="CARTONQTY" property="cartonqty" jdbcType="NUMERIC" />
+    <result column="STEPID" property="stepid" jdbcType="VARCHAR" />
+    <result column="STATIONID" property="stationid" jdbcType="VARCHAR" />
+    <result column="PRODUCTPN" property="productpn" jdbcType="VARCHAR" />
+    <result column="SECTION" property="section" jdbcType="VARCHAR" />
+    <result column="GIFTCODE" property="giftcode" jdbcType="VARCHAR" />
+    <result column="GIFTQTY" property="giftqty" jdbcType="NUMERIC" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+    <result column="DELETEFLAG" property="deleteflag" jdbcType="CHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="CONSUMEQTY" property="consumeqty" jdbcType="NUMERIC" />
+    <result column="CARTON_OBJ01" property="cartonObj01" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ02" property="cartonObj02" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ03" property="cartonObj03" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ04" property="cartonObj04" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ05" property="cartonObj05" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ06" property="cartonObj06" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ07" property="cartonObj07" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ08" property="cartonObj08" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ09" property="cartonObj09" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ10" property="cartonObj10" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ11" property="cartonObj11" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ12" property="cartonObj12" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ13" property="cartonObj13" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ14" property="cartonObj14" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ15" property="cartonObj15" jdbcType="VARCHAR" />
+    <result column="CARTON_OBJ16" property="cartonObj16" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CARTONID, CARTONCODE, CARTONQTY, STEPID, STATIONID, PRODUCTPN, SECTION, GIFTCODE, 
+    GIFTQTY, COMMENTS, DELETEFLAG, USERNAME, DATETIME, CONSUMEQTY, CARTON_OBJ01, CARTON_OBJ02, 
+    CARTON_OBJ03, CARTON_OBJ04, CARTON_OBJ05, CARTON_OBJ06, CARTON_OBJ07, CARTON_OBJ08, 
+    CARTON_OBJ09, CARTON_OBJ10, CARTON_OBJ11, CARTON_OBJ12, CARTON_OBJ13, CARTON_OBJ14, 
+    CARTON_OBJ15, CARTON_OBJ16
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.PackcartonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PACKCARTON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="PackcartonGetByCartoncode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PACKCARTON
+    where CARTONCODE = #{cartoncode,jdbcType=VARCHAR}
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PACKCARTON
+    where CARTONID = #{cartonid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Packcarton" >
+    insert into PACKCARTON (CARTONID, CARTONCODE, CARTONQTY, 
+      STEPID, STATIONID, PRODUCTPN, 
+      SECTION, GIFTCODE, GIFTQTY, 
+      COMMENTS, DELETEFLAG, USERNAME, 
+      DATETIME, CONSUMEQTY, CARTON_OBJ01, 
+      CARTON_OBJ02, CARTON_OBJ03, CARTON_OBJ04, 
+      CARTON_OBJ05, CARTON_OBJ06, CARTON_OBJ07, 
+      CARTON_OBJ08, CARTON_OBJ09, CARTON_OBJ10, 
+      CARTON_OBJ11, CARTON_OBJ12, CARTON_OBJ13, 
+      CARTON_OBJ14, CARTON_OBJ15, CARTON_OBJ16
+      )
+    values (#{cartonid,jdbcType=VARCHAR}, #{cartoncode,jdbcType=VARCHAR}, #{cartonqty,jdbcType=NUMERIC}, 
+      #{stepid,jdbcType=VARCHAR}, #{stationid,jdbcType=VARCHAR}, #{productpn,jdbcType=VARCHAR}, 
+      #{section,jdbcType=VARCHAR}, #{giftcode,jdbcType=VARCHAR}, #{giftqty,jdbcType=NUMERIC}, 
+      #{comments,jdbcType=VARCHAR}, #{deleteflag,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{consumeqty,jdbcType=NUMERIC}, #{cartonObj01,jdbcType=VARCHAR}, 
+      #{cartonObj02,jdbcType=VARCHAR}, #{cartonObj03,jdbcType=VARCHAR}, #{cartonObj04,jdbcType=VARCHAR}, 
+      #{cartonObj05,jdbcType=VARCHAR}, #{cartonObj06,jdbcType=VARCHAR}, #{cartonObj07,jdbcType=VARCHAR}, 
+      #{cartonObj08,jdbcType=VARCHAR}, #{cartonObj09,jdbcType=VARCHAR}, #{cartonObj10,jdbcType=VARCHAR}, 
+      #{cartonObj11,jdbcType=VARCHAR}, #{cartonObj12,jdbcType=VARCHAR}, #{cartonObj13,jdbcType=VARCHAR}, 
+      #{cartonObj14,jdbcType=VARCHAR}, #{cartonObj15,jdbcType=VARCHAR}, #{cartonObj16,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Packcarton" >
+    insert into PACKCARTON
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartonid != null" >
+        CARTONID,
+      </if>
+      <if test="cartoncode != null" >
+        CARTONCODE,
+      </if>
+      <if test="cartonqty != null" >
+        CARTONQTY,
+      </if>
+      <if test="stepid != null" >
+        STEPID,
+      </if>
+      <if test="stationid != null" >
+        STATIONID,
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN,
+      </if>
+      <if test="section != null" >
+        SECTION,
+      </if>
+      <if test="giftcode != null" >
+        GIFTCODE,
+      </if>
+      <if test="giftqty != null" >
+        GIFTQTY,
+      </if>
+      <if test="comments != null" >
+        COMMENTS,
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="consumeqty != null" >
+        CONSUMEQTY,
+      </if>
+      <if test="cartonObj01 != null" >
+        CARTON_OBJ01,
+      </if>
+      <if test="cartonObj02 != null" >
+        CARTON_OBJ02,
+      </if>
+      <if test="cartonObj03 != null" >
+        CARTON_OBJ03,
+      </if>
+      <if test="cartonObj04 != null" >
+        CARTON_OBJ04,
+      </if>
+      <if test="cartonObj05 != null" >
+        CARTON_OBJ05,
+      </if>
+      <if test="cartonObj06 != null" >
+        CARTON_OBJ06,
+      </if>
+      <if test="cartonObj07 != null" >
+        CARTON_OBJ07,
+      </if>
+      <if test="cartonObj08 != null" >
+        CARTON_OBJ08,
+      </if>
+      <if test="cartonObj09 != null" >
+        CARTON_OBJ09,
+      </if>
+      <if test="cartonObj10 != null" >
+        CARTON_OBJ10,
+      </if>
+      <if test="cartonObj11 != null" >
+        CARTON_OBJ11,
+      </if>
+      <if test="cartonObj12 != null" >
+        CARTON_OBJ12,
+      </if>
+      <if test="cartonObj13 != null" >
+        CARTON_OBJ13,
+      </if>
+      <if test="cartonObj14 != null" >
+        CARTON_OBJ14,
+      </if>
+      <if test="cartonObj15 != null" >
+        CARTON_OBJ15,
+      </if>
+      <if test="cartonObj16 != null" >
+        CARTON_OBJ16,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartonid != null" >
+        #{cartonid,jdbcType=VARCHAR},
+      </if>
+      <if test="cartoncode != null" >
+        #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonqty != null" >
+        #{cartonqty,jdbcType=NUMERIC},
+      </if>
+      <if test="stepid != null" >
+        #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        #{stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="giftcode != null" >
+        #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giftqty != null" >
+        #{giftqty,jdbcType=NUMERIC},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        #{deleteflag,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeqty != null" >
+        #{consumeqty,jdbcType=NUMERIC},
+      </if>
+      <if test="cartonObj01 != null" >
+        #{cartonObj01,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj02 != null" >
+        #{cartonObj02,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj03 != null" >
+        #{cartonObj03,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj04 != null" >
+        #{cartonObj04,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj05 != null" >
+        #{cartonObj05,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj06 != null" >
+        #{cartonObj06,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj07 != null" >
+        #{cartonObj07,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj08 != null" >
+        #{cartonObj08,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj09 != null" >
+        #{cartonObj09,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj10 != null" >
+        #{cartonObj10,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj11 != null" >
+        #{cartonObj11,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj12 != null" >
+        #{cartonObj12,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj13 != null" >
+        #{cartonObj13,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj14 != null" >
+        #{cartonObj14,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj15 != null" >
+        #{cartonObj15,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj16 != null" >
+        #{cartonObj16,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Packcarton" >
+    update PACKCARTON
+    <set >
+      <if test="cartoncode != null" >
+        CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonqty != null" >
+        CARTONQTY = #{cartonqty,jdbcType=NUMERIC},
+      </if>
+      <if test="stepid != null" >
+        STEPID = #{stepid,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        STATIONID = #{stationid,jdbcType=VARCHAR},
+      </if>
+      <if test="productpn != null" >
+        PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null" >
+        SECTION = #{section,jdbcType=VARCHAR},
+      </if>
+      <if test="giftcode != null" >
+        GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giftqty != null" >
+        GIFTQTY = #{giftqty,jdbcType=NUMERIC},
+      </if>
+      <if test="comments != null" >
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteflag != null" >
+        DELETEFLAG = #{deleteflag,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeqty != null" >
+        CONSUMEQTY = #{consumeqty,jdbcType=NUMERIC},
+      </if>
+      <if test="cartonObj01 != null" >
+        CARTON_OBJ01 = #{cartonObj01,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj02 != null" >
+        CARTON_OBJ02 = #{cartonObj02,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj03 != null" >
+        CARTON_OBJ03 = #{cartonObj03,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj04 != null" >
+        CARTON_OBJ04 = #{cartonObj04,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj05 != null" >
+        CARTON_OBJ05 = #{cartonObj05,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj06 != null" >
+        CARTON_OBJ06 = #{cartonObj06,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj07 != null" >
+        CARTON_OBJ07 = #{cartonObj07,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj08 != null" >
+        CARTON_OBJ08 = #{cartonObj08,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj09 != null" >
+        CARTON_OBJ09 = #{cartonObj09,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj10 != null" >
+        CARTON_OBJ10 = #{cartonObj10,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj11 != null" >
+        CARTON_OBJ11 = #{cartonObj11,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj12 != null" >
+        CARTON_OBJ12 = #{cartonObj12,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj13 != null" >
+        CARTON_OBJ13 = #{cartonObj13,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj14 != null" >
+        CARTON_OBJ14 = #{cartonObj14,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj15 != null" >
+        CARTON_OBJ15 = #{cartonObj15,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonObj16 != null" >
+        CARTON_OBJ16 = #{cartonObj16,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CARTONID = #{cartonid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Packcarton" >
+    update PACKCARTON
+    set CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      CARTONQTY = #{cartonqty,jdbcType=NUMERIC},
+      STEPID = #{stepid,jdbcType=VARCHAR},
+      STATIONID = #{stationid,jdbcType=VARCHAR},
+      PRODUCTPN = #{productpn,jdbcType=VARCHAR},
+      SECTION = #{section,jdbcType=VARCHAR},
+      GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      GIFTQTY = #{giftqty,jdbcType=NUMERIC},
+      COMMENTS = #{comments,jdbcType=VARCHAR},
+      DELETEFLAG = #{deleteflag,jdbcType=CHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      CONSUMEQTY = #{consumeqty,jdbcType=NUMERIC},
+      CARTON_OBJ01 = #{cartonObj01,jdbcType=VARCHAR},
+      CARTON_OBJ02 = #{cartonObj02,jdbcType=VARCHAR},
+      CARTON_OBJ03 = #{cartonObj03,jdbcType=VARCHAR},
+      CARTON_OBJ04 = #{cartonObj04,jdbcType=VARCHAR},
+      CARTON_OBJ05 = #{cartonObj05,jdbcType=VARCHAR},
+      CARTON_OBJ06 = #{cartonObj06,jdbcType=VARCHAR},
+      CARTON_OBJ07 = #{cartonObj07,jdbcType=VARCHAR},
+      CARTON_OBJ08 = #{cartonObj08,jdbcType=VARCHAR},
+      CARTON_OBJ09 = #{cartonObj09,jdbcType=VARCHAR},
+      CARTON_OBJ10 = #{cartonObj10,jdbcType=VARCHAR},
+      CARTON_OBJ11 = #{cartonObj11,jdbcType=VARCHAR},
+      CARTON_OBJ12 = #{cartonObj12,jdbcType=VARCHAR},
+      CARTON_OBJ13 = #{cartonObj13,jdbcType=VARCHAR},
+      CARTON_OBJ14 = #{cartonObj14,jdbcType=VARCHAR},
+      CARTON_OBJ15 = #{cartonObj15,jdbcType=VARCHAR},
+      CARTON_OBJ16 = #{cartonObj16,jdbcType=VARCHAR}
+    where CARTONID = #{cartonid,jdbcType=VARCHAR}
+  </update>
+</mapper>

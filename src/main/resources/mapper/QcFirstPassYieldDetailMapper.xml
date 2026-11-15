@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.QcFirstPassYieldDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.CuxLowcodeFqcdirectLine" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="HEADID" property="HEADID" jdbcType="VARCHAR" />
+    <result column="TYPEID" property="TYPEID" jdbcType="NUMERIC" />
+    <result column="TYPEVALUE" property="TYPEVALUE" jdbcType="NUMERIC" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, HEADID, TYPEID, TYPEVALUE
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" >
+    select ID, HEADID, TYPEID, TYPEVALUE
+    from CUX_LOWCODE_FQCDIRECT_LINE
+    where HEADID= #{recordId,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.jcd.model.CuxLowcodeFqcdirectLine" >
+    insert into CUX_LOWCODE_FQCDIRECT_LINE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="HEADID != null" >
+        HEADID,
+      </if>
+      <if test="TYPEID != null" >
+        TYPEID,
+      </if>
+      <if test="TYPEVALUE != null" >
+        TYPEVALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="HEADID != null" >
+        #{HEADID,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPEID != null" >
+        #{TYPEID,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPEVALUE != null" >
+        #{TYPEVALUE,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectTypeId" >
+    SELECT ID FROM CUX_LOWCODE_FQCDIRECTTYPE where TYPENAME=#{defectName}
+    and TYPE=#{plateSharp} and rownum=1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CUX_LOWCODE_FQCDIRECT_LINE
+    where HEADID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertTypeId" >
+    insert into CUX_LOWCODE_ERROR_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,DEFECT_NAME,"TYPE"
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{uuid,jdbcType=VARCHAR},
+      #{defectName,jdbcType=VARCHAR},
+      #{value,jdbcType=VARCHAR},
+    </trim>
+
+  </insert>
+
+</mapper>

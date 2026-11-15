@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.Wip_storage_hisMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Wip_storage_his" >
+    <id column="STORAGEHISID" property="storagehisid" jdbcType="VARCHAR" />
+    <result column="GIFTCODE" property="giftcode" jdbcType="VARCHAR" />
+    <result column="CARTONCODE" property="cartoncode" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="LOCATIONID" property="locationid" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="NUMERIC" />
+    <result column="SHIPID" property="shipid" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="OBJ01" property="obj01" jdbcType="VARCHAR" />
+    <result column="OBJ02" property="obj02" jdbcType="VARCHAR" />
+    <result column="OBJ03" property="obj03" jdbcType="VARCHAR" />
+    <result column="OBJ04" property="obj04" jdbcType="VARCHAR" />
+    <result column="OBJ05" property="obj05" jdbcType="VARCHAR" />
+    <result column="OBJ06" property="obj06" jdbcType="VARCHAR" />
+    <result column="OBJ07" property="obj07" jdbcType="VARCHAR" />
+    <result column="OBJ08" property="obj08" jdbcType="VARCHAR" />
+    <result column="OBJ09" property="obj09" jdbcType="VARCHAR" />
+    <result column="OBJ10" property="obj10" jdbcType="VARCHAR" />
+    <result column="OBJ11" property="obj11" jdbcType="VARCHAR" />
+    <result column="OBJ12" property="obj12" jdbcType="VARCHAR" />
+    <result column="OBJ13" property="obj13" jdbcType="VARCHAR" />
+    <result column="OBJ14" property="obj14" jdbcType="VARCHAR" />
+    <result column="OBJ15" property="obj15" jdbcType="VARCHAR" />
+    <result column="OBJ16" property="obj16" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STORAGEHISID, GIFTCODE, CARTONCODE, STATUS, LOCATIONID, QTY, SHIPID, REMARK, DATETIME, 
+    USERNAME, OBJ01, OBJ02, OBJ03, OBJ04, OBJ05, OBJ06, OBJ07, OBJ08, OBJ09, OBJ10, OBJ11, 
+    OBJ12, OBJ13, OBJ14, OBJ15, OBJ16
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.Wip_storage_hisExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from WIP_STORAGE_HIS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WIP_STORAGE_HIS
+    where STORAGEHISID = #{storagehisid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WIP_STORAGE_HIS
+    where STORAGEHISID = #{storagehisid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="Wip_storage_hisInsert" parameterType="com.jcd.model.Wip_storage_his" >
+    insert into WIP_STORAGE_HIS (STORAGEHISID, GIFTCODE, CARTONCODE, 
+      STATUS, LOCATIONID, QTY, 
+      SHIPID, REMARK, DATETIME, 
+      USERNAME, OBJ01, OBJ02, 
+      OBJ03, OBJ04, OBJ05, 
+      OBJ06, OBJ07, OBJ08, 
+      OBJ09, OBJ10, OBJ11, 
+      OBJ12, OBJ13, OBJ14, 
+      OBJ15, OBJ16)
+    values (#{storagehisid,jdbcType=VARCHAR}, #{giftcode,jdbcType=VARCHAR}, #{cartoncode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{locationid,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, 
+      #{shipid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{datetime,jdbcType=TIMESTAMP}, 
+      #{username,jdbcType=VARCHAR}, #{obj01,jdbcType=VARCHAR}, #{obj02,jdbcType=VARCHAR}, 
+      #{obj03,jdbcType=VARCHAR}, #{obj04,jdbcType=VARCHAR}, #{obj05,jdbcType=VARCHAR}, 
+      #{obj06,jdbcType=VARCHAR}, #{obj07,jdbcType=VARCHAR}, #{obj08,jdbcType=VARCHAR}, 
+      #{obj09,jdbcType=VARCHAR}, #{obj10,jdbcType=VARCHAR}, #{obj11,jdbcType=VARCHAR}, 
+      #{obj12,jdbcType=VARCHAR}, #{obj13,jdbcType=VARCHAR}, #{obj14,jdbcType=VARCHAR}, 
+      #{obj15,jdbcType=VARCHAR}, #{obj16,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Wip_storage_his" >
+    insert into WIP_STORAGE_HIS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="storagehisid != null" >
+        STORAGEHISID,
+      </if>
+      <if test="giftcode != null" >
+        GIFTCODE,
+      </if>
+      <if test="cartoncode != null" >
+        CARTONCODE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID,
+      </if>
+      <if test="qty != null" >
+        QTY,
+      </if>
+      <if test="shipid != null" >
+        SHIPID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="obj01 != null" >
+        OBJ01,
+      </if>
+      <if test="obj02 != null" >
+        OBJ02,
+      </if>
+      <if test="obj03 != null" >
+        OBJ03,
+      </if>
+      <if test="obj04 != null" >
+        OBJ04,
+      </if>
+      <if test="obj05 != null" >
+        OBJ05,
+      </if>
+      <if test="obj06 != null" >
+        OBJ06,
+      </if>
+      <if test="obj07 != null" >
+        OBJ07,
+      </if>
+      <if test="obj08 != null" >
+        OBJ08,
+      </if>
+      <if test="obj09 != null" >
+        OBJ09,
+      </if>
+      <if test="obj10 != null" >
+        OBJ10,
+      </if>
+      <if test="obj11 != null" >
+        OBJ11,
+      </if>
+      <if test="obj12 != null" >
+        OBJ12,
+      </if>
+      <if test="obj13 != null" >
+        OBJ13,
+      </if>
+      <if test="obj14 != null" >
+        OBJ14,
+      </if>
+      <if test="obj15 != null" >
+        OBJ15,
+      </if>
+      <if test="obj16 != null" >
+        OBJ16,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="storagehisid != null" >
+        #{storagehisid,jdbcType=VARCHAR},
+      </if>
+      <if test="giftcode != null" >
+        #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartoncode != null" >
+        #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="shipid != null" >
+        #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        #{obj10,jdbcType=VARCHAR},
+      </if>
+      <if test="obj11 != null" >
+        #{obj11,jdbcType=VARCHAR},
+      </if>
+      <if test="obj12 != null" >
+        #{obj12,jdbcType=VARCHAR},
+      </if>
+      <if test="obj13 != null" >
+        #{obj13,jdbcType=VARCHAR},
+      </if>
+      <if test="obj14 != null" >
+        #{obj14,jdbcType=VARCHAR},
+      </if>
+      <if test="obj15 != null" >
+        #{obj15,jdbcType=VARCHAR},
+      </if>
+      <if test="obj16 != null" >
+        #{obj16,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Wip_storage_his" >
+    update WIP_STORAGE_HIS
+    <set >
+      <if test="giftcode != null" >
+        GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartoncode != null" >
+        CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="locationid != null" >
+        LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="shipid != null" >
+        SHIPID = #{shipid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="obj01 != null" >
+        OBJ01 = #{obj01,jdbcType=VARCHAR},
+      </if>
+      <if test="obj02 != null" >
+        OBJ02 = #{obj02,jdbcType=VARCHAR},
+      </if>
+      <if test="obj03 != null" >
+        OBJ03 = #{obj03,jdbcType=VARCHAR},
+      </if>
+      <if test="obj04 != null" >
+        OBJ04 = #{obj04,jdbcType=VARCHAR},
+      </if>
+      <if test="obj05 != null" >
+        OBJ05 = #{obj05,jdbcType=VARCHAR},
+      </if>
+      <if test="obj06 != null" >
+        OBJ06 = #{obj06,jdbcType=VARCHAR},
+      </if>
+      <if test="obj07 != null" >
+        OBJ07 = #{obj07,jdbcType=VARCHAR},
+      </if>
+      <if test="obj08 != null" >
+        OBJ08 = #{obj08,jdbcType=VARCHAR},
+      </if>
+      <if test="obj09 != null" >
+        OBJ09 = #{obj09,jdbcType=VARCHAR},
+      </if>
+      <if test="obj10 != null" >
+        OBJ10 = #{obj10,jdbcType=VARCHAR},
+      </if>
+      <if test="obj11 != null" >
+        OBJ11 = #{obj11,jdbcType=VARCHAR},
+      </if>
+      <if test="obj12 != null" >
+        OBJ12 = #{obj12,jdbcType=VARCHAR},
+      </if>
+      <if test="obj13 != null" >
+        OBJ13 = #{obj13,jdbcType=VARCHAR},
+      </if>
+      <if test="obj14 != null" >
+        OBJ14 = #{obj14,jdbcType=VARCHAR},
+      </if>
+      <if test="obj15 != null" >
+        OBJ15 = #{obj15,jdbcType=VARCHAR},
+      </if>
+      <if test="obj16 != null" >
+        OBJ16 = #{obj16,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STORAGEHISID = #{storagehisid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Wip_storage_his" >
+    update WIP_STORAGE_HIS
+    set GIFTCODE = #{giftcode,jdbcType=VARCHAR},
+      CARTONCODE = #{cartoncode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      LOCATIONID = #{locationid,jdbcType=VARCHAR},
+      QTY = #{qty,jdbcType=NUMERIC},
+      SHIPID = #{shipid,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      OBJ01 = #{obj01,jdbcType=VARCHAR},
+      OBJ02 = #{obj02,jdbcType=VARCHAR},
+      OBJ03 = #{obj03,jdbcType=VARCHAR},
+      OBJ04 = #{obj04,jdbcType=VARCHAR},
+      OBJ05 = #{obj05,jdbcType=VARCHAR},
+      OBJ06 = #{obj06,jdbcType=VARCHAR},
+      OBJ07 = #{obj07,jdbcType=VARCHAR},
+      OBJ08 = #{obj08,jdbcType=VARCHAR},
+      OBJ09 = #{obj09,jdbcType=VARCHAR},
+      OBJ10 = #{obj10,jdbcType=VARCHAR},
+      OBJ11 = #{obj11,jdbcType=VARCHAR},
+      OBJ12 = #{obj12,jdbcType=VARCHAR},
+      OBJ13 = #{obj13,jdbcType=VARCHAR},
+      OBJ14 = #{obj14,jdbcType=VARCHAR},
+      OBJ15 = #{obj15,jdbcType=VARCHAR},
+      OBJ16 = #{obj16,jdbcType=VARCHAR}
+    where STORAGEHISID = #{storagehisid,jdbcType=VARCHAR}
+  </update>
+</mapper>

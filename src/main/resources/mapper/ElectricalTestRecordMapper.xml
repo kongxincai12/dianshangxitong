@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ElectricalTestRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.ElectricalTestRecord" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOT_CODE" property="lotCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+    <result column="MODEL_NAME" property="modelName" jdbcType="VARCHAR" />
+    <result column="TOTAL_QTY" property="totalQty" jdbcType="NUMERIC" />
+    <result column="GOOD_QTY" property="goodQty" jdbcType="NUMERIC" />
+    <result column="DEFECT_QTY" property="defectQty" jdbcType="NUMERIC" />
+    <result column="PASS_RATE" property="passRate" jdbcType="NUMERIC" />
+    <result column="STANDARD_CAPACITY" property="standardCapacity" jdbcType="NUMERIC" />
+    <result column="OUTPUT_HOURS" property="outputHours" jdbcType="NUMERIC" />
+    <result column="INSPECTOR_ID" property="inspectorId" jdbcType="VARCHAR" />
+    <result column="INSPECTOR_NAME" property="inspectorName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="INSP_DATE" property="inspDate" jdbcType="TIMESTAMP" />
+    <result column="REOPEN_COUNT" property="reopenCount" jdbcType="NUMERIC" />
+    <result column="LAST_REOPEN_TIME" property="lastReopenTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+
+    <result column="PNL_PCS" property="pnlPcs" jdbcType="NUMERIC" />
+    <result column="PNL_TEST_TIMES" property="pnlTestTimes" jdbcType="NUMERIC" />
+    <result column="CHECK_RESULT" property="checkResult" jdbcType="VARCHAR" />
+    <result column="CHECK_EXCEPTION_RESULT" property="checkExceptionResult" jdbcType="VARCHAR" />
+    <result column="CHECK_HANDLE_RESULT" property="checkHandleResult" jdbcType="VARCHAR" />
+    <result column="RETEST_PASS_QTY" property="retestPassQty" jdbcType="NUMERIC" />
+    <result column="PRE_STEP_DEFECTSQTY" property="preStepDefectsqty" jdbcType="NUMERIC" />
+    <result column="ADD_OPEN_WAY" property="addOpenWay" jdbcType="NUMERIC" />
+    <result column="ADD_SHORT_WAY" property="addShortWay" jdbcType="NUMERIC" />
+    <result column="PUNCHING_SCRAPQTY" property="punchingScrapqty" jdbcType="NUMERIC" />
+    <result column="ISFOLLOW" property="isfollow" jdbcType="VARCHAR" />
+    <result column="EQP_CODE" property="eqpCode" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapOne" type="com.jcd.model.ElectricalTestRecord" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LOT_CODE" property="lotCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+    <result column="MODEL_NAME" property="modelName" jdbcType="VARCHAR" />
+    <result column="TOTAL_QTY" property="totalQty" jdbcType="NUMERIC" />
+    <result column="GOOD_QTY" property="goodQty" jdbcType="NUMERIC" />
+    <result column="DEFECT_QTY" property="defectQty" jdbcType="NUMERIC" />
+    <result column="PASS_RATE" property="passRate" jdbcType="NUMERIC" />
+    <result column="STANDARD_CAPACITY" property="standardCapacity" jdbcType="NUMERIC" />
+    <result column="OUTPUT_HOURS" property="outputHours" jdbcType="NUMERIC" />
+    <result column="INSPECTOR_ID" property="inspectorId" jdbcType="VARCHAR" />
+    <result column="INSPECTOR_NAME" property="inspectorName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="INSP_DATE" property="inspDate" jdbcType="TIMESTAMP" />
+    <result column="REOPEN_COUNT" property="reopenCount" jdbcType="NUMERIC" />
+    <result column="LAST_REOPEN_TIME" property="lastReopenTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+
+    <result column="PNL_PCS" property="pnlPcs" jdbcType="NUMERIC" />
+    <result column="PNL_TEST_TIMES" property="pnlTestTimes" jdbcType="NUMERIC" />
+    <result column="CHECK_RESULT" property="checkResult" jdbcType="VARCHAR" />
+    <result column="CHECK_EXCEPTION_RESULT" property="checkExceptionResult" jdbcType="VARCHAR" />
+    <result column="CHECK_HANDLE_RESULT" property="checkHandleResult" jdbcType="VARCHAR" />
+    <result column="RETEST_PASS_QTY" property="retestPassQty" jdbcType="NUMERIC" />
+    <result column="PRE_STEP_DEFECTSQTY" property="preStepDefectsqty" jdbcType="NUMERIC" />
+    <result column="ADD_OPEN_WAY" property="addOpenWay" jdbcType="NUMERIC" />
+    <result column="ADD_SHORT_WAY" property="addShortWay" jdbcType="NUMERIC" />
+    <result column="PUNCHING_SCRAPQTY" property="punchingScrapqty" jdbcType="NUMERIC" />
+    <result column="ISFOLLOW" property="isfollow" jdbcType="VARCHAR" />
+    <result column="EQP_CODE" property="eqpCode" jdbcType="VARCHAR" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID, LOT_CODE, PRODUCT_TYPE, MODEL_NAME, TOTAL_QTY, GOOD_QTY, DEFECT_QTY, PASS_RATE,
+    STANDARD_CAPACITY,OUTPUT_HOURS,INSPECTOR_ID, INSPECTOR_NAME, STATUS,
+    INSP_DATE, REOPEN_COUNT, LAST_REOPEN_TIME, REMARK, CREATE_TIME, UPDATE_TIME,PNL_PCS,PNL_TEST_TIMES,CHECK_RESULT,
+    CHECK_EXCEPTION_RESULT,CHECK_HANDLE_RESULT,RETEST_PASS_QTY,PRE_STEP_DEFECTSQTY,ADD_OPEN_WAY,ADD_SHORT_WAY,
+    PUNCHING_SCRAPQTY,ISFOLLOW,EQP_CODE,END_DATE
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMapOne"  parameterType="java.lang.String" >
+    select
+      record.ID, record.LOT_CODE, record.PRODUCT_TYPE, record.MODEL_NAME,record.TOTAL_QTY, record.GOOD_QTY, record.DEFECT_QTY, record.PASS_RATE,
+      record.STANDARD_CAPACITY,record.OUTPUT_HOURS,record.INSPECTOR_ID, record.INSPECTOR_NAME, record.STATUS,
+      record.INSP_DATE, record.REOPEN_COUNT, record.LAST_REOPEN_TIME, record.REMARK, record.CREATE_TIME, record.UPDATE_TIME,record.PNL_PCS,
+      record.PNL_TEST_TIMES,record.CHECK_RESULT,record.CHECK_EXCEPTION_RESULT,record.CHECK_HANDLE_RESULT,
+      record.RETEST_PASS_QTY,record.PRE_STEP_DEFECTSQTY,record.ADD_OPEN_WAY,record.ADD_SHORT_WAY,
+      record.PUNCHING_SCRAPQTY,record.ISFOLLOW,record.EQP_CODE,record.END_DATE
+    from ELECTRICAL_TEST_RECORDS record
+    left join PRP_LOT lot on lot.LOTNAME=record.LOT_CODE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getSumByLotCode"   >
+    select sum(TOTAL_QTY) TOTAL_QTY
+    from ELECTRICAL_TEST_RECORDS
+    where LOT_CODE = #{lotCode,jdbcType=VARCHAR}
+    and ID not in(#{recordId,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectByLotAndDate" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" />
+    from ELECTRICAL_TEST_RECORDS
+    where LOT_CODE = #{lotCode,jdbcType=VARCHAR}
+      and TRUNC(INSP_DATE) = TRUNC(#{inspDate,jdbcType=TIMESTAMP})
+    order by CREATE_TIME desc
+  </select>
+
+  <select id="selectByInspectorAndDate" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ELECTRICAL_TEST_RECORDS
+    where INSPECTOR_ID = #{inspectorId,jdbcType=VARCHAR}
+      and TRUNC(INSP_DATE) = TRUNC(#{inspDate,jdbcType=TIMESTAMP})
+    order by CREATE_TIME desc
+  </select>
+
+  <select id="checkElectricalPermission" resultType="java.lang.Integer" >
+    select count(1) from MES_INSP_USER_PERMISSIONS up
+    join MES_INSP_ROLES r on r.ID = up.ROLE_ID
+    where up.USER_ID = #{employeeId,jdbcType=VARCHAR}
+      and r.ROLE_CODE = 'FQC_INSPECTOR'
+      and up.IS_ACTIVE = 1
+  </select>
+
+  <select id="selectElectricalTestDefectPresets" resultType="java.util.Map" >
+    select DEFECTCODEID as "defectCodeId",
+           DEFECTCODENAME as "defectCode",
+           BRIEFDESCRIPTION as "defectName"
+    from ELECTRICAL_TEST_DEFECTCODE
+    where IS_ACTIVE = 1
+    order by sort
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ELECTRICAL_TEST_RECORDS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.jcd.model.ElectricalTestRecord" >
+    insert into ELECTRICAL_TEST_RECORDS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="lotCode != null" >
+        LOT_CODE,
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE,
+      </if>
+      <if test="modelName != null" >
+        MODEL_NAME,
+      </if>
+      <if test="totalQty != null" >
+        TOTAL_QTY,
+      </if>
+      <if test="goodQty != null" >
+        GOOD_QTY,
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY,
+      </if>
+      <if test="passRate != null" >
+        PASS_RATE,
+      </if>
+      <if test="standardCapacity != null" >
+        STANDARD_CAPACITY,
+      </if>
+      <if test="outputHours != null" >
+        OUTPUT_HOURS,
+      </if>
+      <if test="inspectorId != null" >
+        INSPECTOR_ID,
+      </if>
+      <if test="inspectorName != null" >
+        INSPECTOR_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="inspDate != null" >
+        INSP_DATE,
+      </if>
+      <if test="reopenCount != null" >
+        REOPEN_COUNT,
+      </if>
+      <if test="lastReopenTime != null" >
+        LAST_REOPEN_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="pnlPcs != null" >
+        PNL_PCS,
+      </if>
+      <if test="pnlTestTimes != null" >
+        PNL_TEST_TIMES,
+      </if>
+      <if test="checkResult != null" >
+        CHECK_RESULT,
+      </if>
+      <if test="checkExceptionResult != null" >
+        CHECK_EXCEPTION_RESULT,
+      </if>
+      <if test="checkHandleResult != null" >
+        CHECK_HANDLE_RESULT,
+      </if>
+      <if test="retestPassQty != null" >
+        RETEST_PASS_QTY,
+      </if>
+      <if test="preStepDefectsqty != null" >
+        PRE_STEP_DEFECTSQTY,
+      </if>
+      <if test="addOpenWay != null" >
+        ADD_OPEN_WAY,
+      </if>
+      <if test="addShortWay != null" >
+        ADD_SHORT_WAY,
+      </if>
+      <if test="punchingScrapqty != null" >
+        PUNCHING_SCRAPQTY,
+      </if>
+      <if test="isfollow != null" >
+        ISFOLLOW,
+      </if>
+      <if test="eqpCode != null" >
+        EQP_CODE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lotCode != null" >
+        #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQty != null" >
+        #{totalQty,jdbcType=NUMERIC},
+      </if>
+      <if test="goodQty != null" >
+        #{goodQty,jdbcType=NUMERIC},
+      </if>
+      <if test="defectQty != null" >
+        #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="passRate != null" >
+        #{passRate,jdbcType=NUMERIC},
+      </if>
+      <if test="standardCapacity != null" >
+        #{standardCapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="outputHours != null" >
+        #{outputHours,jdbcType=NUMERIC},
+      </if>
+      <if test="inspectorId != null" >
+        #{inspectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectorName != null" >
+        #{inspectorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="inspDate != null" >
+        #{inspDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reopenCount != null" >
+        #{reopenCount,jdbcType=NUMERIC},
+      </if>
+      <if test="lastReopenTime != null" >
+        #{lastReopenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="pnlPcs != null" >
+        #{pnlPcs,jdbcType=NUMERIC},
+      </if>
+      <if test="pnlTestTimes != null" >
+        #{pnlTestTimes,jdbcType=NUMERIC},
+      </if>
+      <if test="checkResult != null" >
+        #{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkExceptionResult != null" >
+        #{checkExceptionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkHandleResult != null" >
+        #{checkHandleResult,jdbcType=VARCHAR},
+      </if>
+      <if test="retestPassQty != null" >
+        #{retestPassQty,jdbcType=NUMERIC},
+      </if>
+      <if test="preStepDefectsqty != null" >
+        #{preStepDefectsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="addOpenWay != null" >
+        #{addOpenWay,jdbcType=NUMERIC},
+      </if>
+      <if test="addShortWay != null" >
+        #{addShortWay,jdbcType=NUMERIC},
+      </if>
+      <if test="punchingScrapqty != null" >
+        #{punchingScrapqty,jdbcType=NUMERIC},
+      </if>
+      <if test="isfollow != null" >
+        #{isfollow,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpCode != null" >
+        #{eqpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.ElectricalTestRecord" >
+    update ELECTRICAL_TEST_RECORDS
+    <set >
+      <if test="lotCode != null" >
+        LOT_CODE = #{lotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null" >
+        MODEL_NAME = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalQty != null" >
+        TOTAL_QTY = #{totalQty,jdbcType=NUMERIC},
+      </if>
+      <if test="goodQty != null" >
+        GOOD_QTY = #{goodQty,jdbcType=NUMERIC},
+      </if>
+      <if test="defectQty != null" >
+        DEFECT_QTY = #{defectQty,jdbcType=NUMERIC},
+      </if>
+      <if test="passRate != null" >
+        PASS_RATE = #{passRate,jdbcType=NUMERIC},
+      </if>
+      <if test="standardCapacity != null" >
+        STANDARD_CAPACITY = #{standardCapacity,jdbcType=NUMERIC},
+      </if>
+      <if test="outputHours != null" >
+        OUTPUT_HOURS = #{outputHours,jdbcType=NUMERIC},
+      </if>
+      <if test="inspectorId != null" >
+        INSPECTOR_ID = #{inspectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectorName != null" >
+        INSPECTOR_NAME = #{inspectorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="inspDate != null" >
+        INSP_DATE = #{inspDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reopenCount != null" >
+        REOPEN_COUNT = #{reopenCount,jdbcType=NUMERIC},
+      </if>
+      <if test="lastReopenTime != null" >
+        LAST_REOPEN_TIME = #{lastReopenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pnlPcs != null" >
+        PNL_PCS=#{pnlPcs,jdbcType=NUMERIC},
+      </if>
+      <if test="pnlTestTimes != null" >
+        PNL_TEST_TIMES=#{pnlTestTimes,jdbcType=NUMERIC},
+      </if>
+      <if test="checkResult != null" >
+        CHECK_RESULT=#{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkExceptionResult != null" >
+        CHECK_EXCEPTION_RESULT=#{checkExceptionResult,jdbcType=VARCHAR},
+      </if>
+      <if test="checkHandleResult != null" >
+        CHECK_HANDLE_RESULT=#{checkHandleResult,jdbcType=VARCHAR},
+      </if>
+      <if test="retestPassQty != null" >
+        RETEST_PASS_QTY=#{retestPassQty,jdbcType=NUMERIC},
+      </if>
+      <if test="preStepDefectsqty != null" >
+        PRE_STEP_DEFECTSQTY=#{preStepDefectsqty,jdbcType=NUMERIC},
+      </if>
+      <if test="addOpenWay != null" >
+        ADD_OPEN_WAY=#{addOpenWay,jdbcType=NUMERIC},
+      </if>
+      <if test="addShortWay != null" >
+        ADD_SHORT_WAY=#{addShortWay,jdbcType=NUMERIC},
+      </if>
+        PUNCHING_SCRAPQTY=#{punchingScrapqty,jdbcType=NUMERIC},
+      <if test="isfollow != null" >
+        ISFOLLOW=#{isfollow,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpCode != null" >
+        EQP_CODE=#{eqpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE=#{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectStandardCapacity" parameterType="java.lang.String" resultType="java.lang.Integer">
+    --select ROUND(3600/(3600*A.RATE),0) standardCapacity
+    select NVL(ROUND(3600/(3600*NULLIF(RATE,0))),0)
+    from CUX_OP_HR_V@ERPLINK
+    where  OPERATION_CODE='FQC'
+    and RESOURCE_CODE='S-HR-FQ-F'
+    and ITEM_NO=REGEXP_SUBSTR(#{modelName,jdbcType=VARCHAR},'[^-]+')
+    and rownum=1
+  </select>
+</mapper>

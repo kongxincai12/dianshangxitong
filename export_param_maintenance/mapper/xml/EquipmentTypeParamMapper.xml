@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.EquipmentTypeParamMapper">
+    <resultMap id="BaseResultMap" type="com.jcd.model.EquipmentTypeParam">
+        <id property="id" column="id"/>
+        <result property="eqpTypeId" column="eqp_type_id"/>
+        <result property="paramKey" column="param_key"/>
+        <result property="paramName" column="param_name"/>
+        <result property="paramOrder" column="param_order"/>
+        <result property="unit" column="unit"/>
+        <result property="standardDisplay" column="standard_display"/>
+        <result property="dataType" column="data_type"/>
+        <result property="validationType" column="validation_type"/>
+        <result property="validationRule" column="validation_rule" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="enableFlag" column="enable_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="findAllByEqpTypeId" resultMap="BaseResultMap">
+        SELECT
+            id,
+            eqp_type_id,
+            param_key,
+            param_name,
+            param_order,
+            unit,
+            standard_display,
+            data_type,
+            validation_type,
+            validation_rule,
+            enable_flag
+        FROM
+            EPM_EQP_TYPE_PARAM
+        WHERE
+            eqp_type_id = #{eqpTypeId}
+        ORDER BY
+            param_order ASC
+    </select>
+    <select id="findEnabledByEqpTypeId" resultMap="BaseResultMap">
+        SELECT
+            id,
+            eqp_type_id,
+            param_key,
+            param_name,
+            param_order,
+            unit,
+            standard_display,
+            data_type,
+            validation_type,
+            validation_rule,
+            enable_flag
+        FROM
+            EPM_EQP_TYPE_PARAM
+        WHERE
+            eqp_type_id = #{eqpTypeId}
+            and enable_flag='Y'
+        ORDER BY
+            param_order ASC
+    </select>
+
+    <insert id="insert" parameterType="com.jcd.model.EquipmentTypeParam">
+        INSERT INTO EPM_EQP_TYPE_PARAM (
+            id, eqp_type_id, param_key, param_name, param_order, unit,
+            standard_display, data_type, validation_type, validation_rule,
+            enable_flag, create_by, create_time
+        ) VALUES (
+                     #{id}, #{eqpTypeId}, #{paramKey}, #{paramName}, #{paramOrder}, #{unit},
+                     #{standardDisplay}, #{dataType}, #{validationType}, #{validationRule, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+                     #{enableFlag},  #{createBy, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP}
+                 )
+    </insert>
+
+    <update id="update" parameterType="com.jcd.model.EquipmentTypeParam">
+        UPDATE EPM_EQP_TYPE_PARAM
+        <set>
+            <if test="paramKey != null">param_key = #{paramKey},</if>
+            <if test="paramName != null">param_name = #{paramName},</if>
+            <if test="paramOrder != null">param_order = #{paramOrder},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="standardDisplay != null">standard_display = #{standardDisplay},</if>
+            <if test="dataType != null">data_type = #{dataType},</if>
+            <if test="validationType != null">validation_type = #{validationType},</if>
+            <if test="validationRule != null">validation_rule = #{validationRule, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime, jdbcType=TIMESTAMP},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="countByKeyAndTypeId" resultType="long">
+        SELECT COUNT(1)
+        FROM EPM_EQP_TYPE_PARAM
+        WHERE param_key = #{paramKey} AND eqp_type_id = #{eqpTypeId}
+    </select>
+
+
+
+    <delete id="delete">
+        DELETE FROM EPM_EQP_TYPE_PARAM WHERE id = #{id}
+    </delete>
+
+</mapper>

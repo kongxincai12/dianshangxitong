@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.ParamOverrideMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.ParamOverride" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EQP_ID" property="eqpId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="PARAM_KEY" property="paramKey" jdbcType="VARCHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="VARCHAR" />
+    <result column="PARAM_ORDER" property="paramOrder" jdbcType="NUMERIC" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="STANDARD_DISPLAY" property="standardDisplay" jdbcType="VARCHAR" />
+    <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+    <result column="VALIDATION_TYPE" property="validationType" jdbcType="VARCHAR" />
+      <result column="VALIDATION_RULE" property="validationRule" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+    <result column="ENABLE_FLAG" property="enableFlag" jdbcType="CHAR" />
+    <result column="SHIFT_BASED" property="shiftBased" jdbcType="CHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EQP_ID, PRODUCT_CODE, PARAM_KEY, PARAM_NAME, PARAM_ORDER, UNIT, STANDARD_DISPLAY, 
+    DATA_TYPE, VALIDATION_TYPE, VALIDATION_RULE, ENABLE_FLAG, SHIFT_BASED, CREATE_BY, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME
+  </sql>
+
+  <delete id="delete" parameterType="com.jcd.model.ParamOverrideExample" >
+    delete from EPM_PARAM_OVERRIDE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.ParamOverride" >
+    insert into EPM_PARAM_OVERRIDE (ID, EQP_ID, PRODUCT_CODE, 
+      PARAM_KEY, PARAM_NAME, PARAM_ORDER, 
+      UNIT, STANDARD_DISPLAY, DATA_TYPE, 
+      VALIDATION_TYPE, VALIDATION_RULE, ENABLE_FLAG, SHIFT_BASED,
+      CREATE_BY, CREATE_TIME, UPDATE_BY, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{eqpId,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+      #{paramKey,jdbcType=VARCHAR}, #{paramName,jdbcType=VARCHAR}, #{paramOrder,jdbcType=NUMERIC}, 
+      #{unit,jdbcType=VARCHAR}, #{standardDisplay,jdbcType=VARCHAR}, #{dataType,jdbcType=VARCHAR}, 
+      #{validationType,jdbcType=VARCHAR}, #{validationRule, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler}, #{enableFlag,jdbcType=CHAR},
+      #{shiftBased,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+
+    <select id="findByEqpId" resultMap="BaseResultMap">
+        SELECT ID, EQP_ID, PRODUCT_CODE,
+               PARAM_KEY, PARAM_NAME, PARAM_ORDER,
+               UNIT, STANDARD_DISPLAY, DATA_TYPE,
+               VALIDATION_TYPE, VALIDATION_RULE, ENABLE_FLAG, SHIFT_BASED,
+               CREATE_BY, CREATE_TIME, UPDATE_BY,
+               UPDATE_TIME FROM EPM_PARAM_OVERRIDE
+        WHERE eqp_id = #{eqpId} AND product_code IS NULL
+        ORDER BY param_order ASC
+    </select>
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT * FROM EPM_PARAM_OVERRIDE WHERE id = #{id}
+    </select>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO EPM_PARAM_OVERRIDE (
+        ID, EQP_ID, PRODUCT_CODE,
+        PARAM_KEY, PARAM_NAME, PARAM_ORDER,
+        UNIT, STANDARD_DISPLAY, DATA_TYPE,
+        VALIDATION_TYPE, VALIDATION_RULE, ENABLE_FLAG, SHIFT_BASED,
+        CREATE_BY, CREATE_TIME, UPDATE_BY,
+        UPDATE_TIME
+        )
+        <foreach collection="list" item="item" separator=" UNION ALL ">
+            SELECT
+            #{item.id},
+            #{item.eqpId},
+            #{item.productCode, jdbcType=VARCHAR},
+            #{item.paramKey},
+            #{item.paramName},
+
+            #{item.paramOrder, jdbcType=INTEGER},
+
+            #{item.unit, jdbcType=VARCHAR},
+            #{item.standardDisplay, jdbcType=VARCHAR},
+            #{item.dataType},
+            #{item.validationType},
+
+            #{item.validationRule, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            #{item.enableFlag},
+            #{item.shiftBased, jdbcType=CHAR},
+            #{item.createBy, jdbcType=VARCHAR},
+            #{item.createTime, jdbcType=TIMESTAMP},
+            #{item.updateBy, jdbcType=VARCHAR},
+            #{item.updateTime, jdbcType=TIMESTAMP}
+            FROM DUAL
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.jcd.model.ParamOverride">
+        UPDATE EPM_PARAM_OVERRIDE
+        <set>
+            <if test="paramKey != null">param_key = #{paramKey},</if>
+            <if test="paramName != null">param_name = #{paramName},</if>
+            <if test="paramOrder != null">param_order = #{paramOrder, jdbcType=NUMERIC},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="standardDisplay != null">standard_display = #{standardDisplay},</if>
+            <if test="dataType != null">data_type = #{dataType},</if>
+            <if test="validationType != null">validation_type = #{validationType},</if>
+
+            <if test="validationRule != null">
+                validation_rule = #{validationRule, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            </if>
+
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="shiftBased != null">shift_based = #{shiftBased},</if>
+            <if test="updateBy != null">update_by = #{updateBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">update_time = #{updateTime, jdbcType=TIMESTAMP},</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM EPM_PARAM_OVERRIDE WHERE id = #{id}
+    </delete>
+    <delete id="deleteByEqpId">
+        DELETE FROM EPM_PARAM_OVERRIDE WHERE eqp_id = #{eqpId} AND product_code IS NULL
+    </delete>
+</mapper>

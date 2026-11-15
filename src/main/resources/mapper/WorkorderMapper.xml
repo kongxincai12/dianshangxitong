@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.WorkorderMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Workorder" >
+    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="ORDERNAME" property="ordername" jdbcType="VARCHAR" />
+    <result column="ORGANIZATIONCODE" property="organizationcode" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRODUCTNAME" property="productname" jdbcType="VARCHAR" />
+    <result column="SALESNUMBER" property="salesnumber" jdbcType="VARCHAR" />
+    <result column="CUSTOMERCODE" property="customercode" jdbcType="VARCHAR" />
+    <result column="TOTALQTY" property="totalqty" jdbcType="NUMERIC" />
+    <result column="STARTQTY" property="startqty" jdbcType="NUMERIC" />
+    <result column="REMAINQTY" property="remainqty" jdbcType="NUMERIC" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="ORDERTYPE" property="ordertype" jdbcType="VARCHAR" />
+    <result column="BONDERTYPE" property="bondertype" jdbcType="VARCHAR" />
+    <result column="CATEGORY" property="category" jdbcType="VARCHAR" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="PANELLENGTH" property="panellength" jdbcType="NUMERIC" />
+    <result column="PANELWIDTH" property="panelwidth" jdbcType="NUMERIC" />
+    <result column="PANELPCS" property="panelpcs" jdbcType="NUMERIC" />
+    <result column="PANELAREA" property="panelarea" jdbcType="NUMERIC" />
+    <result column="BOMVERSION" property="bomversion" jdbcType="VARCHAR" />
+    <result column="PLANSTARTDATE" property="planstartdate" jdbcType="TIMESTAMP" />
+    <result column="PLANENDDATE" property="planenddate" jdbcType="TIMESTAMP" />
+    <result column="ORDERCOMMENT" property="ordercomment" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+    <result column="AUDITDATE" property="auditdate" jdbcType="TIMESTAMP" />
+    <result column="CUSTOMER_PN" property="customerPn" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="NUMERIC" />
+    <result column="ATTRIBUTE1" property="attribute1" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE2" property="attribute2" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE3" property="attribute3" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE4" property="attribute4" jdbcType="VARCHAR" />
+    <result column="ATTRIBUTE5" property="attribute5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDERID, ORDERNAME, ORGANIZATIONCODE, DESCRIPTION, PRODUCTNAME, SALESNUMBER, CUSTOMERCODE, 
+    TOTALQTY, STARTQTY, REMAINQTY, STATE, ORDERTYPE, BONDERTYPE, CATEGORY, UNIT, PANELLENGTH, 
+    PANELWIDTH, PANELPCS, PANELAREA, BOMVERSION, PLANSTARTDATE, PLANENDDATE, ORDERCOMMENT, 
+    USERNAME, DATETIME, AUDITOR, AUDITDATE, CUSTOMER_PN, QTY, ATTRIBUTE1, ATTRIBUTE2, 
+    ATTRIBUTE3, ATTRIBUTE4, ATTRIBUTE5
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcd.model.WorkorderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from WORKORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WORKORDER
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WORKORDER
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Workorder" >
+    insert into WORKORDER (ORDERID, ORDERNAME, ORGANIZATIONCODE, 
+      DESCRIPTION, PRODUCTNAME, SALESNUMBER, 
+      CUSTOMERCODE, TOTALQTY, STARTQTY, 
+      REMAINQTY, STATE, ORDERTYPE, 
+      BONDERTYPE, CATEGORY, UNIT, 
+      PANELLENGTH, PANELWIDTH, PANELPCS, 
+      PANELAREA, BOMVERSION, PLANSTARTDATE, 
+      PLANENDDATE, ORDERCOMMENT, USERNAME, 
+      DATETIME, AUDITOR, AUDITDATE, 
+      CUSTOMER_PN, QTY, ATTRIBUTE1, 
+      ATTRIBUTE2, ATTRIBUTE3, ATTRIBUTE4, 
+      ATTRIBUTE5)
+    values (#{orderid,jdbcType=VARCHAR}, #{ordername,jdbcType=VARCHAR}, #{organizationcode,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{salesnumber,jdbcType=VARCHAR}, 
+      #{customercode,jdbcType=VARCHAR}, #{totalqty,jdbcType=NUMERIC}, #{startqty,jdbcType=NUMERIC}, 
+      #{remainqty,jdbcType=NUMERIC}, #{state,jdbcType=VARCHAR}, #{ordertype,jdbcType=VARCHAR}, 
+      #{bondertype,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{panellength,jdbcType=NUMERIC}, #{panelwidth,jdbcType=NUMERIC}, #{panelpcs,jdbcType=NUMERIC}, 
+      #{panelarea,jdbcType=NUMERIC}, #{bomversion,jdbcType=VARCHAR}, #{planstartdate,jdbcType=TIMESTAMP}, 
+      #{planenddate,jdbcType=TIMESTAMP}, #{ordercomment,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, #{auditdate,jdbcType=TIMESTAMP}, 
+      #{customerPn,jdbcType=VARCHAR}, #{qty,jdbcType=NUMERIC}, #{attribute1,jdbcType=VARCHAR}, 
+      #{attribute2,jdbcType=VARCHAR}, #{attribute3,jdbcType=VARCHAR}, #{attribute4,jdbcType=VARCHAR}, 
+      #{attribute5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Workorder" >
+    insert into WORKORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="ordername != null" >
+        ORDERNAME,
+      </if>
+      <if test="organizationcode != null" >
+        ORGANIZATIONCODE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME,
+      </if>
+      <if test="salesnumber != null" >
+        SALESNUMBER,
+      </if>
+      <if test="customercode != null" >
+        CUSTOMERCODE,
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY,
+      </if>
+      <if test="startqty != null" >
+        STARTQTY,
+      </if>
+      <if test="remainqty != null" >
+        REMAINQTY,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="ordertype != null" >
+        ORDERTYPE,
+      </if>
+      <if test="bondertype != null" >
+        BONDERTYPE,
+      </if>
+      <if test="category != null" >
+        CATEGORY,
+      </if>
+      <if test="unit != null" >
+        UNIT,
+      </if>
+      <if test="panellength != null" >
+        PANELLENGTH,
+      </if>
+      <if test="panelwidth != null" >
+        PANELWIDTH,
+      </if>
+      <if test="panelpcs != null" >
+        PANELPCS,
+      </if>
+      <if test="panelarea != null" >
+        PANELAREA,
+      </if>
+      <if test="bomversion != null" >
+        BOMVERSION,
+      </if>
+      <if test="planstartdate != null" >
+        PLANSTARTDATE,
+      </if>
+      <if test="planenddate != null" >
+        PLANENDDATE,
+      </if>
+      <if test="ordercomment != null" >
+        ORDERCOMMENT,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="auditor != null" >
+        AUDITOR,
+      </if>
+      <if test="auditdate != null" >
+        AUDITDATE,
+      </if>
+      <if test="customerPn != null" >
+        CUSTOMER_PN,
+      </if>
+      <if test="qty != null" >
+        QTY,
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1,
+      </if>
+      <if test="attribute2 != null" >
+        ATTRIBUTE2,
+      </if>
+      <if test="attribute3 != null" >
+        ATTRIBUTE3,
+      </if>
+      <if test="attribute4 != null" >
+        ATTRIBUTE4,
+      </if>
+      <if test="attribute5 != null" >
+        ATTRIBUTE5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordername != null" >
+        #{ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationcode != null" >
+        #{organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="salesnumber != null" >
+        #{salesnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customercode != null" >
+        #{customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="startqty != null" >
+        #{startqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainqty != null" >
+        #{remainqty,jdbcType=NUMERIC},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null" >
+        #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="bondertype != null" >
+        #{bondertype,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="panellength != null" >
+        #{panellength,jdbcType=NUMERIC},
+      </if>
+      <if test="panelwidth != null" >
+        #{panelwidth,jdbcType=NUMERIC},
+      </if>
+      <if test="panelpcs != null" >
+        #{panelpcs,jdbcType=NUMERIC},
+      </if>
+      <if test="panelarea != null" >
+        #{panelarea,jdbcType=NUMERIC},
+      </if>
+      <if test="bomversion != null" >
+        #{bomversion,jdbcType=VARCHAR},
+      </if>
+      <if test="planstartdate != null" >
+        #{planstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planenddate != null" >
+        #{planenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordercomment != null" >
+        #{ordercomment,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditdate != null" >
+        #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerPn != null" >
+        #{customerPn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="attribute1 != null" >
+        #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        #{attribute5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update WORKORDER
+    <set >
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordername != null" >
+        ORDERNAME = #{record.ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizationcode != null" >
+        ORGANIZATIONCODE = #{record.organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        PRODUCTNAME = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesnumber != null" >
+        SALESNUMBER = #{record.salesnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customercode != null" >
+        CUSTOMERCODE = #{record.customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalqty != null" >
+        TOTALQTY = #{record.totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.startqty != null" >
+        STARTQTY = #{record.startqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.remainqty != null" >
+        REMAINQTY = #{record.remainqty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.state != null" >
+        STATE = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordertype != null" >
+        ORDERTYPE = #{record.ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bondertype != null" >
+        BONDERTYPE = #{record.bondertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        CATEGORY = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null" >
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.panellength != null" >
+        PANELLENGTH = #{record.panellength,jdbcType=NUMERIC},
+      </if>
+      <if test="record.panelwidth != null" >
+        PANELWIDTH = #{record.panelwidth,jdbcType=NUMERIC},
+      </if>
+      <if test="record.panelpcs != null" >
+        PANELPCS = #{record.panelpcs,jdbcType=NUMERIC},
+      </if>
+      <if test="record.panelarea != null" >
+        PANELAREA = #{record.panelarea,jdbcType=NUMERIC},
+      </if>
+      <if test="record.bomversion != null" >
+        BOMVERSION = #{record.bomversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planstartdate != null" >
+        PLANSTARTDATE = #{record.planstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planenddate != null" >
+        PLANENDDATE = #{record.planenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ordercomment != null" >
+        ORDERCOMMENT = #{record.ordercomment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datetime != null" >
+        DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditor != null" >
+        AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditdate != null" >
+        AUDITDATE = #{record.auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.customerPn != null" >
+        CUSTOMER_PN = #{record.customerPn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qty != null" >
+        QTY = #{record.qty,jdbcType=NUMERIC},
+      </if>
+      <if test="record.attribute1 != null" >
+        ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute2 != null" >
+        ATTRIBUTE2 = #{record.attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute3 != null" >
+        ATTRIBUTE3 = #{record.attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute4 != null" >
+        ATTRIBUTE4 = #{record.attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attribute5 != null" >
+        ATTRIBUTE5 = #{record.attribute5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update WORKORDER
+    set ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      ORDERNAME = #{record.ordername,jdbcType=VARCHAR},
+      ORGANIZATIONCODE = #{record.organizationcode,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      PRODUCTNAME = #{record.productname,jdbcType=VARCHAR},
+      SALESNUMBER = #{record.salesnumber,jdbcType=VARCHAR},
+      CUSTOMERCODE = #{record.customercode,jdbcType=VARCHAR},
+      TOTALQTY = #{record.totalqty,jdbcType=NUMERIC},
+      STARTQTY = #{record.startqty,jdbcType=NUMERIC},
+      REMAINQTY = #{record.remainqty,jdbcType=NUMERIC},
+      STATE = #{record.state,jdbcType=VARCHAR},
+      ORDERTYPE = #{record.ordertype,jdbcType=VARCHAR},
+      BONDERTYPE = #{record.bondertype,jdbcType=VARCHAR},
+      CATEGORY = #{record.category,jdbcType=VARCHAR},
+      UNIT = #{record.unit,jdbcType=VARCHAR},
+      PANELLENGTH = #{record.panellength,jdbcType=NUMERIC},
+      PANELWIDTH = #{record.panelwidth,jdbcType=NUMERIC},
+      PANELPCS = #{record.panelpcs,jdbcType=NUMERIC},
+      PANELAREA = #{record.panelarea,jdbcType=NUMERIC},
+      BOMVERSION = #{record.bomversion,jdbcType=VARCHAR},
+      PLANSTARTDATE = #{record.planstartdate,jdbcType=TIMESTAMP},
+      PLANENDDATE = #{record.planenddate,jdbcType=TIMESTAMP},
+      ORDERCOMMENT = #{record.ordercomment,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      DATETIME = #{record.datetime,jdbcType=TIMESTAMP},
+      AUDITOR = #{record.auditor,jdbcType=VARCHAR},
+      AUDITDATE = #{record.auditdate,jdbcType=TIMESTAMP},
+      CUSTOMER_PN = #{record.customerPn,jdbcType=VARCHAR},
+      QTY = #{record.qty,jdbcType=NUMERIC},
+      ATTRIBUTE1 = #{record.attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE2 = #{record.attribute2,jdbcType=VARCHAR},
+      ATTRIBUTE3 = #{record.attribute3,jdbcType=VARCHAR},
+      ATTRIBUTE4 = #{record.attribute4,jdbcType=VARCHAR},
+      ATTRIBUTE5 = #{record.attribute5,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Workorder" >
+    update WORKORDER
+    <set >
+      <if test="ordername != null" >
+        ORDERNAME = #{ordername,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationcode != null" >
+        ORGANIZATIONCODE = #{organizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="salesnumber != null" >
+        SALESNUMBER = #{salesnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customercode != null" >
+        CUSTOMERCODE = #{customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="totalqty != null" >
+        TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      </if>
+      <if test="startqty != null" >
+        STARTQTY = #{startqty,jdbcType=NUMERIC},
+      </if>
+      <if test="remainqty != null" >
+        REMAINQTY = #{remainqty,jdbcType=NUMERIC},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null" >
+        ORDERTYPE = #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="bondertype != null" >
+        BONDERTYPE = #{bondertype,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        CATEGORY = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="panellength != null" >
+        PANELLENGTH = #{panellength,jdbcType=NUMERIC},
+      </if>
+      <if test="panelwidth != null" >
+        PANELWIDTH = #{panelwidth,jdbcType=NUMERIC},
+      </if>
+      <if test="panelpcs != null" >
+        PANELPCS = #{panelpcs,jdbcType=NUMERIC},
+      </if>
+      <if test="panelarea != null" >
+        PANELAREA = #{panelarea,jdbcType=NUMERIC},
+      </if>
+      <if test="bomversion != null" >
+        BOMVERSION = #{bomversion,jdbcType=VARCHAR},
+      </if>
+      <if test="planstartdate != null" >
+        PLANSTARTDATE = #{planstartdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planenddate != null" >
+        PLANENDDATE = #{planenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordercomment != null" >
+        ORDERCOMMENT = #{ordercomment,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditor != null" >
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditdate != null" >
+        AUDITDATE = #{auditdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerPn != null" >
+        CUSTOMER_PN = #{customerPn,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=NUMERIC},
+      </if>
+      <if test="attribute1 != null" >
+        ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute2 != null" >
+        ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute3 != null" >
+        ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute4 != null" >
+        ATTRIBUTE4 = #{attribute4,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute5 != null" >
+        ATTRIBUTE5 = #{attribute5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Workorder" >
+    update WORKORDER
+    set ORDERNAME = #{ordername,jdbcType=VARCHAR},
+      ORGANIZATIONCODE = #{organizationcode,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      SALESNUMBER = #{salesnumber,jdbcType=VARCHAR},
+      CUSTOMERCODE = #{customercode,jdbcType=VARCHAR},
+      TOTALQTY = #{totalqty,jdbcType=NUMERIC},
+      STARTQTY = #{startqty,jdbcType=NUMERIC},
+      REMAINQTY = #{remainqty,jdbcType=NUMERIC},
+      STATE = #{state,jdbcType=VARCHAR},
+      ORDERTYPE = #{ordertype,jdbcType=VARCHAR},
+      BONDERTYPE = #{bondertype,jdbcType=VARCHAR},
+      CATEGORY = #{category,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      PANELLENGTH = #{panellength,jdbcType=NUMERIC},
+      PANELWIDTH = #{panelwidth,jdbcType=NUMERIC},
+      PANELPCS = #{panelpcs,jdbcType=NUMERIC},
+      PANELAREA = #{panelarea,jdbcType=NUMERIC},
+      BOMVERSION = #{bomversion,jdbcType=VARCHAR},
+      PLANSTARTDATE = #{planstartdate,jdbcType=TIMESTAMP},
+      PLANENDDATE = #{planenddate,jdbcType=TIMESTAMP},
+      ORDERCOMMENT = #{ordercomment,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDITDATE = #{auditdate,jdbcType=TIMESTAMP},
+      CUSTOMER_PN = #{customerPn,jdbcType=VARCHAR},
+      QTY = #{qty,jdbcType=NUMERIC},
+      ATTRIBUTE1 = #{attribute1,jdbcType=VARCHAR},
+      ATTRIBUTE2 = #{attribute2,jdbcType=VARCHAR},
+      ATTRIBUTE3 = #{attribute3,jdbcType=VARCHAR},
+      ATTRIBUTE4 = #{attribute4,jdbcType=VARCHAR},
+      ATTRIBUTE5 = #{attribute5,jdbcType=VARCHAR}
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateWorkorderStatus" parameterType="java.lang.String">
+    UPDATE WORKORDER SET STATE= #{state,jdbcType=VARCHAR} WHERE ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

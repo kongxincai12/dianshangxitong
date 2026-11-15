@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcd.mapper.LoadinglistMapper" >
+  <resultMap id="BaseResultMap" type="com.jcd.model.Loadinglist" >
+    <id column="LLID" property="llid" jdbcType="VARCHAR" />
+    <result column="LLNAME" property="llname" jdbcType="VARCHAR" />
+    <result column="PRODUCTNAME" property="productname" jdbcType="VARCHAR" />
+    <result column="LINENAME" property="linename" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    LLID, LLNAME, PRODUCTNAME, LINENAME, DESCRIPTION, USERNAME, DATETIME, VERSION, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from LOADINGLIST
+    where LLID = #{llid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByProductname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM LOADINGLIST
+    WHERE PRODUCTNAME = #{productpn,jdbcType=VARCHAR}
+    AND LINENAME LIKE '%AUTO%'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LOADINGLIST
+    where LLID = #{llid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jcd.model.Loadinglist" >
+    insert into LOADINGLIST (LLID, LLNAME, PRODUCTNAME, 
+      LINENAME, DESCRIPTION, USERNAME, 
+      DATETIME, VERSION, STATUS
+      )
+    values (#{llid,jdbcType=VARCHAR}, #{llname,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, 
+      #{linename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcd.model.Loadinglist" >
+    insert into LOADINGLIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="llid != null" >
+        LLID,
+      </if>
+      <if test="llname != null" >
+        LLNAME,
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME,
+      </if>
+      <if test="linename != null" >
+        LINENAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="llid != null" >
+        #{llid,jdbcType=VARCHAR},
+      </if>
+      <if test="llname != null" >
+        #{llname,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="linename != null" >
+        #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcd.model.Loadinglist" >
+    update LOADINGLIST
+    <set >
+      <if test="llname != null" >
+        LLNAME = #{llname,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="linename != null" >
+        LINENAME = #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LLID = #{llid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcd.model.Loadinglist" >
+    update LOADINGLIST
+    set LLNAME = #{llname,jdbcType=VARCHAR},
+      PRODUCTNAME = #{productname,jdbcType=VARCHAR},
+      LINENAME = #{linename,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where LLID = #{llid,jdbcType=VARCHAR}
+  </update>
+</mapper>
