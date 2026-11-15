@@ -1,0 +1,5 @@
+USERNAME	NICKNAME	ROLE	STATUS	CREATED	
+admin	商城测试账号	工程师	1	2026-11-15 20:26:39
+buyer1	商城买家测试账号	工程师	1	2026-11-15 20:26:39
+buyer2	kongxincai	客户	1	2026-11-15 20:54:28
+rows=3
