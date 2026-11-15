@@ -33,6 +33,7 @@
     .filters .btns { flex: 0 0 auto; display: flex; gap: 8px; }
     .inline { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
     .login-card { max-width: 360px; margin: 60px auto; }
+    .auth-foot { display: flex; align-items: center; justify-content: center; margin-top: 10px; font-size: 12px; }
     .block { width: 100%; margin-top: 14px; }
     button { border: none; border-radius: 6px; padding: 8px 14px; font-size: 13px; cursor: pointer; background: #eef1f5; }
     button:disabled { opacity: .5; cursor: not-allowed; }
@@ -122,14 +123,29 @@
     <div class="user" v-if="authed"><span>{{ user.fullname || user.username }}</span><span class="tip" v-if="isAdmin">（管理员）</span><button class="link" @click="logout">退出</button></div>
   </header>
 
-  <!-- 登录 -->
+  <!-- 登录 / 注册：账号存在 SHOP_USER，注册接口无需 Token（已在拦截器白名单里） -->
   <section class="wrap" v-if="!authed">
     <div class="card login-card">
-      <h2>登录</h2>
-      <p class="tip">商城接口需要 JWT，账号来自 MES 用户表（Userprofile）。</p>
-      <label>用户名</label><input v-model.trim="loginForm.username" placeholder="MES 登录账号" @keyup.enter="doLogin">
-      <label>密码</label><input v-model.trim="loginForm.password" type="password" @keyup.enter="doLogin">
-      <button class="pri block" :disabled="loginLoading" @click="doLogin">{{ loginLoading ? '登录中...' : '登录' }}</button>
+      <h2>{{ authView === 'login' ? '登录' : '注册' }}</h2>
+
+      <template v-if="authView === 'login'">
+        <p class="tip">商城接口需要 JWT，账号来自商城用户表（SHOP_USER）。</p>
+        <label>用户名</label><input v-model.trim="loginForm.username" placeholder="登录账号" @keyup.enter="doLogin">
+        <label>密码</label><input v-model.trim="loginForm.password" type="password" @keyup.enter="doLogin">
+        <button class="pri block" :disabled="loginLoading" @click="doLogin">{{ loginLoading ? '登录中...' : '登录' }}</button>
+        <div class="auth-foot"><span class="tip">还没有账号？</span><button class="link" @click="showAuth('register')">立即注册</button></div>
+      </template>
+
+      <template v-else>
+        <p class="tip">自助注册的身份是普通客户，管理员权限需另行授予。</p>
+        <label>用户名 *</label><input v-model.trim="regForm.username" placeholder="至少 3 个字符" @keyup.enter="doRegister">
+        <label>密码 *</label><input v-model.trim="regForm.password" type="password" placeholder="至少 6 个字符" @keyup.enter="doRegister">
+        <label>确认密码 *</label><input v-model.trim="regForm.confirm" type="password" @keyup.enter="doRegister">
+        <label>昵称</label><input v-model.trim="regForm.nickname" placeholder="选填，留空则与用户名相同">
+        <label>手机号</label><input v-model.trim="regForm.phone" placeholder="选填">
+        <button class="pri block" :disabled="regLoading" @click="doRegister">{{ regLoading ? '提交中...' : '注册' }}</button>
+        <div class="auth-foot"><span class="tip">已有账号？</span><button class="link" @click="showAuth('login')">返回登录</button></div>
+      </template>
     </div>
   </section>
 
@@ -548,9 +564,36 @@ function boot() {
           notify((e && e.message) || '登录失败', true);
         } finally { loginLoading.value = false; }
       }
+      /* 注册：字段对应 ShopRegisterDto，校验规则和 ShopUserServiceImpl 一致，
+         前端拦一遍只是为了少一次往返，真正的判定仍在后端 */
+      var authView = ref('login');
+      var regForm = reactive({ username: '', password: '', confirm: '', nickname: '', phone: '' }), regLoading = ref(false);
+      function showAuth(v) {
+        authView.value = v;
+        if (v === 'login') { regForm.password = ''; regForm.confirm = ''; }
+      }
+      async function doRegister() {
+        if (!regForm.username || !regForm.password || !regForm.confirm) { notify('请填写用户名和密码', true); return; }
+        if (regForm.username.length < 3) { notify('用户名至少 3 个字符', true); return; }
+        if (regForm.password.length < 6) { notify('密码至少 6 个字符', true); return; }
+        if (regForm.password !== regForm.confirm) { notify('两次输入的密码不一致', true); return; }
+        regLoading.value = true;
+        try {
+          await http.post('/api/auth/register', {
+            username: regForm.username, password: regForm.password,
+            nickname: regForm.nickname || null, phone: regForm.phone || null
+          });
+          /* 注册完直接登进去，省得用户再输一遍密码 */
+          loginForm.username = regForm.username; loginForm.password = regForm.password;
+          showAuth('login');
+          await doLogin();
+        } catch (e) {
+          notify((e && e.message) || '注册失败', true);
+        } finally { regLoading.value = false; }
+      }
       function logout() {
         http.clearAuth(); authed.value = false; user.value = {}; cart.value = [];
-        isAdmin.value = false; tab.value = 'goods';
+        isAdmin.value = false; tab.value = 'goods'; authView.value = 'login';
         notify('已退出登录');
       }
 
@@ -919,6 +962,7 @@ function boot() {
       return {
         toast, money, fmtDate, statusText, pageCount,
         authed, user, loginForm, loginLoading, doLogin, logout, tab, switchTab, isAdmin, loadProfile,
+        authView, regForm, regLoading, showAuth, doRegister,
         categories, goods, loadGoods, resetGoods, detail, openDetail, quickAdd, addCartFromDetail,
         cart, cartCount, cartAmount, updateCartQty, onQtyInput, removeCartItem, clearCart,
         checkoutForm, submitting, gotoCheckout, doCheckout,

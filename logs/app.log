@@ -30803,3 +30803,79 @@ Caused by: java.security.SignatureException: Signature length not correct: got 3
 2026-11-15 20:48:11.694  INFO 14920 --- [http-nio-9900-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-11-15 20:48:11.695  INFO 14920 --- [http-nio-9900-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-11-15 20:48:11.696  INFO 14920 --- [http-nio-9900-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 20:53:00.709  INFO 3976 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication v0.0.1-SNAPSHOT using Java 17.0.4 on DESKTOP-68LG5GB with PID 3976 (C:\Users\Administrator\Desktop\dianshang\target\jcd-mes-pda-server-0.0.1-SNAPSHOT.jar started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:53:00.714  INFO 3976 --- [main] com.jcd.PdaserverApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 20:53:02.263  INFO 3976 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9901 (http)
+2026-11-15 20:53:02.277  INFO 3976 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:53:02.277  INFO 3976 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:53:02.386  INFO 3976 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:53:02.386  INFO 3976 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1600 ms
+2026-11-15 20:53:02.617  INFO 3976 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:53:02.720  WARN 3976 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:53:02.841  INFO 3976 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:53:04.144  INFO 3976 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9901 (http) with context path ''
+2026-11-15 20:53:04.160  INFO 3976 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 4.014 seconds (JVM running for 4.548)
+2026-11-15 20:53:42.958  INFO 3976 --- [http-nio-9901-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:53:42.961  INFO 3976 --- [http-nio-9901-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:53:42.965  INFO 3976 --- [http-nio-9901-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-11-15 20:57:07.062  INFO 14920 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2026-11-15 20:58:30.848  INFO 9808 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication v0.0.1-SNAPSHOT using Java 17.0.4 on DESKTOP-68LG5GB with PID 9808 (C:\Users\Administrator\Desktop\dianshang\target\jcd-mes-pda-server-0.0.1-SNAPSHOT.jar started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:58:30.853  INFO 9808 --- [main] com.jcd.PdaserverApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 20:58:32.488  INFO 9808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9900 (http)
+2026-11-15 20:58:32.500  INFO 9808 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:58:32.501  INFO 9808 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:58:32.596  INFO 9808 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:58:32.596  INFO 9808 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1666 ms
+2026-11-15 20:58:32.826  INFO 9808 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:58:32.940  WARN 9808 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:58:33.061  INFO 9808 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:58:34.392  INFO 9808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9900 (http) with context path ''
+2026-11-15 20:58:34.410  INFO 9808 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 4.188 seconds (JVM running for 4.745)
+2026-11-15 20:59:02.686  INFO 9808 --- [http-nio-9900-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:59:02.690  INFO 9808 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:59:02.692  INFO 9808 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 21:06:07.483  INFO 9704 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication using Java 1.8.0_341 on DESKTOP-68LG5GB with PID 9704 (C:\Users\Administrator\Desktop\dianshang\target\classes started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 21:06:07.486  INFO 9704 --- [main] com.jcd.PdaserverApplication             : The following 1 profile is active: "sz"
+2026-11-15 21:06:08.670  INFO 9704 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9900 (http)
+2026-11-15 21:06:08.682  INFO 9704 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 21:06:08.683  INFO 9704 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 21:06:08.867  INFO 9704 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 21:06:08.867  INFO 9704 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1336 ms
+2026-11-15 21:06:09.044  INFO 9704 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 21:06:09.124  WARN 9704 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 21:06:09.170  INFO 9704 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 21:06:11.162  WARN 9704 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 9900 is already in use
+2026-11-15 21:06:11.165  INFO 9704 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2026-11-15 21:06:11.168  INFO 9704 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-11-15 21:06:11.180  INFO 9704 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2026-11-15 21:06:11.207 ERROR 9704 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 9900 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 9900 or configure this application to listen on another port.
+
+2026-11-15 21:07:00.107  INFO 3768 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication using Java 1.8.0_341 on DESKTOP-68LG5GB with PID 3768 (C:\Users\Administrator\Desktop\dianshang\target\classes started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 21:07:00.109  INFO 3768 --- [main] com.jcd.PdaserverApplication             : The following 1 profile is active: "sz"
+2026-11-15 21:07:01.335  INFO 3768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9900 (http)
+2026-11-15 21:07:01.344  INFO 3768 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 21:07:01.345  INFO 3768 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 21:07:01.512  INFO 3768 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 21:07:01.513  INFO 3768 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1354 ms
+2026-11-15 21:07:01.676  INFO 3768 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 21:07:01.763  WARN 3768 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 21:07:01.808  INFO 3768 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 21:07:03.756  INFO 3768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9900 (http) with context path ''
+2026-11-15 21:07:03.769  INFO 3768 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 4.203 seconds (JVM running for 5.713)
+2026-11-15 21:07:38.723  INFO 3768 --- [http-nio-9900-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 21:07:38.723  INFO 3768 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 21:07:38.724  INFO 3768 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
