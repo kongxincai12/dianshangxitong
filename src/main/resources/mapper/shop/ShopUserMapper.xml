@@ -9,13 +9,14 @@
     <result column="NICKNAME"    property="nickname"/>
     <result column="PHONE"       property="phone"/>
     <result column="EMAIL"       property="email"/>
+    <result column="ROLE"        property="role"/>
     <result column="STATUS"      property="status"/>
     <result column="CREATE_TIME" property="createTime"/>
     <result column="UPDATE_TIME" property="updateTime"/>
   </resultMap>
 
   <sql id="Cols">
-    ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, STATUS, CREATE_TIME, UPDATE_TIME
+    ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, ROLE, STATUS, CREATE_TIME, UPDATE_TIME
   </sql>
 
   <select id="selectById" resultMap="UserMap">
@@ -28,9 +29,9 @@
 
   <insert id="insert" parameterType="com.jcd.model.shop.ShopUser">
     insert into SHOP_USER (
-      ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, STATUS, CREATE_TIME, UPDATE_TIME
+      ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, ROLE, STATUS, CREATE_TIME, UPDATE_TIME
     ) values (
-      #{id}, #{username}, #{password}, #{nickname}, #{phone}, #{email}, #{status}, #{createTime}, #{updateTime}
+      #{id}, #{username}, #{password}, #{nickname}, #{phone}, #{email}, #{role}, #{status}, #{createTime}, #{updateTime}
     )
   </insert>
 
@@ -40,7 +41,8 @@
       <if test="password != null"> PASSWORD = #{password},</if>
       <if test="nickname != null"> NICKNAME = #{nickname},</if>
       <if test="phone != null">    PHONE = #{phone},</if>
-      <if test="email != null">    EMAIL = #{email},</if>
+      <if test="email != null">     EMAIL = #{email},</if>
+      <if test="role != null">      ROLE = #{role},</if>
       <if test="status != null">   STATUS = #{status},</if>
       UPDATE_TIME = #{updateTime}
     </set>

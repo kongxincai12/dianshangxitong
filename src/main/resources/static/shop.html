@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>简易商城 · Vue3</title>
+  <title>简易商城</title>
   <style>
     * { box-sizing: border-box; }
     [v-cloak] { display: none; }
@@ -111,7 +111,7 @@
 
 <div id="app" v-cloak>
   <header class="topbar">
-    <div class="brand">🛒 简易商城 <span class="sub">Vue3 + Spring Boot</span></div>
+    <div class="brand">🛒 简易商城</div>
     <nav class="tabs" v-if="authed">
       <a :class="{ active: tab === 'goods' }" @click="switchTab('goods')">商品</a>
       <a :class="{ active: tab === 'cart' }" @click="switchTab('cart')">购物车<span class="badge" v-if="cartCount > 0">{{ cartCount }}</span></a>

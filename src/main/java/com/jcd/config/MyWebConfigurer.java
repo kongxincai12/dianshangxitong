@@ -38,25 +38,15 @@ public class MyWebConfigurer implements WebMvcConfigurer {
         return new CorsFilter(source);
     }
 
-    // 这是新增的拦截器配置
+    // JWT 拦截器: 除下面列出的公开接口外, /api/** 一律要带 Token
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
-                // 1. addPathPatterns: 指定要拦截的路径
-                .addPathPatterns("/api/**") // 拦截所有 /api/ 开头的请求
-                // 2. excludePathPatterns: 指定要放行的路径
-                .excludePathPatterns("/api/auth/latest-version")// 放行更新版本接口
-                .excludePathPatterns("/api/mes/latest-version")// 放行更新版本接口
-                .excludePathPatterns("/api/auth/login")// 放行登录接口，否则无法获取Token
-                .excludePathPatterns("/api/auth/mes/check")
-                .excludePathPatterns("/api/system/factory")// 放行厂区身份核验接口
-                .excludePathPatterns("/api/materialcheck/**")
-                .excludePathPatterns("/api/upload/**")
-                .excludePathPatterns("/api/shelf/**")
-                .excludePathPatterns("/api/alipay/notify")// 放行支付宝异步通知回调
-                .excludePathPatterns("/api/alipay/return")// 放行支付宝同步跳转回调
-                .excludePathPatterns("/api/alipay/**")// 放行支付宝支付相关接口
-
-        ;
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/auth/login")            // 登录接口本身没有 Token
+                .excludePathPatterns("/api/auth/register")         // 注册同理, 且注册只能拿到普通客户角色
+                .excludePathPatterns("/api/alipay/notify")         // 支付宝异步回调由支付宝服务器发起
+                .excludePathPatterns("/api/alipay/return")         // 支付宝同步跳转
+                .excludePathPatterns("/api/alipay/**");           // 其余支付宝接口
     }
 }

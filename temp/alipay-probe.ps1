@@ -1,8 +1,9 @@
 # Alipay integration probe. ASCII-only source so PS 5.1 reads it correctly.
+param([int]$Port = 9900, [string]$TunnelHost = 'sb76aff6.natappfree.cc')
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
-$Base = 'http://localhost:9900'
+$Base = 'http://localhost:' + $Port
 
 function Send-Req($method, $path, $body, $token) {
   $hs = @{ 'Content-Type' = 'application/json' }
@@ -25,9 +26,11 @@ $r2 = Send-Req POST '/api/alipay/pay' @{ subject = 'probe-cancelled'; totalAmoun
 Write-Host ('code=' + $r2.code + ' message=' + $r2.message)
 
 Write-Host '=== 3. create a fresh PENDING order ==='
-$prods = (Send-Req GET '/api/shop/products?pageNo=1&pageSize=5&status=1' $null $tk).data
-$pid1 = $prods.list[0].id
-Write-Host ('product: ' + $pid1 + ' price=' + $prods.list[0].price)
+$prods = (Send-Req GET '/api/shop/products?pageNo=1&pageSize=20&status=1' $null $tk).data
+# a product with 0 stock makes checkout fail on 409 and hides the real alipay result
+$p = $prods.list | Where-Object { $_.stock -gt 0 } | Select-Object -First 1
+$pid1 = $p.id
+Write-Host ('product: ' + $pid1 + ' price=' + $p.price)
 $null = Send-Req DELETE '/api/shop/cart' $null $tk
 $null = Send-Req POST '/api/shop/cart' @{ productId = $pid1; quantity = 1 } $tk
 $order = (Send-Req POST '/api/shop/orders/checkout' @{
@@ -78,7 +81,7 @@ Write-Host ('code=' + $r9.code + ' data=' + ($r9.data | ConvertTo-Json -Compress
 
 Write-Host '=== 10. notify tunnel reachability (public natapp url in config) ==='
 try {
-  $t = Invoke-WebRequest -Uri 'http://r86547fe.natappfree.cc/api/alipay/notify' -Method Post -Body 'out_trade_no=probe' -ContentType 'application/x-www-form-urlencoded' -UseBasicParsing -TimeoutSec 15
+  $t = Invoke-WebRequest -Uri ('http://' + $TunnelHost + '/api/alipay/notify') -Method Post -Body 'out_trade_no=probe' -ContentType 'application/x-www-form-urlencoded' -UseBasicParsing -TimeoutSec 15
   Write-Host ('tunnel HTTP 200, body head = ' + (([Text.Encoding]::UTF8.GetString($t.RawContentStream.ToArray())).Substring(0, 80)))
 } catch {
   Write-Host ('tunnel unreachable: ' + $_.Exception.Message)

@@ -45,8 +45,22 @@ $tkAdmin = (Invoke-Api POST '/api/auth/login' @{ username = 'admin';  password =
 $tkBuyer = (Invoke-Api POST '/api/auth/login' @{ username = 'buyer1'; password = '123456' }).Json.data.token
 Write-Host "tokens: admin=$([bool]$tkAdmin) buyer1=$([bool]$tkBuyer)"
 
-$pid1 = (Invoke-Api GET '/api/shop/products?pageNo=1&pageSize=1&status=1' $null $tkBuyer).Json.data.list[0].id
+# pick a product that actually has stock, otherwise checkout fails on 409 for unrelated reasons
+$prods = (Invoke-Api GET '/api/shop/products?pageNo=1&pageSize=50&status=1' $null $tkBuyer).Json.data.list
+$pid1 = ($prods | Where-Object { $_.stock -gt 0 } | Select-Object -First 1).id
 Write-Host "test product: $pid1"
+
+# ---- 0. empty both carts and address books so this probe stays idempotent ----
+# later assertions assume a known start state: buyer has 0 rows, admin has 0 rows
+foreach ($tk in @($tkBuyer, $tkAdmin)) {
+    [void](Invoke-Api DELETE '/api/shop/cart' $null $tk)
+    $cur = (Invoke-Api GET '/api/shop/addresses' $null $tk).Json.data
+    if ($cur) {
+        foreach ($a in @($cur)) { [void](Invoke-Api DELETE ('/api/shop/addresses/' + $a.id) $null $tk) }
+    }
+}
+$left = (Invoke-Api GET '/api/shop/addresses' $null $tkBuyer).Json.data
+Write-Host "cleanup: buyer addresses left = $(@($left | Where-Object { $_ }).Count)"
 
 # ---- 1. buyer address book starts empty ----
 Write-Host "`n=== 1. buyer address book initially empty ==="

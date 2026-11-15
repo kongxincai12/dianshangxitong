@@ -40,7 +40,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 【核心改造#1】不再仅仅校验是否过期，而是直接解析出Claims
             Claims claims = jwtUtils.extractAllClaims(token); // 假设您的JwtUtils有这个方法
 
-            // 从Claims中获取工号 (通常是'subject')
+            // 从 Claims 中获取登录账号 (商城为 SHOP_USER.USERNAME)
             String employeeId = claims.getSubject();
 
             if (employeeId == null) {
@@ -52,7 +52,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 这样，后续的Controller就可以通过 request.getAttribute("employeeId") 来获取
             request.setAttribute("current_employee_id", employeeId);
 
-            // 商城后台权限判定用: role 就是登录时写进去的 USERPROFILE.USERPOSITION,
+            // 商城后台权限判定用: role 就是登录时写进去的 SHOP_USER.ROLE,
             // 老 Token 可能没有这个 claim, 取不到就留 null, 由 ShopAdminGuard 按非管理员处理
             Object roleClaim = claims.get("role");
             request.setAttribute("current_user_role", roleClaim == null ? null : String.valueOf(roleClaim));

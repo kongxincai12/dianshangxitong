@@ -12,9 +12,8 @@ import java.util.Set;
 /**
  * 商城后台管理权限判定。
  *
- * 商城登录账号复用 MES 用户表 USERPROFILE，现有数据里 USERPOSITION 全是"工程师"，
- * 并不存在"管理员"职位，所以不能只按职位判：那样连测试账号自己都会被挡在门外。
- * 这里以用户名白名单为主、职位白名单为辅，命中任意一个即视为管理员；
+ * 登录账号存在 SHOP_USER，ROLE 列就是 JWT 的 role claim。
+ * 这里以用户名白名单为主、角色白名单为辅，命中任意一个即视为管理员；
  * 两个白名单都来自配置，以后给人开权限只改配置不改代码。
  */
 @Component
@@ -23,7 +22,7 @@ public class ShopAdminGuard {
     /** 登录账号，即 JWT subject，由 JwtInterceptor 写入 */
     public static final String ATTR_USERNAME = "current_employee_id";
 
-    /** 角色，即 JWT role claim (USERPROFILE.USERPOSITION)，由 JwtInterceptor 写入 */
+    /** 角色，即 JWT role claim (SHOP_USER.ROLE)，由 JwtInterceptor 写入 */
     public static final String ATTR_ROLE = "current_user_role";
 
     private static final String DENY_MESSAGE = "无权限：仅商城管理员可以维护商品与分类";

@@ -30313,3 +30313,493 @@ Caused by: java.security.SignatureException: Signature length not correct: got 3
 2026-11-15 20:06:09.727  INFO 10092 --- [http-nio-9901-exec-3] com.jcd.log.WebLogAspect                 : Response     : Result(code=200, message=≤Ÿ◊˜≥…π¶, data=Map(size=4, keys=[total, pageNo, pageSize, list]))
 2026-11-15 20:06:09.727  INFO 10092 --- [http-nio-9901-exec-3] com.jcd.log.WebLogAspect                 : Time Cost    : 4 ms
 2026-11-15 20:06:09.727  INFO 10092 --- [http-nio-9901-exec-3] com.jcd.log.WebLogAspect                 : =========================================== End ===========================================
+2026-11-15 20:29:33.764  INFO 3520 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication using Java 17.0.4 on DESKTOP-68LG5GB with PID 3520 (C:\Users\Administrator\Desktop\dianshang\target\classes started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:29:33.768  INFO 3520 --- [main] com.jcd.PdaserverApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 20:29:34.688  INFO 3520 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-15 20:29:34.724  INFO 3520 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 0 JPA repository interfaces.
+2026-11-15 20:29:35.543  INFO 3520 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9901 (http)
+2026-11-15 20:29:35.558  INFO 3520 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:29:35.559  INFO 3520 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:29:35.763  INFO 3520 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:29:35.764  INFO 3520 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1932 ms
+2026-11-15 20:29:35.902  INFO 3520 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:29:36.017  WARN 3520 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:29:36.106  INFO 3520 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:29:36.734  INFO 3520 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-15 20:29:36.813  INFO 3520 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.10.Final
+2026-11-15 20:29:37.026  INFO 3520 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-11-15 20:29:37.204  INFO 3520 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.Oracle10gDialect
+2026-11-15 20:29:37.469  INFO 3520 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-11-15 20:29:37.481  INFO 3520 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15 20:29:38.288  WARN 3520 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-15 20:29:38.600  WARN 3520 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2026-11-15 20:29:38.723  INFO 3520 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9901 (http) with context path ''
+2026-11-15 20:29:38.737  INFO 3520 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 5.528 seconds (JVM running for 6.091)
+2026-11-15 20:30:22.510  INFO 3520 --- [http-nio-9901-exec-5] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:30:22.512  INFO 3520 --- [http-nio-9901-exec-5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:30:22.513  INFO 3520 --- [http-nio-9901-exec-5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 20:30:37.426 ERROR 3520 --- [http-nio-9901-exec-7] c.jcd.exception.GlobalExceptionHandler   : œµÕ≥ƒ⁄≤ø—œ÷ÿ“Ï≥£
+
+org.apache.catalina.connector.ClientAbortException: java.io.IOException: Connection reset by peer
+	at org.apache.catalina.connector.OutputBuffer.doFlush(OutputBuffer.java:310) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.OutputBuffer.flush(OutputBuffer.java:273) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.CoyoteOutputStream.flush(CoyoteOutputStream.java:118) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at java.base/java.io.FilterOutputStream.flush(FilterOutputStream.java:153) ~[na:na]
+	at com.fasterxml.jackson.core.json.UTF8JsonGenerator.flush(UTF8JsonGenerator.java:1187) ~[jackson-core-2.13.3.jar:2.13.3]
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1009) ~[jackson-databind-2.13.3.jar:2.13.3]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:456) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:104) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:290) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.handleReturnValue(RequestResponseBodyMethodProcessor.java:183) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:135) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) ~[druid-1.1.10.jar:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.io.IOException: Connection reset by peer
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.write(SocketDispatcher.java:54) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:132) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:97) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:53) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:532) ~[na:na]
+	at org.apache.tomcat.util.net.NioChannel.write(NioChannel.java:135) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.doWrite(NioEndpoint.java:1424) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.doWrite(SocketWrapperBase.java:768) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.flushBlocking(SocketWrapperBase.java:732) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.flush(SocketWrapperBase.java:716) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11OutputBuffer$SocketOutputBuffer.flush(Http11OutputBuffer.java:573) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.filters.ChunkedOutputFilter.flush(ChunkedOutputFilter.java:157) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11OutputBuffer.flush(Http11OutputBuffer.java:221) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11Processor.flush(Http11Processor.java:1255) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProcessor.action(AbstractProcessor.java:402) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.Response.action(Response.java:209) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.OutputBuffer.doFlush(OutputBuffer.java:306) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	... 61 common frames omitted
+
+2026-11-15 20:30:37.434  WARN 3520 --- [http-nio-9901-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.jcd.exception.GlobalExceptionHandler#handleException(Exception)
+
+org.apache.catalina.connector.ClientAbortException: java.io.IOException: Connection reset by peer
+	at org.apache.catalina.connector.OutputBuffer.doFlush(OutputBuffer.java:310) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.OutputBuffer.flush(OutputBuffer.java:273) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.CoyoteOutputStream.flush(CoyoteOutputStream.java:118) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at java.base/java.io.FilterOutputStream.flush(FilterOutputStream.java:153) ~[na:na]
+	at com.fasterxml.jackson.core.json.UTF8JsonGenerator.flush(UTF8JsonGenerator.java:1187) ~[jackson-core-2.13.3.jar:2.13.3]
+	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1009) ~[jackson-databind-2.13.3.jar:2.13.3]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:456) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.http.converter.AbstractGenericHttpMessageConverter.write(AbstractGenericHttpMessageConverter.java:104) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:290) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.handleReturnValue(RequestResponseBodyMethodProcessor.java:183) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:135) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver.doResolveHandlerMethodException(ExceptionHandlerExceptionResolver.java:428) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionResolver.doResolveException(AbstractHandlerMethodExceptionResolver.java:75) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver.resolveException(AbstractHandlerExceptionResolver.java:142) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.handler.HandlerExceptionResolverComposite.resolveException(HandlerExceptionResolverComposite.java:80) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.processHandlerException(DispatcherServlet.java:1330) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1141) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1087) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) ~[druid-1.1.10.jar:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.io.IOException: Connection reset by peer
+	at java.base/sun.nio.ch.SocketDispatcher.write0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.write(SocketDispatcher.java:54) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:132) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:97) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:53) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:532) ~[na:na]
+	at org.apache.tomcat.util.net.NioChannel.write(NioChannel.java:135) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.doWrite(NioEndpoint.java:1424) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.doWrite(SocketWrapperBase.java:768) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.flushBlocking(SocketWrapperBase.java:732) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketWrapperBase.flush(SocketWrapperBase.java:716) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11OutputBuffer$SocketOutputBuffer.flush(Http11OutputBuffer.java:573) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.filters.ChunkedOutputFilter.flush(ChunkedOutputFilter.java:157) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11OutputBuffer.flush(Http11OutputBuffer.java:221) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11Processor.flush(Http11Processor.java:1255) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProcessor.action(AbstractProcessor.java:402) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.Response.action(Response.java:209) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.OutputBuffer.doFlush(OutputBuffer.java:306) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	... 64 common frames omitted
+
+2026-11-15 20:32:20.639  INFO 3520 --- [http-nio-9901-exec-6] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=probe-cancelled, amount=0.01
+2026-11-15 20:32:20.652  INFO 3520 --- [http-nio-9901-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150001, subject=probe-cancelled, amount=0.01
+2026-11-15 20:32:20.658  WARN 3520 --- [http-nio-9901-exec-6] c.jcd.exception.GlobalExceptionHandler   : ≥ˆœ÷“µŒÒ“Ï≥£: …Ã≥«∂©µ•µ±«∞◊¥Ã¨≤ªø…÷ß∏∂: CANCELLED
+2026-11-15 20:32:20.751  INFO 3520 --- [http-nio-9901-exec-10] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=shop-order-SO202611150015, amount=39.9
+2026-11-15 20:32:20.752  INFO 3520 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150015, subject=shop-order-SO202611150015, amount=39.9
+2026-11-15 20:32:22.134  INFO 3520 --- [http-nio-9901-exec-10] sdk.biz.info                             : Summary^_^10000^_^null^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.precreate&sign=Wv7mbv7ZrGQ9v/RYmXGzo7GwWcVqHAi/w1iO9OJ5eViHQg+C5BovbmiF5vewSYpkeYsdloikRozZnl66SDlKJYo3QNGfKT3N2+IP7ugJEj2fmmymeyyi1KjpQTENpQIbCzBR5MhXVL6/nnddbZGgIF3IKdfX9++dbB6B9KQqjze6oFU3luv57xnPU5rIUau4sp+BXs+Kwzt1YCIIJNSihajOFO+2tvOvKue8XBuhSGVF/5iEPGyT7Xn/AHvByY5c931W8yX0ZNrym2IY0fJJUQ5xYrddtX4gwo+XGgT33RRMhbw99RIZB/0JOp7YM0gf9ouLhrOESqU9l/y60DuW4Q==&notify_url=http://sb76aff6.natappfree.cc/api/alipay/notify&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:32:20^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:biz_content={"body":"alipay probe","out_trade_no":"SO202611150015","subject":"shop-order-SO202611150015","timeout_express":"30m","total_amount":"39.9"}^_^125ms,1213ms,38ms^_^trace_id:060064c4179474594118965734014473
+2026-11-15 20:32:22.135  INFO 3520 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : precreateœÏ”¶, outTradeNo=SO202611150015, isSuccess=true, subCode=null
+2026-11-15 20:32:22.135  INFO 3520 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : precreate≥…π¶, ∂˛Œ¨¬Î¡¥Ω”: https://qr.alipay.com/bax07324pncsnlkjo5aj004a
+2026-11-15 20:32:22.148  INFO 3520 --- [http-nio-9901-exec-5] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=shop-order-SO202611150015, amount=0.01
+2026-11-15 20:32:22.149  INFO 3520 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150015, subject=shop-order-SO202611150015, amount=0.01
+2026-11-15 20:32:22.150  WARN 3520 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : «∞∂À…œÀÕΩ∂Ó”Î…Ã≥«∂©µ•≤ª“ª÷¬, “—∏ƒŒ™“‘ø‚Œ™◊º: outTradeNo=SO202611150015, «∞∂À=0.01, ∂©µ•=39.9
+2026-11-15 20:32:22.152  INFO 3520 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : ∏¥”√“—¥Ê‘⁄µƒ÷ß∏∂µ•, outTradeNo=SO202611150015, status=WAIT_PAY
+2026-11-15 20:32:22.818  INFO 3520 --- [http-nio-9901-exec-5] sdk.biz.info                             : Summary^_^10000^_^null^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.precreate&sign=p5fDYuvVspuODhQ2Ijjxa8d5mSFDVRHYdKV8QcWF+sQNzAut8cazvLmwz8iyPIAtHKPMDMt8TOtNxTV+hOo/33FfKI5mStFW6iZBhp03Y6zzFhKhivU46ZYYMbdYtsExpqrOQHkjRAqZrXBkNrMj4cnvOn2D/EQ2+FluUsVRAcnGhRcyBGnCsDu7pKcU8qmplD94jlAHuK/Nzv2JN57+UYSVzBwSo9F3mHv6xv8N4ZPG8Hmjb9Y8ntdacQU/FWAUuZ9b4JFLX3i/UC/548BmtAi9hR8tgeYwQYxpAVi8CfJuEwD782RlsyEqRofDSK+4n+7Fo2p1k9OOAwKhR3TEZg==&notify_url=http://sb76aff6.natappfree.cc/api/alipay/notify&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:32:22^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:biz_content={"out_trade_no":"SO202611150015","subject":"shop-order-SO202611150015","timeout_express":"30m","total_amount":"39.9"}^_^11ms,644ms,11ms^_^trace_id:06037af0179474594204473476414
+2026-11-15 20:32:22.819  INFO 3520 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : precreateœÏ”¶, outTradeNo=SO202611150015, isSuccess=true, subCode=null
+2026-11-15 20:32:22.819  INFO 3520 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : precreate≥…π¶, ∂˛Œ¨¬Î¡¥Ω”: https://qr.alipay.com/bax05260eupxcdpwxsya005f
+2026-11-15 20:32:22.823  INFO 3520 --- [http-nio-9901-exec-1] com.jcd.controller.AlipayController      : ≤È—Ø∂©µ•, outTradeNo=SO202611150015
+2026-11-15 20:32:22.830  INFO 3520 --- [http-nio-9901-exec-2] com.jcd.controller.AlipayController      :  ’µΩ÷ß∏∂±¶“Ï≤ΩÕ®÷™
+2026-11-15 20:32:22.831  INFO 3520 --- [http-nio-9901-exec-2] com.jcd.controller.AlipayController      : Õ®÷™≤Œ ˝: {out_trade_no=SO202611150015, total_amount=39.9, trade_status=TRADE_SUCCESS, sign=abc, trade_no=2026111522001000000000000000, sign_type=RSA2}
+2026-11-15 20:32:22.831  INFO 3520 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   :  ’µΩ÷ß∏∂±¶“Ï≤ΩÕ®÷™, params={out_trade_no=SO202611150015, total_amount=39.9, trade_status=TRADE_SUCCESS, sign=abc, trade_no=2026111522001000000000000000, sign_type=RSA2}
+2026-11-15 20:32:22.834 ERROR 3520 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : ¥¶¿Ì÷ß∏∂±¶Õ®÷™“Ï≥£, error=RSA2—È«©‘‚”ˆ“Ï≥££¨«ÎºÏ≤Èπ´‘ø∏Ò ΩªÚ«©√˚ «∑Ò’˝»∑°£Signature length not correct: got 3 but was expecting 256 content=out_trade_no=SO202611150015&total_amount=39.9&trade_no=2026111522001000000000000000&trade_status=TRADE_SUCCESS£¨charset=UTF-8£¨publicKey=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq7i9q7eS2moxFF3ff7kGJXWHc4UlG5vjPkNjQdsEH+EQhhmI2xHCQSVcuUNluf/ZY4NiMjsgy9AgjZYsbwZwIBLl8PV8x5MoaVCCsdAZR6D9J3Cw9A2iR1x17IPBvuw+roLgCbEZtg8I7ZxODfMJUpLznbcobbw5FwaDbDgV2UR4f1F0SK3fe+aA84bSZ8cbfYS359zQo2lrIOMS4CPQpdnQRZSKW2II6eSmreYiRqVrkiK+cC/SLaFwCjBiBivR9BQSvwpgXFg2+xuzUvSJI3XK3G2v1/kpBjATWhk2Ms36hXTrmSjwpLVCH3BxBnsgHyT1zwMwpPUiHcQNCSXFUQIDAQAB£¨sign=abc
+
+com.alipay.api.AlipayApiException: RSA2—È«©‘‚”ˆ“Ï≥££¨«ÎºÏ≤Èπ´‘ø∏Ò ΩªÚ«©√˚ «∑Ò’˝»∑°£Signature length not correct: got 3 but was expecting 256 content=out_trade_no=SO202611150015&total_amount=39.9&trade_no=2026111522001000000000000000&trade_status=TRADE_SUCCESS£¨charset=UTF-8£¨publicKey=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq7i9q7eS2moxFF3ff7kGJXWHc4UlG5vjPkNjQdsEH+EQhhmI2xHCQSVcuUNluf/ZY4NiMjsgy9AgjZYsbwZwIBLl8PV8x5MoaVCCsdAZR6D9J3Cw9A2iR1x17IPBvuw+roLgCbEZtg8I7ZxODfMJUpLznbcobbw5FwaDbDgV2UR4f1F0SK3fe+aA84bSZ8cbfYS359zQo2lrIOMS4CPQpdnQRZSKW2II6eSmreYiRqVrkiK+cC/SLaFwCjBiBivR9BQSvwpgXFg2+xuzUvSJI3XK3G2v1/kpBjATWhk2Ms36hXTrmSjwpLVCH3BxBnsgHyT1zwMwpPUiHcQNCSXFUQIDAQAB£¨sign=abc
+	at com.alipay.api.internal.util.asymmetric.BaseAsymmetricEncryptor.verify(BaseAsymmetricEncryptor.java:110) ~[alipay-sdk-java-4.38.79.ALL.jar:na]
+	at com.alipay.api.internal.util.AlipaySignature.rsaCheck(AlipaySignature.java:597) ~[alipay-sdk-java-4.38.79.ALL.jar:na]
+	at com.alipay.api.internal.util.AlipaySignature.rsaCheckV1(AlipaySignature.java:556) ~[alipay-sdk-java-4.38.79.ALL.jar:na]
+	at com.jcd.service.Impl.AlipayServiceImpl.handleNotify(AlipayServiceImpl.java:224) ~[classes/:na]
+	at com.jcd.service.Impl.AlipayServiceImpl$$FastClassBySpringCGLIB$$5fa24866.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793) ~[spring-aop-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.22.jar:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.22.jar:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.22.jar:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.22.jar:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708) ~[spring-aop-5.3.22.jar:5.3.22]
+	at com.jcd.service.Impl.AlipayServiceImpl$$EnhancerBySpringCGLIB$$ef548bb.handleNotify(<generated>) ~[classes/:na]
+	at com.jcd.controller.AlipayController.handleNotify(AlipayController.java:74) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.22.jar:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.65.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) ~[druid-1.1.10.jar:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.65.jar:9.0.65]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.security.SignatureException: Signature length not correct: got 3 but was expecting 256
+	at java.base/sun.security.rsa.RSASignature.engineVerify(RSASignature.java:213) ~[na:na]
+	at java.base/java.security.Signature$Delegate.engineVerify(Signature.java:1435) ~[na:na]
+	at java.base/java.security.Signature.verify(Signature.java:789) ~[na:na]
+	at com.alipay.api.internal.util.asymmetric.RSAEncryptor.doVerify(RSAEncryptor.java:147) ~[alipay-sdk-java-4.38.79.ALL.jar:na]
+	at com.alipay.api.internal.util.asymmetric.BaseAsymmetricEncryptor.verify(BaseAsymmetricEncryptor.java:105) ~[alipay-sdk-java-4.38.79.ALL.jar:na]
+	... 73 common frames omitted
+
+2026-11-15 20:32:22.856  INFO 3520 --- [http-nio-9901-exec-6] com.jcd.controller.AlipayController      : ≤È—ØΩª“◊◊¥Ã¨, outTradeNo=SO202611150015
+2026-11-15 20:32:22.858  INFO 3520 --- [http-nio-9901-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : ≤È—Ø÷ß∏∂±¶Ωª“◊◊¥Ã¨, outTradeNo=SO202611150015, tradeNo=null
+2026-11-15 20:32:23.335 ERROR 3520 --- [http-nio-9901-exec-6] sdk.biz.err                              : ErrorScene^_^40004^_^ACQ.TRADE_NOT_EXIST^_^null^_^Windows 10^_^2026-11-15 20:32:23^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.query&sign=N3JDXsFUobYFzbsOfQz/7G3KcqKkEJr39CmCrK5O22BQsBhB58vP8/gkVr78KSlZZDyHE+LcT0d8/bLt0S1CfnA3bJcflqhOYwp4wpegVy5PrrMicASTfLe0ID0B8062qNqp6BrlZfgbYx7JYNfwpHbKo87XLjuI/HjrBQUT1bOIiCSbQSQhEnvIMAOOKt7qXPRSl97iNLA4yfBHAZx1RuCJdqlcCzQp1P6DpR8Vh3j//HVxam1MbEpsYq/n79P5HfX/VfPuaB//IjtXptXxjqgLIWkq7VANBhQtdZJOOHCfQG63bESmp/0/5AK9bv6b1LbpyTtjmdqTiLzkBacp2w==&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:32:22^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:traceId=060215f617947459427581326665165&biz_content={"out_trade_no":"SO202611150015"}^_^Body:{"alipay_trade_query_response":{"msg":"Business Failed","code":"40004","out_trade_no":"SO202611150015","sub_msg":"Ωª“◊≤ª¥Ê‘⁄","sub_code":"ACQ.TRADE_NOT_EXIST","receipt_amount":"0.00","point_amount":"0.00","buyer_pay_amount":"0.00","invoice_amount":"0.00"},"sign":"HWld1lFy1CuMIM+c9ov3rx4DgtOXQoz3uEVkeQmkvu6xj5zMi2tSB6NicGEimYtZrpaypsnkUFerBg7yBnd3zWQ7DGKx/k9OnKcePLlheRS6tzsXtj0obYM8CigQjOCE+Eom99f4tHpRocjwaT6ZeOugRWx0/RfTKHI190VMpFaFzY2S907rtE0jvelgP+BVFJMkAZnB1jvVhla7vZAk5e6TXHQDoCexyxEsxoUeZeaADU3uTeRy1Jeg9Fz/vYjEFkRpUY8WctEzjt54vhrR17KD+N6lUpuU/z1S1nbqaPLtGAr6SEebvaLYUz+zcBqWzzMBkfvk3WGxPKxT9Cfp2Q=="}^_^14ms,425ms,36ms^_^trace_id:060215f617947459427581326665165
+2026-11-15 20:32:23.335  WARN 3520 --- [http-nio-9901-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : ≤È—ØΩª“◊◊¥Ã¨ ß∞‹, code=40004, msg=Business Failed
+2026-11-15 20:39:45.938  INFO 2308 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication v0.0.1-SNAPSHOT using Java 17.0.4 on DESKTOP-68LG5GB with PID 2308 (C:\Users\Administrator\Desktop\dianshang\target\jcd-mes-pda-server-0.0.1-SNAPSHOT.jar started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:39:45.943  INFO 2308 --- [main] com.jcd.PdaserverApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-11-15 20:39:47.742  INFO 2308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9901 (http)
+2026-11-15 20:39:47.757  INFO 2308 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:39:47.758  INFO 2308 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:39:47.867  INFO 2308 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:39:47.868  INFO 2308 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1847 ms
+2026-11-15 20:39:48.125  INFO 2308 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:39:48.250  WARN 2308 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:39:48.374  INFO 2308 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:39:49.709  INFO 2308 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9901 (http) with context path ''
+2026-11-15 20:39:49.724  INFO 2308 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 4.441 seconds (JVM running for 5.057)
+2026-11-15 20:40:21.965  INFO 2308 --- [http-nio-9901-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:40:21.966  INFO 2308 --- [http-nio-9901-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:40:21.970  INFO 2308 --- [http-nio-9901-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 20:41:03.508  INFO 2308 --- [http-nio-9901-exec-5] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=probe-cancelled, amount=0.01
+2026-11-15 20:41:03.514  INFO 2308 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150001, subject=probe-cancelled, amount=0.01
+2026-11-15 20:41:03.518  WARN 2308 --- [http-nio-9901-exec-5] c.jcd.exception.GlobalExceptionHandler   : ≥ˆœ÷“µŒÒ“Ï≥£: …Ã≥«∂©µ•µ±«∞◊¥Ã¨≤ªø…÷ß∏∂: CANCELLED
+2026-11-15 20:41:03.637  INFO 2308 --- [http-nio-9901-exec-10] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=shop-order-SO202611150019, amount=39.9
+2026-11-15 20:41:03.637  INFO 2308 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150019, subject=shop-order-SO202611150019, amount=39.9
+2026-11-15 20:41:04.747  INFO 2308 --- [http-nio-9901-exec-10] sdk.biz.info                             : Summary^_^10000^_^null^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.precreate&sign=icIPf1OPMPrk6l77FDi4hHRwxPpxyHyyxZIb5z3UgErNxi9kmLEYCOVwCM3Hiox8p+k5gazac4r+yx2XX5jNhDGB5uQP9Y4LW7haT8tVNXlW0wlZYqoC9GTc0hEj8Xs646vnQh3TvOUjmc7CUTIy3FNN35qaTKyFaeOid5otdI8ZAWd4lz69e17gc8B0jrV64iaQA3FHbtt/UAD3dtbOWdA6sqRCMqQrrOtqeDt9r8CF6FRDgOHC3hizcc9hHIF+iUvGMvhOEZZJCtvpRdeenHVB2pPCBHqJ/kb6HjsEKfhui/fHRViPTU9ALcsxZYKSx3fGFZneoCEKN2xo11LEdw==&notify_url=http://sb76aff6.natappfree.cc/api/alipay/notify&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:41:03^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:biz_content={"body":"alipay probe","out_trade_no":"SO202611150019","subject":"shop-order-SO202611150019","timeout_express":"30m","total_amount":"39.9"}^_^74ms,994ms,35ms^_^trace_id:0600898f179474646394555544078700
+2026-11-15 20:41:04.748  INFO 2308 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : precreateœÏ”¶, outTradeNo=SO202611150019, isSuccess=true, subCode=null
+2026-11-15 20:41:04.750  INFO 2308 --- [http-nio-9901-exec-10] com.jcd.service.Impl.AlipayServiceImpl   : precreate≥…π¶, ∂˛Œ¨¬Î¡¥Ω”: https://qr.alipay.com/bax02429pz6u3z6dok56002f
+2026-11-15 20:41:04.789  INFO 2308 --- [http-nio-9901-exec-2] com.jcd.controller.AlipayController      : ¥¥Ω®÷ß∏∂∂©µ•, subject=shop-order-SO202611150019, amount=0.01
+2026-11-15 20:41:04.790  INFO 2308 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : ¥¥Ω®÷ß∏∂±¶∂©µ•, outTradeNo=SO202611150019, subject=shop-order-SO202611150019, amount=0.01
+2026-11-15 20:41:04.791  WARN 2308 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : «∞∂À…œÀÕΩ∂Ó”Î…Ã≥«∂©µ•≤ª“ª÷¬, “—∏ƒŒ™“‘ø‚Œ™◊º: outTradeNo=SO202611150019, «∞∂À=0.01, ∂©µ•=39.9
+2026-11-15 20:41:04.793  INFO 2308 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : ∏¥”√“—¥Ê‘⁄µƒ÷ß∏∂µ•, outTradeNo=SO202611150019, status=WAIT_PAY
+2026-11-15 20:41:05.437  INFO 2308 --- [http-nio-9901-exec-2] sdk.biz.info                             : Summary^_^10000^_^null^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.precreate&sign=ZepmfV4O5KJm+sHF3A+dETGK4/HVGtKNsJqeXutR77GgZPH9Kg5J96zUoVRVKiMnH7LUZbZ7F8BrJrZrM2qsBp5u38/NKPU3eB8GrxdwzAhrIBB8n4oink7xMu39GXnXv/Nl2v2LtD/2bJosEDGkMHqUPkz/0fV6mncTP3ORkTSatzP2+03sVQimQ9BDY69faKWEiVCW9kY4r2PY9l6VMMeMVSoMmNnEm/WSP1//m1GZfyOKBlhSwIuhh0i4pgI+XiHO9y9WD7MbtPEXTUj9Vg1r0THAVrNTz2KXmV/nVHp2JvBSZuGcJ0O5vZCQYU/5PflKnKvVjEYpp8YgQoTUqg==&notify_url=http://sb76aff6.natappfree.cc/api/alipay/notify&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:41:04^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:biz_content={"out_trade_no":"SO202611150019","subject":"shop-order-SO202611150019","timeout_express":"30m","total_amount":"39.9"}^_^7ms,632ms,5ms^_^trace_id:0603276e17947464647103703768100
+2026-11-15 20:41:05.437  INFO 2308 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : precreateœÏ”¶, outTradeNo=SO202611150019, isSuccess=true, subCode=null
+2026-11-15 20:41:05.437  INFO 2308 --- [http-nio-9901-exec-2] com.jcd.service.Impl.AlipayServiceImpl   : precreate≥…π¶, ∂˛Œ¨¬Î¡¥Ω”: https://qr.alipay.com/bax02662gtkqq6ufx7wm0046
+2026-11-15 20:41:05.442  INFO 2308 --- [http-nio-9901-exec-1] com.jcd.controller.AlipayController      : ≤È—Ø∂©µ•, outTradeNo=SO202611150019
+2026-11-15 20:41:05.451  INFO 2308 --- [http-nio-9901-exec-3] com.jcd.controller.AlipayController      :  ’µΩ÷ß∏∂±¶“Ï≤ΩÕ®÷™
+2026-11-15 20:41:05.452  INFO 2308 --- [http-nio-9901-exec-3] com.jcd.controller.AlipayController      : Õ®÷™≤Œ ˝: {out_trade_no=SO202611150019, total_amount=39.9, trade_status=TRADE_SUCCESS, sign=abc, trade_no=2026111522001000000000000000, sign_type=RSA2}
+2026-11-15 20:41:05.453  INFO 2308 --- [http-nio-9901-exec-3] com.jcd.service.Impl.AlipayServiceImpl   :  ’µΩ÷ß∏∂±¶“Ï≤ΩÕ®÷™, params={out_trade_no=SO202611150019, total_amount=39.9, trade_status=TRADE_SUCCESS, sign=abc, trade_no=2026111522001000000000000000, sign_type=RSA2}
+2026-11-15 20:41:05.459 ERROR 2308 --- [http-nio-9901-exec-3] com.jcd.service.Impl.AlipayServiceImpl   : ¥¶¿Ì÷ß∏∂±¶Õ®÷™“Ï≥£, error=RSA2—È«©‘‚”ˆ“Ï≥££¨«ÎºÏ≤Èπ´‘ø∏Ò ΩªÚ«©√˚ «∑Ò’˝»∑°£Signature length not correct: got 3 but was expecting 256 content=out_trade_no=SO202611150019&total_amount=39.9&trade_no=2026111522001000000000000000&trade_status=TRADE_SUCCESS£¨charset=UTF-8£¨publicKey=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq7i9q7eS2moxFF3ff7kGJXWHc4UlG5vjPkNjQdsEH+EQhhmI2xHCQSVcuUNluf/ZY4NiMjsgy9AgjZYsbwZwIBLl8PV8x5MoaVCCsdAZR6D9J3Cw9A2iR1x17IPBvuw+roLgCbEZtg8I7ZxODfMJUpLznbcobbw5FwaDbDgV2UR4f1F0SK3fe+aA84bSZ8cbfYS359zQo2lrIOMS4CPQpdnQRZSKW2II6eSmreYiRqVrkiK+cC/SLaFwCjBiBivR9BQSvwpgXFg2+xuzUvSJI3XK3G2v1/kpBjATWhk2Ms36hXTrmSjwpLVCH3BxBnsgHyT1zwMwpPUiHcQNCSXFUQIDAQAB£¨sign=abc
+
+com.alipay.api.AlipayApiException: RSA2—È«©‘‚”ˆ“Ï≥££¨«ÎºÏ≤Èπ´‘ø∏Ò ΩªÚ«©√˚ «∑Ò’˝»∑°£Signature length not correct: got 3 but was expecting 256 content=out_trade_no=SO202611150019&total_amount=39.9&trade_no=2026111522001000000000000000&trade_status=TRADE_SUCCESS£¨charset=UTF-8£¨publicKey=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq7i9q7eS2moxFF3ff7kGJXWHc4UlG5vjPkNjQdsEH+EQhhmI2xHCQSVcuUNluf/ZY4NiMjsgy9AgjZYsbwZwIBLl8PV8x5MoaVCCsdAZR6D9J3Cw9A2iR1x17IPBvuw+roLgCbEZtg8I7ZxODfMJUpLznbcobbw5FwaDbDgV2UR4f1F0SK3fe+aA84bSZ8cbfYS359zQo2lrIOMS4CPQpdnQRZSKW2II6eSmreYiRqVrkiK+cC/SLaFwCjBiBivR9BQSvwpgXFg2+xuzUvSJI3XK3G2v1/kpBjATWhk2Ms36hXTrmSjwpLVCH3BxBnsgHyT1zwMwpPUiHcQNCSXFUQIDAQAB£¨sign=abc
+	at com.alipay.api.internal.util.asymmetric.BaseAsymmetricEncryptor.verify(BaseAsymmetricEncryptor.java:110) ~[alipay-sdk-java-4.38.79.ALL.jar!/:na]
+	at com.alipay.api.internal.util.AlipaySignature.rsaCheck(AlipaySignature.java:597) ~[alipay-sdk-java-4.38.79.ALL.jar!/:na]
+	at com.alipay.api.internal.util.AlipaySignature.rsaCheckV1(AlipaySignature.java:556) ~[alipay-sdk-java-4.38.79.ALL.jar!/:na]
+	at com.jcd.service.Impl.AlipayServiceImpl.handleNotify(AlipayServiceImpl.java:224) ~[classes!/:0.0.1-SNAPSHOT]
+	at com.jcd.service.Impl.AlipayServiceImpl$$FastClassBySpringCGLIB$$5fa24866.invoke(<generated>) ~[classes!/:0.0.1-SNAPSHOT]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.22.jar!/:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.22.jar!/:5.3.22]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708) ~[spring-aop-5.3.22.jar!/:5.3.22]
+	at com.jcd.service.Impl.AlipayServiceImpl$$EnhancerBySpringCGLIB$$598dfd10.handleNotify(<generated>) ~[classes!/:0.0.1-SNAPSHOT]
+	at com.jcd.controller.AlipayController.handleNotify(AlipayController.java:74) ~[classes!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1070) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.22.jar!/:5.3.22]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123) ~[druid-1.1.10.jar!/:1.1.10]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.22.jar!/:5.3.22]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.65.jar!/:na]
+	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+Caused by: java.security.SignatureException: Signature length not correct: got 3 but was expecting 256
+	at java.base/sun.security.rsa.RSASignature.engineVerify(RSASignature.java:213) ~[na:na]
+	at java.base/java.security.Signature$Delegate.engineVerify(Signature.java:1435) ~[na:na]
+	at java.base/java.security.Signature.verify(Signature.java:789) ~[na:na]
+	at com.alipay.api.internal.util.asymmetric.RSAEncryptor.doVerify(RSAEncryptor.java:147) ~[alipay-sdk-java-4.38.79.ALL.jar!/:na]
+	at com.alipay.api.internal.util.asymmetric.BaseAsymmetricEncryptor.verify(BaseAsymmetricEncryptor.java:105) ~[alipay-sdk-java-4.38.79.ALL.jar!/:na]
+	... 73 common frames omitted
+
+2026-11-15 20:41:05.482  INFO 2308 --- [http-nio-9901-exec-5] com.jcd.controller.AlipayController      : ≤È—ØΩª“◊◊¥Ã¨, outTradeNo=SO202611150019
+2026-11-15 20:41:05.482  INFO 2308 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : ≤È—Ø÷ß∏∂±¶Ωª“◊◊¥Ã¨, outTradeNo=SO202611150019, tradeNo=null
+2026-11-15 20:41:05.779 ERROR 2308 --- [http-nio-9901-exec-5] sdk.biz.err                              : ErrorScene^_^40004^_^ACQ.TRADE_NOT_EXIST^_^null^_^Windows 10^_^2026-11-15 20:41:05^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.query&sign=lRQXaL1dY5r+pPWeQvoee3QpAueak8BuFES2VRxODLxRF984hdBMmRvJ8A/OctDY4QixsIGOO2papOGSRvr4rSC2xprd0fCw/CzaJHTCVMda8ZJwjFKRSqrNA8Wic5oG0+rLguZRN4oO9WlP6CwEJQs4m1gA/bTzfV8HLcqbGDA8z9YU3hIeJN0gB0BnJzCs0Ob+JY5/1n8aiVVjTYZoTjxiNZQL4mcVQTq7IhclUD28AebM3EOBhKRwBT+kGP9xC9hjpTjfi5EYoy+FF2FfAFC6cuGxQzl/4lnWO8zxQmIRz09HklznPk3xTpobQWNKPaCMU62jgtL1luXXpi8uWg==&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:41:05^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:traceId=0600a410179474646538362853024161&biz_content={"out_trade_no":"SO202611150019"}^_^Body:{"alipay_trade_query_response":{"msg":"Business Failed","code":"40004","out_trade_no":"SO202611150019","sub_msg":"Ωª“◊≤ª¥Ê‘⁄","sub_code":"ACQ.TRADE_NOT_EXIST","receipt_amount":"0.00","point_amount":"0.00","buyer_pay_amount":"0.00","invoice_amount":"0.00"},"sign":"eH4xgU5FTrukhfd00iony4PKAwSdeUQ7NzL8v+YwyGgsEJRzbIf5hbsWqR+QKi7a7drE3jI310sM0HG9fatNnqK+DQCCvJYkd1hCJeouzE5yFlUN41gNYuijXX6b7jq/e+T5qb6irUoExP7Bo/N40zdKroDuQoOPTdl23zBqy9E/j4n+a2sK4XVIBYbC6YtKTNlWV6DvzkxQ5JPNDGDv8itXDY+IKMCfwRWXGtub50TAy4K7oKAXPGk04F5E4qrnAN8eNl1cUc3MGqn27q6bCCWeTP31//ogVRwfGaP51EjeQvTN9vW6NCeB61QTFZ2UXDTbrtV/dkboOsWYy9fXvA=="}^_^3ms,275ms,16ms^_^trace_id:0600a410179474646538362853024161
+2026-11-15 20:41:05.779  WARN 2308 --- [http-nio-9901-exec-5] com.jcd.service.Impl.AlipayServiceImpl   : ≤È—ØΩª“◊◊¥Ã¨ ß∞‹, code=40004, msg=Business Failed
+2026-11-15 20:45:02.831  INFO 13828 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication using Java 1.8.0_341 on DESKTOP-68LG5GB with PID 13828 (C:\Users\Administrator\Desktop\dianshang\target\classes started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:45:02.835  INFO 13828 --- [main] com.jcd.PdaserverApplication             : The following 1 profile is active: "sz"
+2026-11-15 20:45:03.665  INFO 13828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-15 20:45:03.696  INFO 13828 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2026-11-15 20:45:04.309  INFO 13828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9900 (http)
+2026-11-15 20:45:04.319  INFO 13828 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:45:04.319  INFO 13828 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:45:04.521  INFO 13828 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:45:04.521  INFO 13828 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1631 ms
+2026-11-15 20:45:04.637  INFO 13828 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:45:04.737  WARN 13828 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:45:04.800  INFO 13828 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:45:05.823  INFO 13828 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-15 20:45:05.880  INFO 13828 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.10.Final
+2026-11-15 20:45:06.042  INFO 13828 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-11-15 20:45:06.157  INFO 13828 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.Oracle10gDialect
+2026-11-15 20:45:06.331  INFO 13828 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-11-15 20:45:06.342  INFO 13828 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15 20:45:08.061  WARN 13828 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-15 20:45:08.358  WARN 13828 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2026-11-15 20:45:08.496  INFO 13828 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9900 (http) with context path ''
+2026-11-15 20:45:08.510  INFO 13828 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 6.231 seconds (JVM running for 7.964)
+2026-11-15 20:45:13.372  INFO 13828 --- [http-nio-9900-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:45:13.373  INFO 13828 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:45:13.374  INFO 13828 --- [http-nio-9900-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15 20:46:02.254  INFO 13828 --- [http-nio-9900-exec-6] com.jcd.controller.AlipayController      : ÂàõÂª∫ÊîØ‰ªòËÆ¢Âçï, subject=ÂïÜÂüéËÆ¢Âçï-SO202611150020, amount=199
+2026-11-15 20:46:02.259  INFO 13828 --- [http-nio-9900-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : ÂàõÂª∫ÊîØ‰ªòÂÆùËÆ¢Âçï, outTradeNo=SO202611150020, subject=ÂïÜÂüéËÆ¢Âçï-SO202611150020, amount=199
+2026-11-15 20:46:03.084  INFO 13828 --- [http-nio-9900-exec-6] sdk.biz.info                             : Summary^_^10000^_^null^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.precreate&sign=VV3cyhTMzkH5WCOSiBEb86rSCb/T1TECcA8XPxHg6jUchOSiCQckWO+83WKfnCRFMXv3Jlnm1YOrHTs1igvLBVYgmk3c6XU5/+bdLzg7rTfMOGZfXiLG4mUCJNhbQWGk+L9GTnFavbWS7g+yCl4BvyfWSR+lO089Ry33qnz3zVhkNATt3GArmhvCKz+DWcr4NZuOWMycWOWZBImoGRLGO0mi9hHTy1AWrloT40ikonxGBUo0yYc6JGRynXIM0YmIvG+LJbmV/L46xl+ae8NZBq9pofYOCwkErJT1ELHJ4QdV4hgWLsltaXjub8aON+gG93x7gRnKf3r0JtWVuDlC1w==&notify_url=http://sb76aff6.natappfree.cc/api/alipay/notify&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:46:02^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:biz_content={"body":"Êó†Á∫øËìùÁâôËÄ≥Êú∫ x1","out_trade_no":"SO202611150020","subject":"ÂïÜÂüéËÆ¢Âçï-SO202611150020","timeout_express":"30m","total_amount":"199"}^_^70ms,720ms,27ms^_^trace_id:060064c4179474676253439664014473
+2026-11-15 20:46:03.085  INFO 13828 --- [http-nio-9900-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : precreateÂìçÂ∫î, outTradeNo=SO202611150020, isSuccess=true, subCode=null
+2026-11-15 20:46:03.085  INFO 13828 --- [http-nio-9900-exec-6] com.jcd.service.Impl.AlipayServiceImpl   : precreateÊàêÂäü, ‰∫åÁª¥Á†ÅÈìæÊé•: https://qr.alipay.com/bax06882pneh9x7hekgk0084
+2026-11-15 20:46:07.009  INFO 13828 --- [http-nio-9900-exec-8] com.jcd.controller.AlipayController      : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020
+2026-11-15 20:46:07.010  INFO 13828 --- [http-nio-9900-exec-8] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢ÊîØ‰ªòÂÆù‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020, tradeNo=null
+2026-11-15 20:46:07.238 ERROR 13828 --- [http-nio-9900-exec-8] sdk.biz.err                              : ErrorScene^_^40004^_^ACQ.TRADE_NOT_EXIST^_^null^_^Windows 10^_^2026-11-15 20:46:07^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.query&sign=KvDb9f6u+S9tmyRSzU8slhkBZvTVzS5uTdQ9yXf9qHm4BU+z4BvTkweal2nHsrzaC78F9rJWMzwEvLfIG7VBWKDQMV0F56kq4rgYfOzCAYhgHgQS+JI4T7JjqFySPfeL0n62+RKgAEA8O+78mPucsJP59DjfTALnWlLl7Ofc71dICcbJrZVXUgUH2lC4RDS4Y7H1ghqXr5KcfC1e6V5jREmQnRm4hZ46GyoZLXDP9MifFXPiY6ZhBqEKKm5cbpjs0q2hHQ1buHmK/cdrTF0EY9WbAGxDtUjvx3DZvcAanb2nAA3c+SWX/Jd5y18IooE5t8h9jMHVmTEehqlT8FgGfQ==&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:46:07^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:traceId=060064c4179474676692339944014473&biz_content={"out_trade_no":"SO202611150020"}^_^Body:{"alipay_trade_query_response":{"msg":"Business Failed","code":"40004","out_trade_no":"SO202611150020","sub_msg":"‰∫§Êòì‰∏çÂ≠òÂú®","sub_code":"ACQ.TRADE_NOT_EXIST","receipt_amount":"0.00","point_amount":"0.00","buyer_pay_amount":"0.00","invoice_amount":"0.00"},"sign":"RCtV0VrZ9dkhs5SsDP4GZu/KFhimNeYXxs6rooXSLYO82Hy3hLbEl4M+JusiRln0GiXEfl7PcgLQnt1j94jl8j99ouKGb1xDAEIAoXhatGRt3AqbseJ653vmSjcP6A2FeLG3l4xDXGMUplP+2Ngy9rcB0gBNxTu4D3cXcJIbFyrUUvBSxQhO39x3Gpnbac0GrM36kZFMvo9bB6rZLSPSS0G+W0gzVnv1jvZAyN7Pw/lDQutUfqYsb5aOZ3Ehzdk+FfRNTitYbyKxmT0EjBypta2RCAyjNoEW/Wa83Dal8gGSYTTFTG1gtDAWZ0ckyOqltDUeo4e2LYv58MsOG4aCZg=="}^_^11ms,188ms,27ms^_^trace_id:060064c4179474676692339944014473
+2026-11-15 20:46:07.239  WARN 13828 --- [http-nio-9900-exec-8] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅÂ§±Ë¥•, code=40004, msg=Business Failed
+2026-11-15 20:46:15.141  INFO 13828 --- [http-nio-9900-exec-9] com.jcd.controller.AlipayController      : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020
+2026-11-15 20:46:15.142  INFO 13828 --- [http-nio-9900-exec-9] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢ÊîØ‰ªòÂÆù‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020, tradeNo=null
+2026-11-15 20:46:15.172  INFO 13828 --- [http-nio-9900-exec-1] com.jcd.controller.AlipayController      : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020
+2026-11-15 20:46:15.172  INFO 13828 --- [http-nio-9900-exec-1] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢ÊîØ‰ªòÂÆù‰∫§ÊòìÁä∂ÊÄÅ, outTradeNo=SO202611150020, tradeNo=null
+2026-11-15 20:46:15.549 ERROR 13828 --- [http-nio-9900-exec-9] sdk.biz.err                              : ErrorScene^_^40004^_^ACQ.TRADE_NOT_EXIST^_^null^_^Windows 10^_^2026-11-15 20:46:15^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.query&sign=JJd33FfMLWTyYrd7HcTif3h81KUZzl9U3hBrGIEA/HoK3o/IRstl8cnpQplGT42EU3S76sdrqIbGVGxMk2nfmzOwnX5TUBtDNqeBEpgu4YUJnYcG7+50bfkyCH8sUMxZmXwejatJNFOORsV8Vm7iyW/fwcXmNrLwGPzjgmj3LQ/Yoz3zI9sjUcSZGzBvkSrHo0+eI4YdFVGH7t1anTGkpUTRJV4Rt6SOI0J5jtT4maZOJsZxUQP+XBe3Vl9hY21yR7ADfzv2qZrvvpV5SPdMfLi/X+hSw90AO0JHTlQPZXyHrm/6LfarkxTjGHTVwrXRoJ3+AGmSoI/IG5oBWluNiQ==&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:46:15^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:traceId=06037af0179474677521243816414&biz_content={"out_trade_no":"SO202611150020"}^_^Body:{"alipay_trade_query_response":{"msg":"Business Failed","code":"40004","out_trade_no":"SO202611150020","sub_msg":"‰∫§Êòì‰∏çÂ≠òÂú®","sub_code":"ACQ.TRADE_NOT_EXIST","receipt_amount":"0.00","point_amount":"0.00","buyer_pay_amount":"0.00","invoice_amount":"0.00"},"sign":"RCtV0VrZ9dkhs5SsDP4GZu/KFhimNeYXxs6rooXSLYO82Hy3hLbEl4M+JusiRln0GiXEfl7PcgLQnt1j94jl8j99ouKGb1xDAEIAoXhatGRt3AqbseJ653vmSjcP6A2FeLG3l4xDXGMUplP+2Ngy9rcB0gBNxTu4D3cXcJIbFyrUUvBSxQhO39x3Gpnbac0GrM36kZFMvo9bB6rZLSPSS0G+W0gzVnv1jvZAyN7Pw/lDQutUfqYsb5aOZ3Ehzdk+FfRNTitYbyKxmT0EjBypta2RCAyjNoEW/Wa83Dal8gGSYTTFTG1gtDAWZ0ckyOqltDUeo4e2LYv58MsOG4aCZg=="}^_^10ms,384ms,12ms^_^trace_id:06037af0179474677521243816414
+2026-11-15 20:46:15.550  WARN 13828 --- [http-nio-9900-exec-9] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅÂ§±Ë¥•, code=40004, msg=Business Failed
+2026-11-15 20:46:15.578 ERROR 13828 --- [http-nio-9900-exec-1] sdk.biz.err                              : ErrorScene^_^40004^_^ACQ.TRADE_NOT_EXIST^_^null^_^Windows 10^_^2026-11-15 20:46:15^_^ProtocalMustParams:charset=UTF-8&method=alipay.trade.query&sign=JJd33FfMLWTyYrd7HcTif3h81KUZzl9U3hBrGIEA/HoK3o/IRstl8cnpQplGT42EU3S76sdrqIbGVGxMk2nfmzOwnX5TUBtDNqeBEpgu4YUJnYcG7+50bfkyCH8sUMxZmXwejatJNFOORsV8Vm7iyW/fwcXmNrLwGPzjgmj3LQ/Yoz3zI9sjUcSZGzBvkSrHo0+eI4YdFVGH7t1anTGkpUTRJV4Rt6SOI0J5jtT4maZOJsZxUQP+XBe3Vl9hY21yR7ADfzv2qZrvvpV5SPdMfLi/X+hSw90AO0JHTlQPZXyHrm/6LfarkxTjGHTVwrXRoJ3+AGmSoI/IG5oBWluNiQ==&version=1.0&app_id=9021000162658782&sign_type=RSA2&timestamp=2026-11-15 20:46:15^_^ProtocalOptParams:alipay_sdk=alipay-sdk-java-4.38.79.ALL&format=json^_^ApplicationParams:traceId=0600a410179474677524182433024161&biz_content={"out_trade_no":"SO202611150020"}^_^Body:{"alipay_trade_query_response":{"msg":"Business Failed","code":"40004","out_trade_no":"SO202611150020","sub_msg":"‰∫§Êòì‰∏çÂ≠òÂú®","sub_code":"ACQ.TRADE_NOT_EXIST","receipt_amount":"0.00","point_amount":"0.00","buyer_pay_amount":"0.00","invoice_amount":"0.00"},"sign":"RCtV0VrZ9dkhs5SsDP4GZu/KFhimNeYXxs6rooXSLYO82Hy3hLbEl4M+JusiRln0GiXEfl7PcgLQnt1j94jl8j99ouKGb1xDAEIAoXhatGRt3AqbseJ653vmSjcP6A2FeLG3l4xDXGMUplP+2Ngy9rcB0gBNxTu4D3cXcJIbFyrUUvBSxQhO39x3Gpnbac0GrM36kZFMvo9bB6rZLSPSS0G+W0gzVnv1jvZAyN7Pw/lDQutUfqYsb5aOZ3Ehzdk+FfRNTitYbyKxmT0EjBypta2RCAyjNoEW/Wa83Dal8gGSYTTFTG1gtDAWZ0ckyOqltDUeo4e2LYv58MsOG4aCZg=="}^_^9ms,382ms,14ms^_^trace_id:0600a410179474677524182433024161
+2026-11-15 20:46:15.578  WARN 13828 --- [http-nio-9900-exec-1] com.jcd.service.Impl.AlipayServiceImpl   : Êü•ËØ¢‰∫§ÊòìÁä∂ÊÄÅÂ§±Ë¥•, code=40004, msg=Business Failed
+2026-11-15 20:47:54.748  INFO 13828 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-15 20:47:54.761  INFO 13828 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2026-11-15 20:48:05.321  INFO 14920 --- [main] com.jcd.PdaserverApplication             : Starting PdaserverApplication using Java 1.8.0_341 on DESKTOP-68LG5GB with PID 14920 (C:\Users\Administrator\Desktop\dianshang\target\classes started by Administrator in C:\Users\Administrator\Desktop\dianshang)
+2026-11-15 20:48:05.326  INFO 14920 --- [main] com.jcd.PdaserverApplication             : The following 1 profile is active: "sz"
+2026-11-15 20:48:06.719  INFO 14920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9900 (http)
+2026-11-15 20:48:06.728  INFO 14920 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15 20:48:06.728  INFO 14920 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2026-11-15 20:48:06.914  INFO 14920 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-15 20:48:06.914  INFO 14920 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1530 ms
+2026-11-15 20:48:07.090  INFO 14920 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2026-11-15 20:48:07.176  WARN 14920 --- [main] c.a.druid.pool.DruidAbstractDataSource   : oracle.jdbc.driver.OracleDriver is deprecated.Having use oracle.jdbc.OracleDriver.
+2026-11-15 20:48:07.219  INFO 14920 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2026-11-15 20:48:09.206  INFO 14920 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9900 (http) with context path ''
+2026-11-15 20:48:09.219  INFO 14920 --- [main] com.jcd.PdaserverApplication             : Started PdaserverApplication in 4.433 seconds (JVM running for 5.909)
+2026-11-15 20:48:11.694  INFO 14920 --- [http-nio-9900-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15 20:48:11.695  INFO 14920 --- [http-nio-9900-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15 20:48:11.696  INFO 14920 --- [http-nio-9900-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
