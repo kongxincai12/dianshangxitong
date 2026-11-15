@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcd.mapper.shop.ShopAddressMapper">
+
+  <resultMap id="AddressMap" type="com.jcd.model.shop.ShopAddress">
+    <id     column="ID"               property="id"/>
+    <result column="USER_ID"          property="userId"/>
+    <result column="RECEIVER_NAME"    property="receiverName"/>
+    <result column="RECEIVER_PHONE"   property="receiverPhone"/>
+    <result column="RECEIVER_ADDRESS" property="receiverAddress"/>
+    <result column="IS_DEFAULT"       property="isDefault"/>
+    <result column="CREATE_TIME"      property="createTime"/>
+    <result column="UPDATE_TIME"      property="updateTime"/>
+  </resultMap>
+
+  <sql id="allColumns">
+    ID, USER_ID, RECEIVER_NAME, RECEIVER_PHONE, RECEIVER_ADDRESS, IS_DEFAULT, CREATE_TIME, UPDATE_TIME
+  </sql>
+
+  <select id="selectByUser" resultMap="AddressMap">
+    select <include refid="allColumns"/>
+    from SHOP_ADDRESS
+    where USER_ID = #{userId}
+    order by IS_DEFAULT desc, CREATE_TIME asc, ID asc
+  </select>
+
+  <select id="selectById" resultMap="AddressMap">
+    select <include refid="allColumns"/>
+    from SHOP_ADDRESS
+    where ID = #{id}
+  </select>
+
+  <select id="selectDefault" resultMap="AddressMap">
+    select <include refid="allColumns"/>
+    from SHOP_ADDRESS
+    where USER_ID = #{userId} and IS_DEFAULT = 1
+  </select>
+
+  <select id="countByUser" resultType="int">
+    select count(1) from SHOP_ADDRESS where USER_ID = #{userId}
+  </select>
+
+  <insert id="insert" parameterType="com.jcd.model.shop.ShopAddress">
+    insert into SHOP_ADDRESS (ID, USER_ID, RECEIVER_NAME, RECEIVER_PHONE, RECEIVER_ADDRESS,
+                              IS_DEFAULT, CREATE_TIME, UPDATE_TIME)
+    values (#{id}, #{userId}, #{receiverName}, #{receiverPhone}, #{receiverAddress},
+            #{isDefault}, #{createTime}, #{updateTime})
+  </insert>
+
+  <update id="update" parameterType="com.jcd.model.shop.ShopAddress">
+    update SHOP_ADDRESS
+    set RECEIVER_NAME = #{receiverName},
+        RECEIVER_PHONE = #{receiverPhone},
+        RECEIVER_ADDRESS = #{receiverAddress},
+        UPDATE_TIME = SYSTIMESTAMP
+    where ID = #{id} and USER_ID = #{userId}
+  </update>
+
+  <delete id="deleteByIdAndUser">
+    delete from SHOP_ADDRESS where ID = #{id} and USER_ID = #{userId}
+  </delete>
+
+  <update id="clearDefault">
+    update SHOP_ADDRESS set IS_DEFAULT = 0, UPDATE_TIME = SYSTIMESTAMP
+    where USER_ID = #{userId} and IS_DEFAULT = 1
+  </update>
+
+  <update id="markDefault">
+    update SHOP_ADDRESS set IS_DEFAULT = 1, UPDATE_TIME = SYSTIMESTAMP
+    where ID = #{id} and USER_ID = #{userId}
+  </update>
+
+</mapper>

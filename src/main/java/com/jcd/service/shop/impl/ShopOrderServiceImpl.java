@@ -6,10 +6,12 @@ import com.jcd.exception.BusinessException;
 import com.jcd.mapper.shop.ShopCartMapper;
 import com.jcd.mapper.shop.ShopOrderMapper;
 import com.jcd.mapper.shop.ShopProductMapper;
+import com.jcd.model.shop.ShopAddress;
 import com.jcd.model.shop.ShopCart;
 import com.jcd.model.shop.ShopOrder;
 import com.jcd.model.shop.ShopOrderItem;
 import com.jcd.model.shop.ShopProduct;
+import com.jcd.service.shop.ShopAddressService;
 import com.jcd.service.shop.ShopOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     @Autowired private ShopOrderMapper   orderMapper;
     @Autowired private ShopProductMapper productMapper;
     @Autowired private ShopCartMapper    cartMapper;
+    @Autowired private ShopAddressService addressService;
 
     @Override
     @Transactional
@@ -44,6 +47,18 @@ public class ShopOrderServiceImpl implements ShopOrderService {
         if (dto == null) {
             throw new BusinessException(400, "结算参数不能为空");
         }
+
+        // 0. 先定收货人信息: 地址有问题就在扣库存之前失败, 不要白跑一趟
+        //    优先地址簿(指定 > 默认 > 最早一条), 地址簿为空时回退到请求里手填的字段,
+        //    保住 Postman 集合和自动化脚本这类老调用方
+        ShopAddress addr = addressService.pickForOrder(userId, dto.getAddressId());
+        String receiverName     = addr != null ? addr.getReceiverName()     : dto.getReceiverName();
+        String receiverPhone    = addr != null ? addr.getReceiverPhone()    : dto.getReceiverPhone();
+        String receiverAddress  = addr != null ? addr.getReceiverAddress()  : dto.getReceiverAddress();
+        if (!StringUtils.hasText(receiverAddress)) {
+            throw new BusinessException(400, "收货地址为空，请先到「收货地址」添加地址");
+        }
+
         // 1. 归集结算明细: 优先使用传入 items, 否则取购物车
         List<CartItemDto> items;
         boolean fromCart = CollectionUtils.isEmpty(dto.getItems());
@@ -102,9 +117,9 @@ public class ShopOrderServiceImpl implements ShopOrderService {
         order.setUserId(userId);
         order.setTotalAmount(total);
         order.setStatus(S_PENDING);
-        order.setReceiverName(dto.getReceiverName());
-        order.setReceiverPhone(dto.getReceiverPhone());
-        order.setReceiverAddress(dto.getReceiverAddress());
+        order.setReceiverName(receiverName);
+        order.setReceiverPhone(receiverPhone);
+        order.setReceiverAddress(receiverAddress);
         order.setRemark(dto.getRemark());
         order.setCreateTime(now);
         order.setUpdateTime(now);
